@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZalBot AI Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 10px;
+    }
+
+    .glow {
+      text-shadow: 0 0 8px #3b82f6, 0 0 20px #3b82f6;
+    }
+
+    .bubble-user {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      align-self: flex-end;
+      color: white;
+    }
+
+    .bubble-bot {
+      background: linear-gradient(135deg, #4b5563, #1f2937);
+      align-self: flex-start;
+      color: white;
+    }
+
+    .bubble {
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      max-width: 75%;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex items-center justify-center p-4">
+  <div class="bg-gray-900/60 border border-gray-700 p-6 rounded-2xl shadow-2xl w-full max-w-2xl backdrop-blur-md">
+    <h1 class="text-4xl font-bold text-center mb-6 glow">ZalOfficial AI</h1>
+
+    <div class="mb-4">
+      <label for="mode" class="block text-sm mb-1 text-gray-300">🎭 Mode Karakter:</label>
+      <select id="mode" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+        <option value="sopan">Sopan ✨</option>
+        <option value="toxic">Toxic 🔥</option>
+        <option value="receh">Receh 🤡</option>
+        <option value="santuy">Santuy 😎</option>
+      </select>
+    </div>
+
+    <div id="chat" class="h-64 overflow-y-auto mb-4 p-3 rounded-xl bg-gray-800 border border-gray-700 flex flex-col space-y-3 text-sm"></div>
+
+    <div class="flex gap-2">
+      <input id="input" class="flex-1 p-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Tulis pesan..." onkeydown="if(event.key === 'Enter') sendMessage()" />
+      <button onclick="sendMessage()" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-white transition font-semibold">Kirim</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat");
+    const input = document.getElementById("input");
+    const mode = document.getElementById("mode");
+
+    function addMessage(sender, text, isBot = false) {
+      const el = document.createElement("div");
+      el.className = `bubble ${isBot ? 'bubble-bot' : 'bubble-user'}`;
+      el.innerHTML = `<span class="block">${text}</span>`;
+      chatBox.appendChild(el);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      addMessage("👤", msg, false);
+      input.value = "";
+      input.disabled = true;
+
+      try {
+        const res = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: msg, mode: mode.value })
+        });
+
+        const data = await res.json();
+        addMessage("🤖", data.reply || "Gagal menjawab.", true);
+      } catch (err) {
+        addMessage("🤖", "⚠️ Error koneksi atau server down.", true);
+      } finally {
+        input.disabled = false;
+        input.focus();
+      }
+    }
+  </script>
+</body>
+</html>
