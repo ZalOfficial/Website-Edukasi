@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Website Edukasi DevZal</title>
+  <title>Website Edukasi ZalOfficial</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
@@ -18,6 +18,28 @@
       align-items: center;
       justify-content: center;
     }
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.judul-elite {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: #00c6ff;
+  text-shadow: 
+    0 0 3px #00c6ff,
+    0 0 6px #00c6ff88,
+    0 0 12px #00c6ff55,
+    0 0 20px #00c6ff33;
+  animation: glowFlash 2.5s infinite ease-in-out;
+  margin-bottom: 15px;
+}
+
+@keyframes glowFlash {
+  0%   { text-shadow: 0 0 4px #00c6ff55, 0 0 6px #00c6ff88; }
+  50%  { text-shadow: 0 0 8px #00c6ffcc, 0 0 18px #00c6ffaa; }
+  100% { text-shadow: 0 0 4px #00c6ff55, 0 0 6px #00c6ff88; }
+}
     .glass {
       background: rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(15px);
@@ -59,6 +81,15 @@
   resize: vertical;
   font-family: monospace;
   margin-bottom: 15px;
+}
+.select-toxic {
+  padding: 12px;
+  font-size: 1.05em;
+  border-radius: 10px;
+  background: #1c1c1c;
+  color: #fff;
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 10px #ff444488;
 }
     button {
       padding: 6px;
@@ -181,9 +212,24 @@
       padding-bottom: 10px;
       min-width: max-content;
     }
-    .menu-materi button {
-      white-space: nowrap;
-    }
+.menu-materi button {
+  white-space: nowrap;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00e5ff88;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  min-width: 120px;
+}
+.menu-materi button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 18px #00e5ffcc;
+}
     #dashboard, #materiPage {
       display: none;
     }
@@ -198,6 +244,25 @@
       max-height: 50vh;
       overflow-y: auto;
     }
+#toxicWrapper {
+  max-width: 700px;
+  margin: 40px auto 30px auto;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 0 18px rgba(200, 200, 200, 0.05);
+  text-align: center;
+}
+
+#toxicText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-family: 'Segoe UI', sans-serif;
+  color: #c0c0c0; /* warna silver */
+  white-space: pre-wrap;
+}
   </style>
 </head>
 <body>
@@ -228,11 +293,14 @@
   </div>
 
   <div class="glass" id="dashboard">
+<h2 class="judul-elite">
+  Selamat Datang Di Website Elite Ciptaan ZalOfficial
+</h2>
     <h3 id="welcomeMsg" style="font-size: 1rem;"></h3>
     <div id="belajarTimer" style="margin-top: 10px; font-size: 0.9rem; color: #aaf;">
   ⏳ Menghitung waktu belajar...
 </div>
-    <p style="font-size: 0.8rem;">Pilih materi yang ingin kamu pelajari:</p>
+    <p style="font-size: 0.8rem;">Pilih Materi Yang Kamu Ingin Pelajaran</p>
     
     <div class="scroll-container">
       <div class="menu-materi">
@@ -261,17 +329,20 @@
 <button onclick="bukaEncodeTools()">Encode & Decode Tools</button>
 <button onclick="bukaPasswordGenerator()">Password Generator</button>
 <button onclick="bukaKuis()">Kuis Edukasi</button>
-<button onclick="bukaNotes()">DevZal Notes</button>
+<button onclick="bukaNotes()">ZalOfficial Notes</button>
 <button onclick="bukaKalkulator()">Kalkulator</button>
 <button onclick="bukaTerminal()">Terminal</button>
 <button onclick="bukaEditor()">Code Editor</button>
+<button onclick="bukaVirusScanner()">Virus Scanner</button>
+<button onclick="bukaCryptoTool()">Crypto Tool</button>
+<button onclick="bukaBackdoorDetector()">Backdoor Detector</button>
+<button onclick="bukaToxicAiBot()">Chat Ai</button>
       </div>
     </div>
+<div id="toxicWrapper">
+  <div id="toxicText"></div>
+</div>
 
-    <div style="text-align: center; margin-top: 30px;">
-      <p style="color: #ccc; font-size: 10px;">
-        Website ini bertujuan untuk belajar tentang seputar hosting dan keamanan.
-      </p>
       <a href="https://wa.me/6289524134626" target="_blank" style="display: inline-block; margin-top: 5px; padding: 5px 10px; background: #007BFF; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
         Hubungi Developer
       </a>
@@ -290,7 +361,7 @@
   <button onclick="kembaliDashboard()">⬅️ Kembali</button>
 </div>
 <div class="glass" id="notesPage" style="display: none;">
-  <h2>📒 DevZal Notes</h2>
+  <h2>📒 ZalOfficial Notes</h2>
   <textarea id="noteArea" placeholder="Tulis catatan atau kode kamu di sini..."></textarea>
   <button class="btn" onclick="simpanKeFile()">💾 Simpan ke File</button>
   <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
@@ -382,14 +453,140 @@
   <button class="btn logout" style="margin-top: 20px;" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
 </div>
 <div class="glass" id="terminalPage" style="display: none;">
-  <h2>💻 Terminal DevZal</h2>
+  <h2>💻 Terminal ZalOfficial</h2>
   <div id="terminalOutput" style="background:#111; color:#0f0; padding:10px; height:200px; overflow:auto; font-family:monospace;"></div>
   <input id="terminalInput" type="text" placeholder="Ketik perintah..." style="width:100%; padding:10px; margin-top:10px;" onkeydown="if(event.key==='Enter') runCommand()">
   <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
 </div>
+<div class="glass" id="virusScannerPage" style="display:none;">
+  <h1 style="color:#66ccff; text-align:center; text-shadow: 0 0 10px white;">🛡️ ZalOfficial Virus Scanner</h1>
+  
+  <div class="controls" style="text-align:center; margin-top: 1rem;">
+    <input type="file" accept=".js,.txt" onchange="handleFileVirus(event)" class="btn" />
+    <button class="btn" onclick="scanVirus()">🔍 Scan Virus</button>
+    <button class="btn" onclick="resetVirus()">🔄 Reset</button>
+  </div>
+
+  <textarea id="virusCode" placeholder="💬 Ketik atau paste script kamu di sini..." style="width:100%; height:200px; background:#0e1a26; color:#aafaff; border-radius:12px; padding:15px; margin-top:20px;"></textarea>
+
+  <div class="result" id="virusHasil" style="display:none; background:#101820; border-left:5px solid #00ffff; padding:15px; border-radius:10px; box-shadow: 0 0 15px #00ffff33; margin-top: 20px;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="cryptoToolPage" style="display: none;">
+  <h2 style="text-align:center; color:#66ccff;">🔐 Crypto Tool (Hash & AES)</h2>
+
+  <textarea id="cryptoInput" placeholder="🔤 Teks yang ingin di-hash atau dienkripsi..." style="width:100%; height:100px; padding:12px; border-radius:10px;"></textarea>
+
+  <div style="margin-top:10px;">
+    🔢 <label>Pilih Mode:</label>
+    <select id="cryptoMode" style="padding:8px; border-radius:6px;">
+      <option value="md5">Hash MD5</option>
+      <option value="sha256">Hash SHA256</option>
+      <option value="aes-encrypt">AES Encrypt</option>
+      <option value="aes-decrypt">AES Decrypt</option>
+    </select>
+  </div>
+
+  <div id="aesKeyInput" style="margin-top:10px;">
+    🔑 Kunci AES:
+    <input type="text" id="aesKey" placeholder="Masukkan kunci AES..." style="width:100%; padding:8px; border-radius:8px;">
+  </div>
+
+  <div style="text-align:center; margin-top:15px;">
+    <button class="btn" onclick="prosesCrypto()">⚙️ Proses</button>
+    <button class="btn" onclick="resetCrypto()">🔄 Reset</button>
+  </div>
+
+  <div id="cryptoOutput" style="margin-top:20px; background:#0e1c26; color:#aafaff; padding:12px; border-radius:10px;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="backdoorPage" style="display: none;">
+  <h2 style="text-align:center; color:#66ccff;">🕵️ Script Backdoor Detector</h2>
+
+  <input type="file" accept=".js,.txt" onchange="handleBackdoorFile(event)" class="btn" style="margin-bottom:15px;">
+
+  <textarea id="backdoorInput" placeholder="Paste script atau upload file untuk dicek..." style="width:100%; height:200px; background:#0e1c26; color:#aafaff; padding:12px; border-radius:10px;"></textarea>
+
+  <div style="text-align:center; margin: 15px 0;">
+    <button class="btn" onclick="cekBackdoor()">🔍 Scan</button>
+    <button class="btn" onclick="resetBackdoor()">🔄 Reset</button>
+  </div>
+
+  <div id="backdoorHasil" style="background:#101820; padding:15px; border-left:5px solid #00ffff; border-radius:10px; box-shadow: 0 0 15px #00ffff33;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="toxicAiBot" style="display:none;">
+  <h2 style="text-align:center; color:#ff3333; font-size:2em;">THE END AI BOT</h2>
+  <p style="text-align:center; font-style:italic; color:#ccc; font-size:1.1em;">
+    Pilih pertanyaan. Jangan sok ngetik, cukup siapin mental.
+  </p>
+
+  <div style="text-align:center; margin-bottom:15px;">
+    <select id="toxicSelect" class="select-toxic">
+      <option value="0">Apa itu JavaScript?</option>
+      <option value="1">Kenapa script gue error mulu?</option>
+      <option value="2">Apa gunanya HTML?</option>
+      <option value="3">Kenapa bot WhatsApp ga jalan?</option>
+      <option value="4">Apa itu API?</option>
+      <option value="5">Cara deploy ke VPS?</option>
+      <option value="6">Apa itu obfuscator?</option>
+      <option value="7">Kenapa web gue lemot?</option>
+      <option value="8">Gimana bikin bot anti-detect?</option>
+      <option value="9">Console.log gak muncul?</option>
+    </select>
+    <button class="btn" style="margin-left:10px;" onclick="jawabToxicSelect()">💀 Jawab Sekarang</button>
+  </div>
+
+<div id="toxicOutput" style="
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 18px;
+  background: linear-gradient(to bottom right, #0f0f0f, #1b1b1b);
+  box-shadow: 0 0 25px #00ffff22, 0 0 60px #0066ff11;
+  border: 1px solid #333;
+">
+  <div id="pertanyaanToxic" style="
+    align-self: flex-end;
+    background: linear-gradient(to top left, #66ccff, #3399ff);
+    color: #000;
+    padding: 14px 18px;
+    border-radius: 20px 20px 4px 20px;
+    max-width: 75%;
+    font-weight: bold;
+    box-shadow: 0 0 10px #66ccff66;
+  "></div>
+
+  <div id="jawabanToxic" style="
+    align-self: flex-start;
+    background: linear-gradient(to top right, #444, #2b2b2b);
+    color: #c0c0c0;
+    padding: 14px 18px;
+    border-radius: 20px 20px 20px 4px;
+    max-width: 85%;
+    font-weight: normal;
+    box-shadow: inset 0 0 4px #9999, 0 0 10px #8883;
+    min-height: 60px;
+  "></div>
+</div>
+  <div style="text-align:center; margin-top:30px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Balik ke Dashboard</button>
+  </div>
+</div>
 <!-- EDITOR -->
 <div class="glass" id="editorPage" style="display: none;">
-  <h2 style="text-align:center;">💻 DevZal Editor</h2>
+  <h2 style="text-align:center;">💻 ZalOfficial Editor</h2>
   <select id="modeSelect" onchange="setEditorMode(this.value)">
     <option value="htmlmixed">HTML</option>
     <option value="javascript">JavaScript</option>
@@ -2224,8 +2421,309 @@ function sembunyiSemua() {
       document.getElementById("welcomeMsg").textContent = `Selamat datang, ${saved}!`;
     }
   });
+  function bukaVirusScanner() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("virusScannerPage").style.display = "block";
+  }
+
+  function handleFileVirus(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("virusCode").value = e.target.result;
+    };
+    reader.readAsText(file);
+  }
+
+  function scanVirus() {
+    const code = document.getElementById("virusCode").value;
+    const result = document.getElementById("virusHasil");
+
+    if (!code.trim()) {
+      result.style.display = "block";
+      result.innerHTML = "⚠️ Silakan masukkan atau upload script terlebih dahulu.";
+      return;
+    }
+
+    const keywords = ["eval", "while(true)", "child_process", "Buffer.from", "atob", "crypto", "exec", "shell", "fetch", "XMLHttpRequest"];
+    const lowerCode = code.toLowerCase();
+    const found = keywords.filter(k => lowerCode.includes(k.toLowerCase()));
+
+    if (found.length > 0) {
+      result.style.display = "block";
+      result.innerHTML = `🚨 <strong>Script Mencurigakan Terdeteksi</strong><br/><br/>
+      Ditemukan penggunaan: <b>${found.join(', ')}</b><br/><br/>
+      💡 <u>Solusi:</u> Hindari <code>eval</code> atau perintah shell tanpa validasi ketat. Pastikan input tidak berasal dari sumber tak terpercaya.`;
+    } else {
+      result.style.display = "block";
+      result.innerHTML = "✅ Tidak ditemukan indikasi script berbahaya.";
+    }
+  }
+
+  function resetVirus() {
+    document.getElementById("virusCode").value = "";
+    document.getElementById("virusHasil").style.display = "none";
+  }
+
+  function bukaCryptoTool() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("cryptoToolPage").style.display = "block";
+  }
+
+  async function prosesCrypto() {
+    const text = document.getElementById("cryptoInput").value;
+    const mode = document.getElementById("cryptoMode").value;
+    const key = document.getElementById("aesKey").value;
+    const output = document.getElementById("cryptoOutput");
+
+    if (!text.trim()) return output.innerHTML = "⚠️ Masukkan teks dulu.";
+
+    if (mode.includes("aes") && !key.trim()) {
+      return output.innerHTML = "⚠️ Masukkan kunci AES terlebih dahulu.";
+    }
+
+    try {
+      if (mode === "md5") {
+        output.innerHTML = `🔑 Hash MD5: <br><code>${await hashText(text, "MD5")}</code>`;
+      } else if (mode === "sha256") {
+        output.innerHTML = `🔑 Hash SHA256: <br><code>${await hashText(text, "SHA-256")}</code>`;
+      } else if (mode === "aes-encrypt") {
+        const encrypted = await aesEncrypt(text, key);
+        output.innerHTML = `🔐 AES Encrypted:<br><code>${encrypted}</code>`;
+      } else if (mode === "aes-decrypt") {
+        const decrypted = await aesDecrypt(text, key);
+        output.innerHTML = `🔓 AES Decrypted:<br><code>${decrypted}</code>`;
+      }
+    } catch (e) {
+      output.innerHTML = "❌ Error: " + e.message;
+    }
+  }
+
+  function resetCrypto() {
+    document.getElementById("cryptoInput").value = "";
+    document.getElementById("cryptoOutput").innerHTML = "";
+    document.getElementById("aesKey").value = "";
+  }
+
+  async function hashText(str, algo) {
+    const data = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest(algo, data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function aesEncrypt(text, keyStr) {
+    const enc = new TextEncoder();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await crypto.subtle.importKey("raw", enc.encode(keyStr.padEnd(16)), "AES-GCM", false, ["encrypt"]);
+    const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(text));
+    const result = [...iv, ...new Uint8Array(encrypted)];
+    return btoa(String.fromCharCode(...result));
+  }
+
+  async function aesDecrypt(base64, keyStr) {
+    const raw = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+    const iv = raw.slice(0, 12);
+    const data = raw.slice(12);
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(keyStr.padEnd(16)), "AES-GCM", false, ["decrypt"]);
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+    return new TextDecoder().decode(decrypted);
+  }
+  function bukaBackdoorDetector() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("backdoorPage").style.display = "block";
+}
+
+function handleBackdoorFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById("backdoorInput").value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+
+function cekBackdoor() {
+  const code = document.getElementById("backdoorInput").value;
+  const hasil = document.getElementById("backdoorHasil");
+
+  if (!code.trim()) {
+    hasil.innerHTML = "⚠️ Masukkan atau upload script dulu.";
+    return;
+  }
+
+  const patterns = [
+    { keyword: "eval(", info: "⚠️ eval digunakan untuk eksekusi dinamis – bisa berbahaya!" },
+    { keyword: "atob(", info: "⚠️ atob digunakan untuk decode base64 – cek apakah isinya aman." },
+    { keyword: "Function(", info: "⚠️ Constructor Function bisa dipakai jalankan kode tersembunyi." },
+    { keyword: "child_process", info: "🚨 child_process bisa jalankan command sistem." },
+    { keyword: "require('fs')", info: "⚠️ Mengakses file sistem, cek apakah aman." },
+    { keyword: "require(\"fs\")", info: "⚠️ Mengakses file sistem, cek apakah aman." },
+    { keyword: "exec(", info: "🚨 exec() bisa eksekusi shell command!" },
+    { keyword: "fetch(", info: "⚠️ fetch bisa digunakan untuk ambil script jarak jauh." },
+    { keyword: "XMLHttpRequest", info: "⚠️ Akses HTTP manual – bisa curi data atau inject skrip." },
+    { keyword: "http://", info: "⚠️ Deteksi URL tidak aman (HTTP)." },
+    { keyword: "https://", info: "⚠️ Deteksi URL eksternal, cek apakah mencurigakan." },
+  ];
+
+  let report = "";
+  patterns.forEach(p => {
+    if (code.toLowerCase().includes(p.keyword.toLowerCase())) {
+      report += `✅ <b>${p.keyword}</b><br>${p.info}<br><br>`;
+    }
+  });
+
+  hasil.innerHTML = report ? report : "✅ Tidak ditemukan tanda backdoor mencurigakan.";
+}
   
-    function kembaliDashboard() {
+function resetBackdoor() {
+  document.getElementById("backdoorInput").value = "";
+  document.getElementById("backdoorHasil").innerHTML = "";
+}
+const toxicQA = [
+  {
+    q: "Apa itu JavaScript?",
+    a: "JavaScript itu bahasa pemrograman yang dipakai buat bikin website jadi interaktif. Tapi buat orang kayak lu, kayaknya itu cuma mantra sihir yang bikin error doang. Dipakai di browser, bisa bikin tombol bisa diklik, bikin animasi, fetch data, dan banyak hal. Sayangnya, otak lu kayaknya stuck di era HTML doang. Bahkan console.log aja masih nanya artinya. Saran: sebelum nyentuh JavaScript lagi, belajar logika dasar dulu, terus install empati ke sesama developer yang harus debug hasil kerja lu."
+  },
+  {
+    q: "Kenapa script gue error mulu?",
+    a: "Karena setiap kali lu ngetik, Tuhan coding nangis. Error itu muncul karena kode lu kacau, logikanya absurd, dan penulisan variabel kadang kayak nama karakter anime. Lu bahkan gak baca error message-nya, langsung panik nanya ke grup. Coba baca pelan-pelan, pahami error-nya, debug satu-satu, bukan spam grup minta solusi buat dosa coding lu sendiri."
+  },
+  {
+    q: "Apa gunanya HTML?",
+    a: "HTML itu pondasi website, bro. Tapi kayaknya lu bangun pondasi pake lumpur, bukan semen. HTML ngatur struktur: heading, paragraph, link, gambar, form — semua dibungkus dalam tag. Tapi lu? Pakai `<div>` buat semuanya, kayak anak yang baru belajar lego. Website lu flat, error, dan gak valid semantik. Belajar struktur tag HTML dulu sebelum ngomongin CSS dan JavaScript."
+  },
+  {
+    q: "Kenapa bot WhatsApp ga jalan?",
+    a: "Karena lu copas script dari GitHub tanpa baca README, terus ngarep bisa langsung jadi Dewa Bot. Token salah, session gak disimpan, atau environment gak diset. Paling parah: lu gak tau bedanya Baileys sama venom. Lu gak debug, gak ngerti log-nya, cuma nanya: ‘bang kenapa gak connect?’. Jawaban: Karena user-nya juga gak connect ke kenyataan."
+  },
+  {
+    q: "Apa itu API?",
+    a: "API itu jembatan komunikasi antar aplikasi. Misalnya lu mau ambil data cuaca dari server, lu gak harus hack BMG, cukup pake API. Tapi lu malah nyangka API itu skrip rahasia elite hacker. Udah gitu, cara pake `fetch` aja salah, endpoint salah, gak pake token, terus nanya: ‘kok null ya datanya?’. Karena otak lu juga `null`, bro. Pahami konsep GET, POST, headers, payload — jangan cuma copas Axios doang."
+  },
+  {
+    q: "Cara deploy ke VPS?",
+    a: "Pertama, buka terminal. Kedua, connect pake SSH. Ketiga, upload project. Keempat, install dependensi, jalankan service, selesai. Tapi lu? Masuk VPS aja gak bisa, ketik `cd` aja salah, terus bilang: ‘gagal deploy’. Ya iya! Lu gak ngerti Linux, gak ngerti firewall, gak ngerti port. Lu pengen hosting bot, tapi gak ngerti perintah `pm2`, `nohup`, atau service manager. Baca tutorial, praktik, jangan cuma ngeluh."
+  },
+  {
+    q: "Apa itu obfuscator?",
+    a: "Obfuscator itu alat buat nyamarin kode biar susah dibaca orang lain. Tapi jujur aja, kode lu gak perlu diobfuscate — karena udah jelek dari lahir. Bahkan lu sendiri gak bisa baca kode lu yang lu tulis minggu lalu. Jadi kalau tujuannya biar aman, belajar cara bikin kode yang bener dulu. Obfuscate itu langkah akhir, bukan pelindung buat kekacauan logic internal."
+  },
+  {
+    q: "Kenapa web gue lemot?",
+    a: "Karena lu isi 10MB gambar PNG gak di-compress, load font dari lima tempat, dan animasi semua elemen pake JavaScript yang jalan terus. CSS lu penuh efek blur, JS lu looping gak penting, API lu delay 3 detik. Bahkan preloader aja beratnya kayak game PS2. Lu pengen web cepet? Audit pake Lighthouse, compress gambar, lazy load, caching, dan yang paling penting: hapus semua efek gak guna dari template copasan lu."
+  },
+  {
+    q: "Gimana bikin bot anti-detect?",
+    a: "Pertama-tama, sadari dulu... bot lu ketahuan bukan karena API, tapi karena kelakuan. Delay gak natural, pattern request terlalu mirip, user-agent sama semua, terus scrapingnya barbar. Mau anti-detect? Pelajari headless browser, randomization, mimic behavior manusia. Tapi kalau bot lu aja hasil copas dari repo 2019, ya ampun... ngarep bisa stealth? Yang stealth itu kemampuan logika lu. Gak kedetect sama sekali."
+  },
+  {
+    q: "Console.log gak muncul?",
+    a: "Mungkin karena lu nempelin `console.log()` di tempat yang gak pernah dijalankan. Atau lu lagi di async function tapi gak await. Atau bahkan file yang lu run bukan yang terbaru. Tapi kemungkinan terbesar: lu bahkan gak tau console itu jalan di mana. Coba liat DevTools, refresh beneran, bukan cuma ngetik ulang di Notepad++. Dan pastikan console-nya gak error duluan. Tapi ya... kalau bahkan buka DevTools aja lu bingung, ya udah lah. Good luck, Dek."
+  }
+];
+function bukaToxicAiBot() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("toxicAiBot").style.display = "block";
+}
+
+  function typeTextInNewBubble(q, a) {
+    const output = document.getElementById("toxicOutput");
+
+    // Buat elemen pertanyaan (kanan)
+    const pertanyaan = document.createElement("div");
+    pertanyaan.style = `
+  align-self: flex-end;
+  background: #66ccff;
+  color: #000;
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 75%;
+  font-weight: bold;
+  box-shadow: 0 0 8px #33ccff88;
+  margin: 0;
+`;
+    pertanyaan.innerHTML = `${q}`;
+    output.appendChild(pertanyaan);
+
+    // Buat elemen jawaban (kiri)
+    const jawaban = document.createElement("div");
+    jawaban.style = `
+  align-self: flex-start;
+  background: #2b2b2b;
+  color: #c0c0c0;
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 85%;
+  font-weight: normal;
+  box-shadow: 0 0 8px #8883;
+  min-height: 60px;
+  white-space: pre-wrap;
+  margin: 0;
+`;
+    output.appendChild(jawaban);
+
+    // Animasi ngetik
+    let i = 0;
+    function typing() {
+      if (i < a.length) {
+        jawaban.innerHTML += a.charAt(i);
+        i++;
+        setTimeout(typing, 15);
+        output.scrollTop = output.scrollHeight; // auto scroll ke bawah
+      }
+    }
+    typing();
+  }
+
+  function jawabToxicSelect() {
+    const selectedIndex = document.getElementById("toxicSelect").value;
+    const item = toxicQA[selectedIndex];
+    typeTextInNewBubble(item.q, item.a);
+  }
+  
+  const toxicTexts = [
+  `Website ini bukan buat lo yang tiap hari hidup dari nge-banned WA orang terus teriak "gue hacker". Lah hacker dari mana? Nge-click script orang aja udah panik kalau ada tulisan 'error'. Mental epep, bukan developer.Makanya Developer ZalOfficial ciptain website ini, biar yang begini bisa belajar atau sadar diri sebelum rename lagi script orang.`,
+
+  `Lo ngaku dev? Tapi kerjaan lo tiap malam cuma rename file ZIP, ubah nama jadi "Nama Lu Modz V99 FINAL". Isinya? Script hasil comot forum sebelah. Bangga banget ya? Mental dev tapi kerjaan kayak tukang rombak kardus. 
+  Makanya Developer ZalOfficial ciptain website ini, supaya lo paham koding beneran, bukan hidup dari modifikasi script orang.`,
+
+  `Datang ke sini cuma buat cari script auto famous biar bisa dipamerin ke grup WA? Close aja tab-nya. Web ini bukan buat spesies kagetan yang panik liat "npm install". Lo bukan developer, lo pencari template. Makanya Developer ZalOfficial ciptain website ini, biar lo berhenti mikir terminal itu tempat teleport ke dunia lain.`,
+
+  `Bangga bisa banned nomor WA? Anjay... keren banget tahun 2022. Sekarang 2025, bro. Orang udah bikin AI chatbot, lo masih stuck di bug wa. Makanya Developer ZalOfficial ciptain website ini, biar lo sadar betapa jadulnya lo dan belajar sesuatu yang relevan.`,
+
+  `Sok ngaku elite cyber, padahal skill cuma spam invisible chat dan bug delay. Udah kayak anak TK ngambek bawa stikernya hilang. Makanya Developer ZalOfficial ciptain website ini, biar bocil kayak lo punya tempat buat buka mata dan perbaiki otak.`,
+
+  `Rename script? Ganti author doang? Terus di-upload ulang pake watermark lo? Lah itu bukan developer, itu editor CapCut.Makanya Developer ZalOfficial ciptain website ini, biar mental lo bisa upgrade sebelum nyentuh file .js lagi.`,
+
+  `Website ini dibuat biar kalian yang otaknya idle 24 jam bisa belajar sesuatu. Kalau masih nanya "cara buka terminal gimana", mending uninstall otak dulu dan install ulang logika. Karena belajar coding itu bukan buat yang otaknya kayak flashdisk 2GB full lagu TikTok.`,
+
+  `Ini bukan playground bocil. Ini tempat belajar coding, server, sama debugging. Yang niatnya cuma copy-paste biar keliatan jago, mending buka YouTube kartun aja. Jangan cemari web ini pake mental gratisan tanpa otak, yang nanya error aja masih takut buka terminal.`,
+
+  `Jangan kira ini web tutorial gratisan buat nambah viewer doang. Ini tempat orang yang pengen ngerti beneran. Kalo lo masih ngira 'console.log' itu nama bot, fix otak lo perlu restart pakai solder panas. Ngetik ` + "`node index.js`" + ` aja takut error.`,
+
+  `Website ini bukan buat gaya-gayaan pasang banner "Dev" tapi error aja nggak ngerti. Ini buat lo yang capek jadi beban grup, dan pengen bisa beneran bikin project tanpa jadi beban hidup admin tiap hari. Rename SC bukan achievement, bro.`,
+
+  `Kalau masih nanya "cara buka file .js", tolong... serahkan HP ke orang tua lo dan minta dibelikan buku gambar. Coding itu buat yang punya logika, bukan yang pikirannya mentok di mod-menu, banned-bannedan, sama spam bug viewOnce ke grup WA random.`,
+
+  `Jangan main ke sini kalo lo cuma pengen kelihatan keren di grup WA. Website ini bukan tempat upgrade tampang, ini tempat upgrade otak. Jadi kalo IQ lo masih loading, better cabut dulu deh. Coding itu buat yang tahan error, bukan panik liat warna merah di terminal.`,
+
+  `Belajar di sini nggak pake shortcut. Lo harus baca, paham, dan mikir. Bukan spam “udah jadi belum bang?” di komentar sambil berharap dijadiin murid spesial padahal mental masih sc obfus rename hasil repost dari channel Telegram receh.`,
+
+  `Lo ngaku cyber, tapi kerjaan tiap hari cuma pamer bug banned dan nanya script install Baileys. Sekali-kali buka docs lah, jangan buka menu rename. Lo kira inject payload itu masak mie instan? Sadar diri lah, jangan ngasih harapan palsu ke otak sendiri.`,
+
+  `Kalau lo pikir belajar coding bisa kelar dalam 1 malam karena habis rename sc, lo salah besar. Ini bukan tempat buat bocah pamer "Termux Termos", ini tempat orang upgrade skill. Kalo nggak kuat mikir, cabut sekarang sebelum browser lo freeze bareng IQ lo.`,
+
+  `Makanya Developer ZalOfficial ciptain website ini buat lo semua yang skill-nya mentok di spam bug viewOnce, banned grup, rename script jadi milik pribadi, terus ngaku “Dev WA V13”. Ini bukan tempat banggain SC hasil copas, tapi buat ngebuktiin otak lo masih bisa diajak kerja.`,
+
+  `Masih bangga pasang status "Dev | Hacker | Elite" padahal buka .env aja tanya: "Bang, ini apa ya?" Jangan sedih. Itu penyakit umum.Makanya Developer ZalOfficial ciptain website ini, buat jadi klinik darurat untuk mental yang sok-sokan ngaku dev tapi buka terminal aja gemeteran.`,
+
+  `Lo liat website ini, kesel? Gatel? Merasa disindir? Nah, berarti lo target utama website ini. Makanya Developer ZalOfficial ciptain website ini, khusus buat lo yang hidup dari skill bug, banned, rename, terus ngaku-ngaku developer di bio.`
+];
+
+  const randomText = toxicTexts[Math.floor(Math.random() * toxicTexts.length)];
+  document.getElementById("toxicText").innerText = randomText;
+  function kembaliDashboard() {
   // Sembunyikan SEMUA fitur yang pakai class "glass"
   document.querySelectorAll(".glass").forEach(div => {
     div.style.display = "none";
@@ -2243,7 +2741,7 @@ function sembunyiSemua() {
       if (saved) {
         document.getElementById("loginContainer").style.display = 'none';
         document.getElementById("dashboard").style.display = 'block';
-        document.getElementById("welcomeMsg").textContent = `Selamat datang, ${saved}!`;
+        document.getElementById("welcomeMsg").textContent = ``;
       }
     });
   </script>
