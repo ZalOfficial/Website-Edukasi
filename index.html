@@ -47,6 +47,19 @@
       color: white;
       font-size: 0.9rem;
     }
+#notesPage textarea {
+  width: 100%;
+  min-height: 200px;
+  background: #111;
+  border: 2px solid #66ccff;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1rem;
+  color: #aafaff;
+  resize: vertical;
+  font-family: monospace;
+  margin-bottom: 15px;
+}
     button {
       padding: 6px;
       border: none;
@@ -82,6 +95,84 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+/* Container Editor VS Code Style */
+#editorPage {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.3);
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+/* CodeMirror styling */
+.CodeMirror {
+  height: 80vh;
+  font-family: 'Fira Code', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #d4d4d4;
+  background: #1e1e1e;
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px #00f2ff33;
+}
+
+/* Posisi teks kiri atas */
+.CodeMirror-scroll {
+  text-align: left !important;
+  padding: 0 !important;
+}
+
+/* Dropdown mode selector */
+#modeSelect {
+  background: #252526;
+  color: #c5c5c5;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+#editorPage .btn {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 0;
+  transition: 0.2s ease;
+  box-shadow: 0 0 12px #00d0ff88;
+}
+#editorPage .btn:hover {
+  box-shadow: 0 0 18px #00d0ffaa;
+  transform: scale(1.03);
+}
+
+/* Hasil tampilan code (preview iframe) fullscreen */
+#outputPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 900;
+  background: white;
+}
+
+#previewFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #0a192f; /* fallback, just in case */
+}
     .menu-materi {
       display: grid;
       grid-template-rows: repeat(3, auto);
@@ -110,6 +201,25 @@
   </style>
 </head>
 <body>
+<div id="musicControl" style="
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  background: #000c;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00d0ff99;
+">
+  <select id="genreSelector" onchange="loadGenre(this.value)">
+    <option value="">Pilih Lagu</option>
+    <option value="sad">Sad</option>
+    <option value="phonk">Phonk</option>
+    <option value="dj">DJ</option>
+  </select>
+  <button onclick="toggleAudio()" id="playBtn"> Play</button>
+</div>
+<audio id="musicPlayer" loop></audio>
   <div class="glass" id="loginContainer">
     <h3 style="text-shadow: 0 0 10px white; font-size: 1rem; margin-bottom: 10px;">Masukkan Nama Kamu</h3>
     <input id="nama" placeholder="Contoh: Dev Zal">
@@ -119,6 +229,9 @@
 
   <div class="glass" id="dashboard">
     <h3 id="welcomeMsg" style="font-size: 1rem;"></h3>
+    <div id="belajarTimer" style="margin-top: 10px; font-size: 0.9rem; color: #aaf;">
+  ⏳ Menghitung waktu belajar...
+</div>
     <p style="font-size: 0.8rem;">Pilih materi yang ingin kamu pelajari:</p>
     
     <div class="scroll-container">
@@ -147,7 +260,11 @@
 <button onclick="bukaErrorChecker()">Cek Error JS</button>
 <button onclick="bukaEncodeTools()">Encode & Decode Tools</button>
 <button onclick="bukaPasswordGenerator()">Password Generator</button>
-
+<button onclick="bukaKuis()">Kuis Edukasi</button>
+<button onclick="bukaNotes()">DevZal Notes</button>
+<button onclick="bukaKalkulator()">Kalkulator</button>
+<button onclick="bukaTerminal()">Terminal</button>
+<button onclick="bukaEditor()">Code Editor</button>
       </div>
     </div>
 
@@ -172,7 +289,12 @@
   <br>
   <button onclick="kembaliDashboard()">⬅️ Kembali</button>
 </div>
-
+<div class="glass" id="notesPage" style="display: none;">
+  <h2>📒 DevZal Notes</h2>
+  <textarea id="noteArea" placeholder="Tulis catatan atau kode kamu di sini..."></textarea>
+  <button class="btn" onclick="simpanKeFile()">💾 Simpan ke File</button>
+  <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+</div>
   <!-- Bagian materiPage -->
 <div class="glass" id="materiPage">
   <h3 id="judulMateri" style="font-size: 1rem;"></h3>
@@ -236,6 +358,55 @@
     Website ini membantu kamu membuat password aman dan acak.<br>
     Contact Dev Zal: <a href="https://wa.me/628xxxxxx" style="color:#66ccff;">Klik di sini</a>
   </div>
+</div>
+<div class="glass" id="kuisPage" style="display:none;">
+  <h2 id="question">Memuat soal...</h2>
+  <div id="options"></div>
+  <div id="scoreArea" style="display:none;">
+    <h3 id="scoreText"></h3>
+    <button class="btn" onclick="loadKuis()">🔁 Main Lagi</button>
+    <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="kalkulatorPage" style="display: none;">
+  <h2>📟 Kalkulator</h2>
+  <input type="number" id="num1" placeholder="Angka Pertama">
+  <input type="number" id="num2" placeholder="Angka Kedua">
+  <div class="buttons" style="margin-top: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+    <button class="btn" onclick="hitung('+')">+</button>
+    <button class="btn" onclick="hitung('-')">−</button>
+    <button class="btn" onclick="hitung('*')">×</button>
+    <button class="btn" onclick="hitung('/')">÷</button>
+  </div>
+  <div id="hasil" style="margin-top: 20px; font-size: 1.2rem;"></div>
+  <button class="btn logout" style="margin-top: 20px;" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+</div>
+<div class="glass" id="terminalPage" style="display: none;">
+  <h2>💻 Terminal DevZal</h2>
+  <div id="terminalOutput" style="background:#111; color:#0f0; padding:10px; height:200px; overflow:auto; font-family:monospace;"></div>
+  <input id="terminalInput" type="text" placeholder="Ketik perintah..." style="width:100%; padding:10px; margin-top:10px;" onkeydown="if(event.key==='Enter') runCommand()">
+  <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+</div>
+<!-- EDITOR -->
+<div class="glass" id="editorPage" style="display: none;">
+  <h2 style="text-align:center;">💻 DevZal Editor</h2>
+  <select id="modeSelect" onchange="setEditorMode(this.value)">
+    <option value="htmlmixed">HTML</option>
+    <option value="javascript">JavaScript</option>
+    <option value="css">CSS</option>
+    <option value="python">Python</option>
+    <option value="text">Text</option>
+  </select>
+  <textarea id="codeEditor">// Tulis kode kamu di sini...</textarea>
+  <br />
+  <button class="btn" onclick="jalankanKode()">▶️ Jalankan</button>
+  <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+</div>
+
+<!-- OUTPUT -->
+<div class="glass" id="outputPage" style="display: none;">
+  <button class="btn logout" onclick="kembaliEditor()" style="margin-bottom:10px;">⬅ Kembali ke Editor</button>
+  <iframe id="previewFrame"></iframe>
 </div>
 <!-- Tambahkan langsung di bawah sini -->
 <div class="glass" id="errorChecker" style="display:none;">
@@ -1723,64 +1894,349 @@ function salinPassword() {
     }
   }
 
-const questions = [
-  { q: "Apa fungsi utama file package.json?", o: ["Konfigurasi project", "Backup file", "Log sistem", "Versi git"], a: 0 },
-  { q: "Apa itu Webhook?", o: ["Pengirim data otomatis via POST", "Bot handler", "Database", "Server listener"], a: 0 },
-  { q: "Perintah upload file ke VPS dengan SCP?", o: ["scp file.js user@ip:/folder", "upload vps", "push file", "send.js"], a: 0 },
-  { q: "Cara obfuscate file?", o: ["Gunakan JsConfuser", "Convert ke pdf", "Rename ke .mp3", "Gunakan npm run dev"], a: 0 },
-  { q: "Apa itu JSON?", o: ["Format pertukaran data", "Framework JS", "Bahasa pemrograman", "Tool Linux"], a: 0 }
-];
+  const kuisQuestions = [
+    { q: "Apa fungsi utama file package.json?", o: ["Konfigurasi project", "Backup file", "Log sistem", "Versi git"], a: 0 },
+    { q: "Apa itu Webhook?", o: ["Pengirim data otomatis via POST", "Bot handler", "Database", "Server listener"], a: 0 },
+    { q: "Apa itu Express.js?", o: ["Framework Node.js untuk routing & API", "Text editor", "Cloud tool", "Plugin NPM"], a: 0 },
+    { q: "Command Handler digunakan untuk?", o: ["Modular command bot", "Install bot", "Jalankan loop", "Run log"], a: 0 },
+    { q: "Perintah upload file ke VPS dengan SCP?", o: ["scp file.js user@ip:/folder", "upload vps", "push file", "send.js"], a: 0 },
+    { q: "Apa itu endpoint API?", o: ["URL untuk akses API", "Login admin", "Koneksi DB", "HTML Page"], a: 0 },
+    { q: "Contoh alat SFTP?", o: ["FileZilla", "Notepad", "CMD", "Termux"], a: 0 },
+    { q: "Apa itu bug WA MD?", o: ["Exploit WA Multi Device", "Plugin NPM", "Update fitur", "Template JS"], a: 0 },
+    { q: "Cara hosting bot di VPS?", o: ["Gunakan PM2 atau node index.js", "Open .zip", "npm install index.html", "Ketik login"], a: 0 },
+    { q: "Apa itu JSON?", o: ["Format pertukaran data", "Bahasa pemrograman", "Framework", "Driver database"], a: 0 },
+  ];
 
-let current = 0, score = 0, used = [];
+  let kuisUsed = [], kuisScore = 0, kuisCountdown;
+  const kuisMax = 10, kuisTime = 15;
 
-function bukaKuis() {
-  document.getElementById('dashboard').style.display = 'none';
-  document.getElementById('kuisContainer').style.display = 'block';
-  score = 0;
-  used = [];
-  loadQuestion();
+  function bukaKuis() {
+    const sections = document.querySelectorAll(".glass");
+    sections.forEach(div => div.style.display = "none");
+    document.getElementById("kuisPage").style.display = "block";
+    loadKuis();
+  }
+
+
+  function loadKuis() {
+    kuisUsed = [];
+    kuisScore = 0;
+    document.getElementById("scoreArea").style.display = "none";
+    document.getElementById("options").style.display = "block";
+    nextSoal();
+  }
+
+  function nextSoal() {
+    if (kuisUsed.length >= kuisMax) return tampilSkor();
+    let idx;
+    do {
+      idx = Math.floor(Math.random() * kuisQuestions.length);
+    } while (kuisUsed.includes(idx));
+    kuisUsed.push(idx);
+    tampilSoal(kuisQuestions[idx]);
+  }
+
+  function tampilSoal(data) {
+    const qElem = document.getElementById("question");
+    const optBox = document.getElementById("options");
+    optBox.innerHTML = "";
+    qElem.textContent = `(${kuisUsed.length}/${kuisMax}) ${data.q}`;
+
+    // Acak opsi dan lacak jawaban benar
+    const options = data.o.map((text, i) => ({ text, correct: i === data.a }));
+    const shuffled = options.sort(() => Math.random() - 0.5);
+
+    shuffled.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        clearInterval(kuisCountdown);
+        if (opt.correct) kuisScore++;
+        nextSoal();
+      };
+      optBox.appendChild(btn);
+    });
+
+    // Timer per soal
+    const timerDiv = document.createElement("div");
+    let waktu = kuisTime;
+    timerDiv.style.margin = "10px";
+    timerDiv.textContent = `⏳ Waktu: ${waktu}s`;
+    optBox.prepend(timerDiv);
+    clearInterval(kuisCountdown);
+    kuisCountdown = setInterval(() => {
+      waktu--;
+      timerDiv.textContent = `⏳ Waktu: ${waktu}s`;
+      if (waktu <= 0) {
+        clearInterval(kuisCountdown);
+        nextSoal();
+      }
+    }, 1000);
+  }
+
+  function tampilSkor() {
+    document.getElementById("question").textContent = "✅ Kuis Selesai!";
+    document.getElementById("options").style.display = "none";
+    document.getElementById("scoreArea").style.display = "block";
+    const persen = Math.round((kuisScore / kuisUsed.length) * 100);
+    document.getElementById("scoreText").textContent = `Skor Kamu: ${kuisScore}/${kuisUsed.length} (${persen}%)`;
+  }
+  function bukaNotes() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    document.getElementById("notesPage").style.display = "block";
+  }
+
+  function simpanKeFile() {
+    const isi = document.getElementById("noteArea").value.trim();
+    if (!isi) {
+      alert("✋ Catatan masih kosong!");
+      return;
+    }
+    const blob = new Blob([isi], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const waktu = new Date().toISOString().slice(0, 19).replace(/:/g, "-");
+    link.download = `Catatan_DevZal_${waktu}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function bukaKalkulator() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    document.getElementById("kalkulatorPage").style.display = "block";
+  }
+
+  function hitung(op) {
+    const a = parseFloat(document.getElementById("num1").value);
+    const b = parseFloat(document.getElementById("num2").value);
+    const output = document.getElementById("hasil");
+
+    if (isNaN(a) || isNaN(b)) {
+      output.textContent = "⚠️ Masukkan angka dulu!";
+      return;
+    }
+
+    let hasil;
+    switch (op) {
+      case '+': hasil = a + b; break;
+      case '-': hasil = a - b; break;
+      case '*': hasil = a * b; break;
+      case '/': hasil = b !== 0 ? (a / b).toFixed(2) : '∞'; break;
+    }
+
+    output.textContent = "Hasil: " + hasil;
+  }
+
+  let belajarWaktu = 0;
+  let belajarInterval;
+
+  function mulaiTimerBelajar() {
+    const now = new Date();
+    const hariIni = now.toISOString().slice(0, 10);
+    const storageKey = "waktuBelajar_" + hariIni;
+
+    // Ambil data sebelumnya
+    const dataSebelumnya = localStorage.getItem(storageKey);
+    belajarWaktu = dataSebelumnya ? parseInt(dataSebelumnya) : 0;
+
+    // Update setiap detik
+    belajarInterval = setInterval(() => {
+      belajarWaktu++;
+      localStorage.setItem(storageKey, belajarWaktu);
+      updateTampilanBelajar();
+    }, 1000);
+  }
+
+  function updateTampilanBelajar() {
+    const menit = Math.floor(belajarWaktu / 60);
+    const detik = belajarWaktu % 60;
+    document.getElementById("belajarTimer").textContent = 
+      `⏱ Kamu sudah belajar ${menit} menit ${detik < 10 ? "0" : ""}${detik} detik hari ini`;
+  }
+
+  // Mulai saat halaman dibuka
+  window.addEventListener("load", () => {
+    mulaiTimerBelajar();
+    updateTampilanBelajar();
+  });
+  
+function bukaTerminal() {
+  document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+  document.getElementById("terminalPage").style.display = "block";
+  document.getElementById("terminalInput").focus();
 }
 
-function kembaliDashboard() {
-  document.getElementById('kuisContainer').style.display = 'none';
-  document.getElementById('scoreArea').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
+function runCommand() {
+  const input = document.getElementById("terminalInput");
+  const output = document.getElementById("terminalOutput");
+  const cmd = input.value.trim();
+  const responses = {
+    'ls': '📁 materi/  📄 index.html  📦 node_modules/',
+    'cd': 'Berpindah direktori...',
+    'git status': 'On branch main\nnothing to commit, working tree clean',
+    'npm start': '🚀 Server berjalan di http://localhost:3000',
+    'help': 'Perintah: ls, cd, git status, npm start, clear',
+    'clear': ''
+  };
+  const response = responses[cmd] ?? '❌ Perintah tidak dikenali.';
+  if (cmd === 'clear') output.innerHTML = '';
+  else output.innerHTML += `<div><span style="color:#0ff">$ ${cmd}</span><br>${response}</div>`;
+  input.value = '';
+  output.scrollTop = output.scrollHeight;
 }
 
-function loadQuestion() {
-  if (used.length >= questions.length) return showScore();
-  let index;
-  do {
-    index = Math.floor(Math.random() * questions.length);
-  } while (used.includes(index));
-  used.push(index);
-  current = index;
-  const q = questions[index];
-  document.getElementById('question').textContent = q.q;
-  const options = document.getElementById('options');
-  options.innerHTML = "";
-  q.o.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.className = "btn";
-    btn.textContent = opt;
-    btn.onclick = () => {
-      if (i === q.a) score++;
-      loadQuestion();
-    };
-    options.appendChild(btn);
+const laguList = {
+  sad: [
+      "https://files.catbox.moe/5s0497.mp3",
+  "https://files.catbox.moe/tyq7gm.mp3",
+  "https://files.catbox.moe/kdoeno.mp3",
+  "https://files.catbox.moe/syrp3c.mp4",
+  "https://files.catbox.moe/k0zfxh.mp4",
+  "https://files.catbox.moe/sbeckl.mp3",
+  "https://files.catbox.moe/t43axq.mp3",
+  "https://files.catbox.moe/wmrz4c.mp4",
+  "https://files.catbox.moe/t7e0uj.mp3",
+  "https://files.catbox.moe/5so1ow.mp4",
+  "https://files.catbox.moe/577un5.mp3",
+  "https://files.catbox.moe/ihyu3j.mp3",
+  "https://files.catbox.moe/l0sv56.mp3",
+  "https://files.catbox.moe/p3ujes.mp3",
+  "https://files.catbox.moe/zqg9ba.mp3",
+  "https://files.catbox.moe/yoebl2.mp3"
+  ],
+  phonk: [
+  "https://files.catbox.moe/i5eank.mp3",
+  "https://files.catbox.moe/bp0m5o.m4a",
+  "https://files.catbox.moe/rooj3b.mp3",
+  "https://files.catbox.moe/1x9ear.mp3",
+  "https://files.catbox.moe/8b0yqe.mp3",
+  "https://files.catbox.moe/rn9t1e.mp3",
+  "https://files.catbox.moe/ri8ldr.mp3",
+  "https://files.catbox.moe/ecxk53.mp3",
+  "https://files.catbox.moe/xqfz1f.mp4"
+  ],
+  dj: [
+    "https://files.catbox.moe/otyzgl.mp3",
+  "https://files.catbox.moe/9wttm6.mp4",
+  "https://files.catbox.moe/jt6sp4.mp3",
+  "https://files.catbox.moe/6019hy.mp3",
+  "https://files.catbox.moe/e5iukb.mp4",
+  "https://files.catbox.moe/tw7vdb.mpeg"
+  ]
+};
+
+let currentGenre = "";
+let currentSong = 0
+let playing = false;
+
+function loadGenre(genre) {
+  currentGenre = genre;
+  currentSong = 0;
+
+  const player = document.getElementById("musicPlayer");
+  if (laguList[genre] && laguList[genre].length > 0) {
+    player.src = laguList[genre][currentSong];
+    playAudio();
+  } else {
+    alert("Genre tidak ditemukan!");
+  }
+}
+
+function toggleAudio() {
+  const player = document.getElementById("musicPlayer");
+  if (!player.src) {
+    alert("Pilih genre dulu!");
+    return;
+  }
+
+  if (playing) {
+    player.pause();
+    playing = false;
+    document.getElementById("playBtn").textContent = "▶️ Play";
+  } else {
+    playAudio();
+  }
+}
+
+function playAudio() {
+  const player = document.getElementById("musicPlayer");
+  player.play().then(() => {
+    playing = true;
+    document.getElementById("playBtn").textContent = "⏸️ Pause";
+  }).catch((err) => {
+    console.error("❌ Gagal memutar lagu:", err);
   });
 }
 
-function showScore() {
-  document.getElementById("question").textContent = "✅ Kuis Selesai!";
-  document.getElementById("options").style.display = "none";
-  document.getElementById("scoreArea").style.display = "block";
-  document.getElementById("scoreText").textContent = `Skor Kamu: ${score} / ${used.length}`;
+let editor;
+
+function bukaEditor() {
+  sembunyiSemua();
+  document.getElementById("editorPage").style.display = "block";
+
+  if (!editor) {
+    editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+      lineNumbers: true,
+      mode: "htmlmixed",
+      theme: "material-darker", // <- DARK THEME
+      indentUnit: 2,
+      smartIndent: true,
+      tabSize: 2,
+    });
+  }
 }
-    function kembaliDashboard() {
-      document.getElementById("materiPage").style.display = 'none';
+
+function setEditorMode(mode) {
+  if (editor) editor.setOption("mode", mode);
+}
+
+function jalankanKode() {
+  const kode = editor.getValue();
+  document.getElementById("previewFrame").srcdoc = kode;
+
+  sembunyiSemua();
+  document.getElementById("outputPage").style.display = "block";
+}
+
+function kembaliEditor() {
+  sembunyiSemua();
+  document.getElementById("editorPage").style.display = "block";
+}
+
+
+function sembunyiSemua() {
+  document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+}
+
+  function kembaliDashboard() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    if (typeof kuisCountdown !== "undefined") clearInterval(kuisCountdown);
+    document.getElementById("dashboard").style.display = "block";
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem("devUser");
+    if (saved) {
+      document.getElementById("loginContainer").style.display = 'none';
       document.getElementById("dashboard").style.display = 'block';
+      document.getElementById("welcomeMsg").textContent = `Selamat datang, ${saved}!`;
     }
+  });
+  
+    function kembaliDashboard() {
+  // Sembunyikan SEMUA fitur yang pakai class "glass"
+  document.querySelectorAll(".glass").forEach(div => {
+    div.style.display = "none";
+  });
+
+  // Hentikan timer kuis kalau ada
+  if (typeof kuisCountdown !== "undefined") clearInterval(kuisCountdown);
+
+  // Tampilkan dashboard
+  document.getElementById("dashboard").style.display = "block";
+}
 
     window.addEventListener('DOMContentLoaded', () => {
       const saved = localStorage.getItem("devUser");
@@ -1791,5 +2247,16 @@ function showScore() {
       }
     });
   </script>
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/markdown/markdown.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-darker.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 </body>
 </html>
